@@ -1,5 +1,6 @@
 #include "password.h"
 
+//Thay đổi max kí tự của mật khẩu
 const int max_value = 20;
 
 bool LoginCheck(string login, string password, char &type, string &ID)
