@@ -6,7 +6,9 @@
 
 using namespace std;
 
-bool LoginCheck(string login, string password, int &type);
-void login();
+bool LoginCheck(string login, string password, char &type, string &ID);
+void login(char &type, string &ID);
+void edit(string ID);
+bool checkForSame(string login, string password, string ID);
 
 #endif
