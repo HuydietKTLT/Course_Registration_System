@@ -95,16 +95,37 @@ void edit(string ID)
 
 string pass()
 {
-    char *pass = new char[max_value];
+    char *password = new char[max_value];
     int i = 0;   
-    while((pass[i]=getch() ) != '\n' && pass[i] != '\r' && i< (max_value - 1))
+    while((password[i]=getch() ) != '\n' && password[i] != '\r' && i < (max_value - 1))
     {
-        putchar('*'); 
-        i++;
+        if (password[i] != '\b')
+        {
+            putchar('*'); 
+            i++;
+        }
+        else
+        {
+            if( i != 0)
+            {
+                putchar('\b');
+                putchar(' ');
+                putchar('\b');
+                i--;
+            }
+        }
     }
-    pass[i] = '\0';
-    cout << '\n';
-    string s = pass;
-    delete pass;
-    return s;
+    if (i < (max_value - 1))
+    {
+        password[i] = '\0';
+        cout << '\n';
+        string s = password;
+        delete password;
+        return s;
+    }
+    else
+    {
+        cout << "\nPassword exceeded the maximun number of character allow.\n Please try again: ";
+        return pass();
+    }
 }
