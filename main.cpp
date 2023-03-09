@@ -2,10 +2,11 @@
 
 int main()
 {
-    string ID;
+    string ID = "";
     char type;
     login(type, ID);
-    edit(ID);
+    if (ID != "")
+        edit(ID);
     return 0;
 }
 

@@ -1,5 +1,7 @@
 #include "password.h"
 
+const int max_value = 20;
+
 bool LoginCheck(string login, string password, char &type, string &ID)
 {
     ifstream fi;
@@ -31,7 +33,7 @@ void login(char &type, string &ID)
     cout << "Enter your account name: ";
     cin >> login;
     cout << "Enter your password: ";
-    cin >> password;
+    password = pass();
     if(LoginCheck(login, password, type, ID) == true)
         cout << "Login successful! " << type << " " << ID << endl;
 }
@@ -72,7 +74,7 @@ void edit(string ID)
         cout << "Enter your new account name: ";
         cin >> new_login;
         cout << "Enter your new password: ";
-        cin >> new_password;
+        new_password = pass();
     }
     while (checkForSame(new_login, new_password, ID));
     string content = "", tempLogin, tempPassword;
@@ -89,4 +91,19 @@ void edit(string ID)
     ofstream fo("password.txt");
     fo << content;
     fo.close();
+}
+
+string pass()
+{
+    char *pass = new char[max_value];
+    int i = 0;   
+    while((pass[i]=getch() ) != '\n' && pass[i] != '\r' && i< (max_value - 1))
+    {
+        putchar('*'); i++;
+    }
+    pass[i] = '\0';
+    cout << '\n';
+    string s = pass;
+    delete pass;
+    return s;
 }
