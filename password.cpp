@@ -99,7 +99,8 @@ string pass()
     int i = 0;   
     while((pass[i]=getch() ) != '\n' && pass[i] != '\r' && i< (max_value - 1))
     {
-        putchar('*'); i++;
+        putchar('*'); 
+        i++;
     }
     pass[i] = '\0';
     cout << '\n';
