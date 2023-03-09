@@ -1,16 +1,59 @@
 #include "password.h"
 
-bool LoginCheck(string login, string password, int &type)
+bool LoginCheck(string login, string password, char &type, string &ID)
 {
     ifstream fi;
     fi.open("password.txt");
     string dataLogin, dataPassword;
+    if(fi.is_open() == false)
+    {
+        cout << "Error cannot open file.";
+        return false;
+    }
     while (!fi.eof())
     {
         fi >> dataLogin;
-        fi >> dataPassword >> type;
+        fi >> dataPassword >> type >> ID;
         if((login == dataLogin) && (password == dataPassword))
         {
+            fi.close();
+            return true;  
+        }
+    }
+    cout << "Invalid account name or password." << endl;
+    fi.close();
+    return false;
+}
+
+void login(char &type, string &ID)
+{
+    string login, password;
+    cout << "Enter your account name: ";
+    cin >> login;
+    cout << "Enter your password: ";
+    cin >> password;
+    if(LoginCheck(login, password, type, ID) == true)
+        cout << "Login successful! " << type << " " << ID << endl;
+}
+
+bool checkForSame(string login, string password, string ID)
+{
+    int trash1, trash2;
+    ifstream fi;
+    fi.open("password.txt");
+    string dataLogin, dataPassword;
+    if ((password == ID) || (login == ID))
+    {
+        cout << "Account name or Password can't be ID. Please try again:\n";
+        return true;
+    }
+    while (!fi.eof())
+    {
+        fi >> dataLogin;
+        fi >> dataPassword >> trash1 >> trash2;
+        if((login == dataLogin) || (password == dataPassword))
+        {
+            cout << "Account name or Password already exists. Please try again:\n";
             fi.close();
             return true;  
         }
@@ -19,17 +62,31 @@ bool LoginCheck(string login, string password, int &type)
     return false;
 }
 
-void login()
+void edit(string ID)
 {
-    
-    string login, password;
-    int type;
-    cout << "Enter your account name: ";
-    cin >> login;
-    cout << "Enter your password: ";
-    cin >> password;
-    if(LoginCheck(login, password, type) == true)
-        cout << "Login successful! " << type << endl;
-    else
-        cout << "Invalid account name or password." << endl;
+    char type;
+    string temp_ID;
+    string new_login, new_password;
+    do
+    {
+        cout << "Enter your new account name: ";
+        cin >> new_login;
+        cout << "Enter your new password: ";
+        cin >> new_password;
+    }
+    while (checkForSame(new_login, new_password, ID));
+    string content = "", tempLogin, tempPassword;
+    ifstream fi;
+    fi.open("password.txt");
+    while(fi >> tempLogin >> tempPassword >> type >> temp_ID)
+    {
+        if(temp_ID != ID)
+            content += tempLogin + ' ' + tempPassword + ' ' + type + ' ' + temp_ID + '\n';
+        else    
+            content += new_login + ' ' + new_password + ' ' + type + ' ' + temp_ID + '\n';
+    }
+    fi.close();
+    ofstream fo("password.txt");
+    fo << content;
+    fo.close();
 }

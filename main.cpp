@@ -2,7 +2,10 @@
 
 int main()
 {
-    login();
+    string ID;
+    char type;
+    login(type, ID);
+    edit(ID);
     return 0;
 }
 
