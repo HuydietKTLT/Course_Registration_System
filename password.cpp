@@ -106,7 +106,6 @@ string pass()
             i++;
         }
         else
-        {
             if( i != 0)
             {
                 putchar('\b');
@@ -114,7 +113,6 @@ string pass()
                 putchar('\b');
                 i--;
             }
-        }
     }
     if (i < (max_value - 1))
     {
