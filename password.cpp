@@ -124,7 +124,7 @@ string pass()
     }
     else
     {
-        cout << "\nPassword exceeded the maximun number of character allow.\n Please try again: ";
+        cout << "\nPassword exceeded the maximun number of characters allow.\n Please try again: ";
         return pass();
     }
 }
