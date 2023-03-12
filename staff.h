@@ -11,5 +11,6 @@ string revString(string a);
 bool currentSchoolYear();
 void addCourseMenu();
 void addSemester();
+bool currentSemester();
 
 #endif

@@ -117,6 +117,7 @@ void createClasses(string year, string type, int numberOfClasses)
 void addCourseMenu()
 {
     currentSchoolYear();
+    currentSemester();
     cout << "-------------------------------------------\n";
     cout << "1. Choose a different school year\n2. Choose a semester\n0. Exit\nEnter options: ";
     int i;
@@ -202,6 +203,23 @@ bool currentSchoolYear()
     }
     else    
         cout << "Current school year: NULL\n";
+    fi.close();
+    return false;
+}
+
+bool currentSemester()
+{
+    cout << "-------------------------------------------\n";
+    ifstream fi;
+    fi.open("currentSemester.txt");
+    string currentSemester;
+    if (fi >> currentSemester)
+    {
+        cout << "Current semester: " << currentSemester << '\n';
+        return true;
+    }
+    else    
+        cout << "Current semester: NULL\n";
     fi.close();
     return false;
 }
