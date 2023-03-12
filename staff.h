@@ -8,5 +8,8 @@ void createNewSchoolYear();
 void createNewClass();
 void createClasses(string year, string type,int numberOfClasses);
 string revString(string a);
+bool currentSchoolYear();
+void addCourseMenu();
+void addSemester();
 
 #endif
