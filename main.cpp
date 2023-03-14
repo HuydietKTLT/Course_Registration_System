@@ -1,15 +1,19 @@
-#include "password.h"
-#include "staff.h"
+#include "scoreview.h"
 
-int main()
+int main ()
 {
-    string ID = "";
-    char type;
-    login(type, ID);
-    if (ID != "")
-        edit(ID);
-    if (type == 'm')
-        menuStaff();
+    ifstream fin;
+    Class *pHead = nullptr;
+    fin.open("listOfClass.txt");
+    if (!fin.is_open()) {
+        cout << "Can not open file !!!";
+        return 0;
+    }
+    else {
+        loadClass(fin, pHead);
+        list_of_class(pHead);
+    }
+    fin.close();
+    deleteClass(pHead);
     return 0;
 }
-
