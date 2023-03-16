@@ -12,6 +12,8 @@ struct Class {
     Class *pNext;
 };
 
+// test git hub 
+
 Class *createNode (string s);
 void loadClass (ifstream &fin, Class *&pHead);
 void deleteClass (Class *&pHead);
