@@ -18,6 +18,27 @@ typedef long int li;
 
 using namespace std;
 
+struct Class
+{
+	string class_name;
+	Student student;
+	Class* pNext;
+};
+
+struct SchoolYear
+{
+	string year_name;
+	Semester semester;
+	SchoolYear* pNext;
+};
+
+struct Semester
+{
+	string semester_name;
+	Course course;
+	Semester* pNext;
+};
+
 struct Course
 {
 	int id;
@@ -28,6 +49,9 @@ struct Course
 	string teacher_name;
 	string day_of_week;
 	string sessions;
+
+	Student student;
+
 	Course* pNext;
 };
 
@@ -41,6 +65,7 @@ struct Student
 	int social_ID;
 	Student* pNext;
 };
+
 
 
 //The path which is formated: CURRENTSCHOOLYEAR//CURRENTSEMESTER//  in C++ string.
