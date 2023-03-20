@@ -1,16 +1,13 @@
 #ifndef _PASSWORD_H_
 #define _PASSWORD_H_
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <conio.h>
+#include "lib.h"
 
-using namespace std;
+struct passInfo;
 
-bool LoginCheck(string login, string password, char &type, string &ID);
+bool LoginCheck(string login, string password, char &type, string &ID, passInfo *readfile);
 void login(char &type, string &ID);
 void edit(string ID);
-bool checkForSame(string login, string password, string ID);
+bool doTheEdit(string login, string password, string ID, passInfo *head);
 string pass();
 
 #endif
