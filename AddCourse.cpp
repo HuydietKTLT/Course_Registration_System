@@ -1,5 +1,248 @@
 #include "Addcourse.h"
 
+
+void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name)
+{
+	ifstream file;
+	file.open(schoolYear_name + "\\" + semester_name + "\\" + course_name + ".txt");
+	if (!file.is_open())
+	{
+		cout << "Khong mo duoc file .txt cua course";
+		return;
+	}
+	Student* pCur = nullptr;
+	while (!file.eof())
+	{
+		if (pHead = nullptr)
+		{
+			pHead = new Student;
+			pCur = pHead;
+		}
+		else
+		{
+			pCur = new Student;
+			pCur = pCur->pNext;
+		}
+		string get_studentID;
+		getline(file, get_studentID, ',');
+		pCur->student_ID = stoi(get_studentID);
+
+		getline(file, pCur->first_name, ',');
+		getline(file, pCur->last_name, ',');
+		getline(file, pCur->gender, ',');
+		getline(file, pCur->date_of_birth, ',');
+
+		string get_socialID;
+		getline(file, get_socialID, '\n');
+		pCur->social_ID = stoi(get_socialID);
+
+		pCur->pNext = nullptr;
+	}
+	file.close();
+}
+
+
+
+
+
+void load_course(Course*& pHead, string schoolYear_name, string semester_name)
+{
+	ifstream file;
+	file.open(schoolYear_name + "\\" + semester_name + "\\courseList.txt");
+	if (!file.is_open())
+	{
+		cout << "Khong mo duoc file courseList.txt";
+		return;
+	}
+	Course* pCur = nullptr;
+	while (!file.eof())
+	{
+		if (pHead == nullptr)
+		{
+			pHead = nullptr;
+			pCur = pHead;
+		}
+		else
+		{
+			pCur = new Course;
+			pCur = pCur->pNext;
+		}
+		string getID;
+		getline(file, getID, ',');
+		pCur->id = stoi(getID);
+
+		getline(file, pCur->course_name, ',');
+		getline(file, pCur->class_name, ',');
+		getline(file, pCur->teacher_name, ',');
+
+		string get_numberCredit;
+		getline(file, get_numberCredit, ',');
+		pCur->number_credits = stoi(get_numberCredit);
+
+		string get_numberStudent;
+		getline(file, get_numberStudent, ',');
+		pCur->number_students = stoi(get_numberStudent);
+
+		getline(file, pCur->day_of_week, ',');
+		getline(file, pCur->sessions, '\n');
+
+		pCur->pNext = nullptr;
+	}
+
+	file.close();
+}
+void load_semester(Semester*& pHead, string schoolYear_name)
+{
+	ifstream file;
+	file.open(schoolYear_name + "\\semesterList.txt");
+	if (!file.is_open())
+	{
+		cout << "Khong mo duoc file semesterList.txt";
+		return;
+	}
+	Semester* pCur = nullptr;
+	while (!file.eof())
+	{
+		if (pHead == nullptr)
+		{
+			pHead = new Semester;
+			pCur = pHead;
+		}
+		else
+		{
+			pCur = new Semester;
+			pCur = pCur->pNext;
+		}
+		file >> pCur->semester_name;
+		pCur->pNext = nullptr;
+	}
+	file.close();
+}
+
+void load_schoolYear(SchoolYear*& pHead)
+{
+	ifstream file;
+	file.open("schoolYearList.txt");
+	if (!file.is_open())
+	{
+		cout << "Khong mo duoc file schoolYearList.txt";
+		return;
+	};
+	SchoolYear* pCur = nullptr;
+	while (!file.eof())
+	{
+		if (pHead == nullptr)
+		{
+			pHead = new SchoolYear;
+			pCur = pHead;
+		}
+		else
+		{
+			pCur = new SchoolYear;
+			pCur = pCur->pNext;
+		}
+		file >> pCur->year_name;
+		pCur->pNext = nullptr;
+	}
+	file.close();
+}
+
+void load_input(SchoolYear*& pHead_schoolYear)
+{
+
+	pHead_schoolYear = nullptr;
+	load_schoolYear(pHead_schoolYear);
+	SchoolYear* pCur = pHead_schoolYear;
+
+		
+	while (pCur != nullptr)
+	{
+		Semester* pHead_Semester = pCur->semester.pNext;
+		pHead_Semester = nullptr;
+		load_semester(pHead_Semester, pCur->year_name);
+
+
+		Course* pHead_Course = pCur->semester.course.pNext;
+		pHead_Course = nullptr;
+		load_course(pHead_Course, pCur->year_name, pCur->semester.semester_name);
+
+		Student* pHead_Student = pCur->semester.course.student.pNext;
+		pHead_Student = nullptr;
+		load_student_InCourse(pHead_Student, pCur->year_name, pCur->semester.semester_name, pCur->semester.course.course_name);
+
+		pCur = pCur->pNext;
+	}
+}
+
+
+void print_student(Student*& pHead, string schoolYear_name, string Semester_name, string Course_name)
+{
+	ofstream file;
+	file.open(schoolYear_name + "\\" + Semester_name + "\\" + Course_name + ".txt");
+	while (pHead != nullptr)
+	{
+		file << pHead->student_ID << ","
+			<< pHead->first_name << ","
+			<< pHead->last_name << ","
+			<< pHead->gender << ","
+			<< pHead->date_of_birth << ","
+			<< pHead->social_ID << endl;
+
+		pHead = pHead->pNext;
+	}
+
+	file.close();
+}
+
+
+void print_course(Course*& pHead, string schoolYear_name, string Semester_name)
+{
+	ofstream file;
+	file.open(schoolYear_name + "\\" + Semester_name + "\\" + "courseList.txt");
+	while (pHead != nullptr)
+	{
+		file << pHead->course_name << endl;
+		pHead = pHead->pNext;
+	}
+	file.close();
+}
+
+
+
+
+void print_Semester(Semester* pHead_Semester,string Schoolyear_name)
+{
+	ofstream file;
+	file.open(Schoolyear_name + "\\" +"semesterlist.txt");
+	while (pHead_Semester != nullptr)
+	{
+		file << pHead_Semester->semester_name << endl;
+		pHead_Semester = pHead_Semester->pNext;
+	}
+	file.close();
+}
+
+void print_output(SchoolYear* pHead_SchoolYear)
+{
+	ofstream file;
+	file.open("schoolYearlist.txt");
+	while (pHead_SchoolYear != nullptr)
+	{
+		file << pHead_SchoolYear->year_name << endl;
+		pHead_SchoolYear = pHead_SchoolYear->pNext;
+	}
+	file.close();
+
+	while (pHead_SchoolYear != nullptr)
+	{
+
+
+
+		pHead_SchoolYear = pHead_SchoolYear->pNext;
+	}
+
+}
+
 string currentSchoolYear_Semester_Cpp_string()
 {
 	ifstream current_schoolYear //Use to open file currentSchoolYear.txt, which located in BIG FOLDER
