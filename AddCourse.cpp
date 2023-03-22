@@ -150,27 +150,51 @@ void load_schoolYear(SchoolYear*& pHead)
 void load_input(SchoolYear*& pHead_schoolYear)
 {
 
+
+	// The function is used to load the data of schoolyears, semesters in each schoolyear, courses in each semester, students in each courses.
+	//The format of the folder is:
+	// 
+	//The big folder will contain the file .txt which named schoolYearList.txt, which in each line of the file contains the name of the schoolyear (This schoolyear has been created before)
+	//For each year which has been included in the file schoolYearList.txt, it means that the folder of that year has been created before.
+	// 
+	//In each folder of each year, it will contain the file .txt which named semesterList.txt, which included the list of semester that has been created before and folder of its semester
+	//In each folder of each semester, it will contain the file .txt which named courseList.txt, which included the data of all the courses which have been created before.
+	//The data of each course includes course id, course name, class name,........
+
+
 	pHead_schoolYear = nullptr;
 	load_schoolYear(pHead_schoolYear);
-	SchoolYear* pCur = pHead_schoolYear;
+	SchoolYear* pCur_SchoolYear = pHead_schoolYear;
 
-		
-	while (pCur != nullptr)
+
+	while (pCur_SchoolYear != nullptr)
 	{
-		Semester* pHead_Semester = pCur->semester.pNext;
-		pHead_Semester = nullptr;
-		load_semester(pHead_Semester, pCur->year_name);
+
+		pCur_SchoolYear->semester.pNext = nullptr;
 
 
-		Course* pHead_Course = pCur->semester.course.pNext;
-		pHead_Course = nullptr;
-		load_course(pHead_Course, pCur->year_name, pCur->semester.semester_name);
+		load_semester(pCur_SchoolYear->semester.pNext, pHead_schoolYear->year_name);
 
-		Student* pHead_Student = pCur->semester.course.student.pNext;
-		pHead_Student = nullptr;
-		load_student_InCourse(pHead_Student, pCur->year_name, pCur->semester.semester_name, pCur->semester.course.course_name);
+		Semester* pCur_Semester = pCur_SchoolYear->semester.pNext;
 
-		pCur = pCur->pNext;
+		while (pCur_Semester != nullptr)
+		{
+			Course* pHead_Course = nullptr;
+
+			load_course(pHead_Course, pCur_SchoolYear->year_name, pCur_Semester->semester_name);
+			Course* pCur_Course = pHead_Course;
+
+			while (pCur_Course != nullptr)
+			{
+
+				Student* pHead_Student = nullptr;
+				load_student_InCourse(pHead_Student, pCur_SchoolYear->year_name, pCur_Semester->semester_name, pCur_Course->course_name);
+
+				pCur_Course = pCur_Course->pNext;
+			}
+			pCur_Semester = pCur_Semester->pNext;
+		}
+		pCur_SchoolYear = pCur_SchoolYear->pNext;
 	}
 }
 
@@ -187,7 +211,6 @@ void print_student(Student*& pHead, string schoolYear_name, string Semester_name
 			<< pHead->gender << ","
 			<< pHead->date_of_birth << ","
 			<< pHead->social_ID << endl;
-
 		pHead = pHead->pNext;
 	}
 
@@ -210,10 +233,10 @@ void print_course(Course*& pHead, string schoolYear_name, string Semester_name)
 
 
 
-void print_Semester(Semester* pHead_Semester,string Schoolyear_name)
+void print_Semester(Semester* pHead_Semester, string Schoolyear_name)
 {
 	ofstream file;
-	file.open(Schoolyear_name + "\\" +"semesterlist.txt");
+	file.open(Schoolyear_name + "\\" + "semesterlist.txt");
 	while (pHead_Semester != nullptr)
 	{
 		file << pHead_Semester->semester_name << endl;
@@ -235,87 +258,27 @@ void print_output(SchoolYear* pHead_SchoolYear)
 
 	while (pHead_SchoolYear != nullptr)
 	{
+		Semester* pCur_Semester = pHead_SchoolYear->semester.pNext;
+		print_Semester(pCur_Semester, pHead_SchoolYear->year_name);
 
 
+		while (pCur_Semester != nullptr)
+		{
+			Course* pCur_course = pHead_SchoolYear->semester.course.pNext;
+			print_course(pCur_course, pHead_SchoolYear->year_name, pHead_SchoolYear->semester.semester_name);
 
+			while (pCur_course != nullptr)
+			{
+
+				Student* pCur_student = pHead_SchoolYear->semester.course.student.pNext;
+				print_student(pCur_student, pHead_SchoolYear->year_name, pHead_SchoolYear->semester.semester_name, pHead_SchoolYear->semester.course.course_name);
+				pCur_course = pCur_course->pNext;
+			}
+
+			pCur_Semester = pCur_Semester->pNext;
+		}
 		pHead_SchoolYear = pHead_SchoolYear->pNext;
 	}
-
-}
-
-string currentSchoolYear_Semester_Cpp_string()
-{
-	ifstream current_schoolYear //Use to open file currentSchoolYear.txt, which located in BIG FOLDER
-		,current_semester; //Use to open file currentSemester.txt, which located in BIG FOLDER.
-
-
-	string currentSchoolYear, currentSemester;
-
-
-
-	//Open file named currentSchoolYear.txt, which contained a current School Year (The latest school year which users have entered).
-	current_schoolYear.open("currentSchoolYear.txt");
-	if (!current_schoolYear.is_open())
-	{
-		cout << "Khong mo duoc file currentSchoolYear.txt";
-		return NULL;
-	}
-	current_schoolYear >> currentSchoolYear;
-	current_schoolYear.close();
-	
-
-
-	//Open file named currentSemester.txt, which contained a current semester (The latest semester which user have entered)
-	current_semester.open("currentSemester.txt");
-	if (!current_semester.is_open())
-	{
-		cout << "Khong mo duoc file currentSemester.txt";
-		return NULL;
-	}
-	current_semester >> currentSemester;
-	current_semester.close();
-
-
-	//Merge it into a new Path named:   " CURRENTSCHOOLYEAR//CURRENTSEMESTER// "
-	currentSchoolYear += "\\" + currentSemester + "\\";
-
-	return currentSchoolYear;
-
-}
-
-char* currentShoolYear_Semester_C_String(int getID)
-{
-	//-> a is the string with contain the Path which has got the format: " CURRENTSCHOOLYEAR//CURRENTSEMESTER// "
-	char a[200];
-	int k = 0;
-
-	//The purpose of these below actions is used for getting a path of the Course that will be deleted
-	//the remove() function is only used in C string, so I cannot use a C++ string to assign in this function. It will get error.
-
-
-	//Path update: CURRENTSCHOOLYEAR//CURRENTSEMESTER//
-	for (int i = 0; i < currentSchoolYear_Semester_Cpp_string().size(); ++i)
-	{
-		a[++k] = currentSchoolYear_Semester_Cpp_string()[i];
-	}
-
-	//Path update: CURRENTSCHOOLYEAR//CURRENTSEMESTER//course
-	string course = "course";
-	for (int i = 0; i < course.size(); ++i)
-		a[++k] = course[i];
-
-	//Path update: CURRENTSCHOOLYEAR//CURRENTSEMESTER//courseID
-	for (int i = 0; i < to_string(getID).size(); ++i)
-		a[++k] = to_string(getID)[i];
-
-	//Path update: CURRENTSCHOOLYEAR//CURRENTSEMESTER//courseID.txt
-	string txt = ".txt";
-	for (int i = 0; i < txt.size(); ++i)
-		a[++k] = txt[i];
-
-	//Assign the operator '\n' is to notify this is the end of the string of characters. 
-	a[k] = '\n';
-	return a;
 }
 
 //Get the data of course from file .txt
@@ -849,7 +812,7 @@ void addStudentCourseWithConsole(Course* pHead)
 
 
 //Get stundet data from file and pass these datas into the linked list Students.
-void getStudentInfoFromFile(Student*& pHead, string get, ifstream &file)
+void getStudentInfoFromFile(Student*& pHead, string get, ifstream& file)
 {
 	Student* pCur = pHead;
 
@@ -895,7 +858,7 @@ void getStudentInfoFromFile(Student*& pHead, string get, ifstream &file)
 void print1StudentDataToFile(Student* pHead, string get)
 {
 	ofstream file;
-	file.open(currentSchoolYear_Semester_Cpp_string() + "course" + get +".txt", ofstream::app);
+	file.open(currentSchoolYear_Semester_Cpp_string() + "course" + get + ".txt", ofstream::app);
 
 	Student* pCur = pHead;
 
@@ -914,7 +877,7 @@ void print1StudentDataToFile(Student* pHead, string get)
 }
 
 
-void removeStudentFromCourse(Student *&pHead)
+void removeStudentFromCourse(Student*& pHead)
 {
 	int getID;
 	cout << "Enter the course ID: ";
@@ -935,7 +898,7 @@ void removeStudentFromCourse(Student *&pHead)
 		return;
 	}
 	//Open file for getting student information and save to the linked list 
-	getStudentInfoFromFile(pHead, get, file);	
+	getStudentInfoFromFile(pHead, get, file);
 	file.close();
 
 
