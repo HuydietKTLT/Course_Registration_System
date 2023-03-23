@@ -4,12 +4,18 @@
 #ifndef _ADDCOURSE_H_
 #define _ADDCOURSE_H_
 
+//Thanh niên cái 
+
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <iomanip>
 #include <cmath>
 #include <cstdio>
+#include <direct.h>
+#include <conio.h>
+
+//////////////////
 
 
 
