@@ -17,4 +17,6 @@ void loadClass (ifstream &fin, Class *&pHead);
 void deleteClass (Class *&pHead);
 void list_of_class (Class *pHead);
 
+// just take commmit from github ...
+
 #endif
