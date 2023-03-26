@@ -41,7 +41,7 @@ struct Semester
 
 struct Course
 {
-	int id;
+	string id;
 	string course_name;
 	string class_name;
 	int number_credits;
@@ -67,12 +67,20 @@ struct Student
 };
 
 
+void load_semester(Semester*& pHead, string schoolYear_name);
 
-//The path which is formated: CURRENTSCHOOLYEAR//CURRENTSEMESTER//  in C++ string.
-string currentSchoolYear_Semester_Cpp_string();
+void load_schoolYear(SchoolYear*& pHead);
 
-////The path which is formated: CURRENTSCHOOLYEAR//CURRENTSEMESTER//  in C string.
-char* currentShoolYear_Semester_C_String(int getID);
+void load_input(SchoolYear*& pHead_schoolYear);
+
+void print_student(Student*& pHead, string schoolYear_name, string Semester_name, string Course_name);
+
+void print_course(Course*& pHead, string schoolYear_name, string Semester_name);
+
+void print_Semester(Semester* pHead_Semester, string Schoolyear_name);
+
+void print_output(SchoolYear* pHead_SchoolYear);
+
 
 //Get the data of the Course from File.txt
 void getCourseDataFromFile(Course*& pHead);
