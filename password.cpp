@@ -1,6 +1,6 @@
 #include "password.h"
 
-//Thay đổi max kí tự của mật khẩu
+//Set the max length of the password
 const int max_value = 20;
 
 struct passInfo
@@ -77,7 +77,7 @@ void login(char &type, string &ID)
     clear(readfile);
 }
 
-bool doTheEdit(string login, string password, string ID, passInfo *head)
+bool doTheEdit(string login, string password, string ID, passInfo *&head)
 {
     passInfo *readfile = head;
     while (readfile != nullptr)
@@ -111,7 +111,7 @@ void edit(string ID)
     int i;
     string temp_ID;
     string new_login, new_password;
-    passInfo *readfile;
+    passInfo *readfile = nullptr;
     ReadPassword(readfile);
     do
     {
@@ -126,6 +126,15 @@ void edit(string ID)
         new_password = pass();
     }
     while (doTheEdit(new_login, new_password, ID, readfile));
+    ofstream fo;
+    fo.open("password.cpp", ios_base::app);
+    passInfo *cur = readfile;
+    while (cur != nullptr)
+    {
+        fo << cur->login << ' ' << cur->password << ' ' << cur->type << ' ' << cur->ID << '\n';
+        cur = cur->next;
+    }
+    fo.close();
     clear(readfile);
 }
 
