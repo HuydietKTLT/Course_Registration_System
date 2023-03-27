@@ -27,21 +27,21 @@ using namespace std;
 struct Class
 {
 	string class_name;
-	Student student;
+	Student* student;
 	Class* pNext;
 };
 
 struct SchoolYear
 {
 	string year_name;
-	Semester semester;
+	Semester* semester;
 	SchoolYear* pNext;
 };
 
 struct Semester
 {
 	string semester_name;
-	Course course;
+	Course* course;
 	Semester* pNext;
 };
 
@@ -56,7 +56,7 @@ struct Course
 	string day_of_week;
 	string sessions;
 
-	Student student;
+	Student* student;
 
 	Course* pNext;
 };
