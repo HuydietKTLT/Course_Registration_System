@@ -17,8 +17,6 @@
 
 //////////////////
 
-
-
 typedef long long ll;
 typedef long int li;
 
@@ -47,11 +45,11 @@ struct Semester
 
 struct Course
 {
-	int id;
+	string id;
 	string course_name;
 	string class_name;
-	int number_credits;
-	int number_students;
+	string number_credits;
+	string number_students;
 	string teacher_name;
 	string day_of_week;
 	string sessions;
@@ -63,31 +61,36 @@ struct Course
 
 struct Student
 {
-	int student_ID;
+	string student_ID;
 	string first_name;
 	string last_name;
 	string gender;
 	string date_of_birth;
-	int social_ID;
+	string social_ID;
 	Student* pNext;
 };
 
+void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name);
+
+void load_course(Course*& pHead, string schoolYear_name, string semester_name);
+
+void load_semester(Semester*& pHead, string schoolYear_name);
+
+void load_schoolYear(SchoolYear*& pHead);
+
+void load_input(SchoolYear*& pHead_schoolYear);
+
+void print_student_InCourse(Student* pHead, string schoolYear_name, string Semester_name, string Course_name);
+
+void print_course(Course* pHead, string schoolYear_name, string Semester_name);
+
+void print_Semester(Semester* pHead_Semester, string Schoolyear_name);
+
+void print_output(SchoolYear* pHead_SchoolYear);
+
+void deallocated(SchoolYear*& pHead_schoolYear);
 
 
-//The path which is formated: CURRENTSCHOOLYEAR//CURRENTSEMESTER//  in C++ string.
-string currentSchoolYear_Semester_Cpp_string();
-
-////The path which is formated: CURRENTSCHOOLYEAR//CURRENTSEMESTER//  in C string.
-char* currentShoolYear_Semester_C_String(int getID);
-
-//Get the data of the Course from File.txt
-void getCourseDataFromFile(Course*& pHead);
-
-//Print the data of Course from the system to file.txt
-void printCourseToFile(Course* pHead);
-
-//Print the data of course on the screen.
-void printCourseToConsole(Course* pHead);
 
 //Use for adding a course.
 void addCourse(Course*& pHead);
@@ -112,9 +115,6 @@ void addStudentCourseWithConsole(Course* pHead);
 
 void getStudentInfoFromFile(Student*& pHead);
 
-void removeStudentFromCourse(Student*& pHead);
-
-
-void deAllocateCourse(Course*& pHead);
+void removeStudent_Course(Student*& pHead);
 
 #endif

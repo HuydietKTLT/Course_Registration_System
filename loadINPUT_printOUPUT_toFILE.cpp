@@ -1,49 +1,40 @@
-#include "Addcourse.h"
+#include "lib.h"
 
 
-void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name)
+void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_id)
 {
 	ifstream file;
-	file.open(schoolYear_name + "\\" + semester_name + "\\" + course_name + ".txt");
+	file.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt");
+
 	if (!file.is_open())
 	{
 		cout << "Khong mo duoc file .txt cua course";
 		return;
 	}
-	Student* pCur = nullptr;
+	Student* pCur = pHead;
 	while (!file.eof())
 	{
-		if (pHead = nullptr)
+		if (pHead == nullptr)
 		{
 			pHead = new Student;
 			pCur = pHead;
 		}
 		else
 		{
-			pCur = new Student;
+			pCur->pNext = new Student;
 			pCur = pCur->pNext;
 		}
-		string get_studentID;
-		getline(file, get_studentID, ',');
-		pCur->student_ID = stoi(get_studentID);
-
+		getline(file, pCur->student_ID, ',');
 		getline(file, pCur->first_name, ',');
 		getline(file, pCur->last_name, ',');
 		getline(file, pCur->gender, ',');
 		getline(file, pCur->date_of_birth, ',');
-
-		string get_socialID;
-		getline(file, get_socialID, '\n');
-		pCur->social_ID = stoi(get_socialID);
+		getline(file, pCur->social_ID, '\n');
 
 		pCur->pNext = nullptr;
 	}
 	file.close();
 }
-
-
-
-
 
 void load_course(Course*& pHead, string schoolYear_name, string semester_name)
 {
@@ -51,56 +42,50 @@ void load_course(Course*& pHead, string schoolYear_name, string semester_name)
 	file.open(schoolYear_name + "\\" + semester_name + "\\courseList.txt");
 	if (!file.is_open())
 	{
-		cout << "Khong mo duoc file courseList.txt";
+		cout << "Khong mo duoc file courseList.txt" << endl;
 		return;
 	}
-	Course* pCur = nullptr;
+
+	Course* pCur = pHead;
+
 	while (!file.eof())
 	{
 		if (pHead == nullptr)
 		{
-			pHead = nullptr;
+			pHead = new Course;
 			pCur = pHead;
 		}
 		else
 		{
-			pCur = new Course;
+			pCur->pNext = new Course;
 			pCur = pCur->pNext;
 		}
-		string getID;
-		getline(file, getID, ',');
-		pCur->id = stoi(getID);
 
+		getline(file, pCur->id, ',');
 		getline(file, pCur->course_name, ',');
 		getline(file, pCur->class_name, ',');
 		getline(file, pCur->teacher_name, ',');
-
-		string get_numberCredit;
-		getline(file, get_numberCredit, ',');
-		pCur->number_credits = stoi(get_numberCredit);
-
-		string get_numberStudent;
-		getline(file, get_numberStudent, ',');
-		pCur->number_students = stoi(get_numberStudent);
-
+		getline(file, pCur->number_credits, ',');
+		getline(file, pCur->number_students, ',');
 		getline(file, pCur->day_of_week, ',');
 		getline(file, pCur->sessions, '\n');
 
 		pCur->pNext = nullptr;
 	}
-
 	file.close();
 }
+
 void load_semester(Semester*& pHead, string schoolYear_name)
 {
 	ifstream file;
 	file.open(schoolYear_name + "\\semesterList.txt");
+
+	Semester* pCur = pHead;
 	if (!file.is_open())
 	{
 		cout << "Khong mo duoc file semesterList.txt";
 		return;
 	}
-	Semester* pCur = nullptr;
 	while (!file.eof())
 	{
 		if (pHead == nullptr)
@@ -110,10 +95,10 @@ void load_semester(Semester*& pHead, string schoolYear_name)
 		}
 		else
 		{
-			pCur = new Semester;
+			pCur->pNext = new Semester;
 			pCur = pCur->pNext;
 		}
-		file >> pCur->semester_name;
+		getline(file, pCur->semester_name, '\n');
 		pCur->pNext = nullptr;
 	}
 	file.close();
@@ -128,7 +113,7 @@ void load_schoolYear(SchoolYear*& pHead)
 		cout << "Khong mo duoc file schoolYearList.txt";
 		return;
 	};
-	SchoolYear* pCur = nullptr;
+	SchoolYear* pCur = pHead;
 	while (!file.eof())
 	{
 		if (pHead == nullptr)
@@ -138,7 +123,7 @@ void load_schoolYear(SchoolYear*& pHead)
 		}
 		else
 		{
-			pCur = new SchoolYear;
+			pCur->pNext = new SchoolYear;
 			pCur = pCur->pNext;
 		}
 		file >> pCur->year_name;
@@ -149,8 +134,6 @@ void load_schoolYear(SchoolYear*& pHead)
 
 void load_input(SchoolYear*& pHead_schoolYear)
 {
-
-
 	// The function is used to load the data of schoolyears, semesters in each schoolyear, courses in each semester, students in each courses.
 	//The format of the folder is:
 	// 
@@ -161,45 +144,56 @@ void load_input(SchoolYear*& pHead_schoolYear)
 	//In each folder of each semester, it will contain the file .txt which named courseList.txt, which included the data of all the courses which have been created before.
 	//The data of each course includes course id, course name, class name,........
 
-
-	pHead_schoolYear = nullptr;
 	load_schoolYear(pHead_schoolYear);
-	SchoolYear* pCur_SchoolYear = pHead_schoolYear;
 
+	SchoolYear* pCur_schoolYear = pHead_schoolYear;
 
-	while (pCur_SchoolYear != nullptr)
+	//The pCur_schoolYear is used for traversing the list of nodes.
+	while (pCur_schoolYear != nullptr)
 	{
-
-		pCur_SchoolYear->semester.pNext = nullptr;
-
-
-		load_semester(pCur_SchoolYear->semester.pNext, pHead_schoolYear->year_name);
-
-		Semester* pCur_Semester = pCur_SchoolYear->semester.pNext;
-
+		cout << pCur_schoolYear->year_name << " ";
+		Semester* pCur_Semester = nullptr;
+		load_semester(pCur_Semester, pCur_schoolYear->year_name);
+		pCur_schoolYear->semester = pCur_Semester;
 		while (pCur_Semester != nullptr)
 		{
-			Course* pHead_Course = nullptr;
-
-			load_course(pHead_Course, pCur_SchoolYear->year_name, pCur_Semester->semester_name);
-			Course* pCur_Course = pHead_Course;
-
+			cout << pCur_Semester->semester_name << " ";
+			Course* pCur_Course = nullptr;
+			load_course(pCur_Course, pCur_schoolYear->year_name, pCur_Semester->semester_name);
+			pCur_schoolYear->semester->course = pCur_Course;
+			cout << endl;
 			while (pCur_Course != nullptr)
 			{
-
-				Student* pHead_Student = nullptr;
-				load_student_InCourse(pHead_Student, pCur_SchoolYear->year_name, pCur_Semester->semester_name, pCur_Course->course_name);
-
+				cout << pCur_Course->course_name << " " << pCur_Course->class_name << " " << pCur_Course->sessions << " ";
+				cout << endl;
+				//Student* pHead_Student = nullptr;
+				Student* pCur_Student = nullptr;
+				cout << pCur_schoolYear->year_name << " " << pCur_Semester->semester_name << " " << pCur_Course->id;
+				cout << endl;
+				load_student_InCourse(pCur_Student, pCur_schoolYear->year_name, pCur_Semester->semester_name, pCur_Course->id);
+				pCur_schoolYear->semester->course->student = pCur_Student;
+				cout << endl;
+				while (pCur_Student != nullptr)
+				{
+					cout << pCur_Student->student_ID << " "
+						<< pCur_Student->first_name << " "
+						<< pCur_Student->last_name << " "
+						<< pCur_Student->gender << " "
+						<< pCur_Student->date_of_birth << " "
+						<< pCur_Student->social_ID << endl;
+					cout << endl;
+					pCur_Student = pCur_Student->pNext;
+				}
 				pCur_Course = pCur_Course->pNext;
 			}
 			pCur_Semester = pCur_Semester->pNext;
 		}
-		pCur_SchoolYear = pCur_SchoolYear->pNext;
+		pCur_schoolYear = pCur_schoolYear->pNext;
+		cout << endl;
 	}
 }
 
-
-void print_student(Student*& pHead, string schoolYear_name, string Semester_name, string Course_name)
+void print_student_InCourse(Student* pHead, string schoolYear_name, string Semester_name, string Course_name)
 {
 	ofstream file;
 	file.open(schoolYear_name + "\\" + Semester_name + "\\" + Course_name + ".txt");
@@ -210,33 +204,37 @@ void print_student(Student*& pHead, string schoolYear_name, string Semester_name
 			<< pHead->last_name << ","
 			<< pHead->gender << ","
 			<< pHead->date_of_birth << ","
-			<< pHead->social_ID << endl;
+			<< pHead->social_ID << "\n";
 		pHead = pHead->pNext;
 	}
-
 	file.close();
 }
 
-
-void print_course(Course*& pHead, string schoolYear_name, string Semester_name)
+void print_course(Course* pHead, string schoolYear_name, string Semester_name)
 {
 	ofstream file;
 	file.open(schoolYear_name + "\\" + Semester_name + "\\" + "courseList.txt");
 	while (pHead != nullptr)
 	{
-		file << pHead->course_name << endl;
+		file
+			<< pHead->id << ","
+			<< pHead->course_name << ","
+			<< pHead->class_name << ","
+			<< pHead->teacher_name << ","
+			<< pHead->number_credits << ","
+			<< pHead->number_students << ","
+			<< pHead->day_of_week << ","
+			<< pHead->sessions << "\n";
+
 		pHead = pHead->pNext;
 	}
 	file.close();
 }
 
-
-
-
 void print_Semester(Semester* pHead_Semester, string Schoolyear_name)
 {
 	ofstream file;
-	file.open(Schoolyear_name + "\\" + "semesterlist.txt");
+	file.open(Schoolyear_name + "\\" + "semesterList.txt");
 	while (pHead_Semester != nullptr)
 	{
 		file << pHead_Semester->semester_name << endl;
@@ -258,114 +256,24 @@ void print_output(SchoolYear* pHead_SchoolYear)
 
 	while (pHead_SchoolYear != nullptr)
 	{
-		Semester* pCur_Semester = pHead_SchoolYear->semester.pNext;
+		Semester* pCur_Semester = pHead_SchoolYear->semester;
 		print_Semester(pCur_Semester, pHead_SchoolYear->year_name);
-
-
 		while (pCur_Semester != nullptr)
 		{
-			Course* pCur_course = pHead_SchoolYear->semester.course.pNext;
-			print_course(pCur_course, pHead_SchoolYear->year_name, pHead_SchoolYear->semester.semester_name);
+			Course* pCur_course = pHead_SchoolYear->semester->course;
+			print_course(pCur_course, pHead_SchoolYear->year_name, pCur_course->course_name);
 
 			while (pCur_course != nullptr)
 			{
-
-				Student* pCur_student = pHead_SchoolYear->semester.course.student.pNext;
-				print_student(pCur_student, pHead_SchoolYear->year_name, pHead_SchoolYear->semester.semester_name, pHead_SchoolYear->semester.course.course_name);
+				Student* pCur_student = pHead_SchoolYear->semester->course->student;
+				print_student_InCourse(pCur_student, pHead_SchoolYear->year_name, pCur_Semester->semester_name, pCur_course->course_name);
 				pCur_course = pCur_course->pNext;
 			}
-
 			pCur_Semester = pCur_Semester->pNext;
 		}
 		pHead_SchoolYear = pHead_SchoolYear->pNext;
 	}
 }
-
-//Get the data of course from file .txt
-void getCourseDataFromFile(Course*& pHead)
-{
-	ifstream file;
-	file.open(currentSchoolYear_Semester_Cpp_string() + "listOfCourse.txt");
-	if (!file.is_open())
-	{
-		cout << "Khong mo duoc file";
-		return;
-	}
-
-	Course* pCur = pHead;
-
-	//Get the data and save to the list of Course until it read to the end of the file
-	while (!file.eof())
-	{
-		//if pHead is nullpointer, create new one
-		if (pHead == nullptr)
-		{
-			pHead = new Course;
-			pCur = pHead;
-		}
-
-		//if pHead is not nullpointer, means there is data in the list of Nodes, so add one next to the current.
-		else
-		{
-			pCur->pNext = new Course;
-			pCur = pCur->pNext;
-		}
-
-		string id;
-		getline(file, id, ',');
-		pCur->id = stoi(id);
-
-		getline(file, pCur->course_name, ',');
-		getline(file, pCur->class_name, ',');
-		getline(file, pCur->teacher_name, ',');
-
-
-
-		string number_credits;
-		getline(file, number_credits, ',');
-		pCur->number_credits = stoi(number_credits);
-
-		string number_students;
-		getline(file, number_students, ',');
-		pCur->number_students = stoi(number_students);
-
-		getline(file, pCur->day_of_week, ',');
-
-
-		getline(file, pCur->sessions, '\n');
-
-		pCur->pNext = nullptr;
-	}
-}
-
-
-
-void printCourseToFile(Course* pHead)
-{
-	ofstream file;
-	file.open(currentSchoolYear_Semester_Cpp_string() + "listOfCourse.txt");
-
-	Course* pCur = pHead;
-
-	//print the data from courses to file .txt.
-	while (pCur != nullptr)
-	{
-		file << pCur->id << ","
-			<< pCur->course_name << ","
-			<< pCur->class_name << ","
-			<< pCur->teacher_name << ","
-			<< pCur->number_credits << ","
-			<< pCur->number_students << ","
-			<< pCur->day_of_week << ","
-			<< pCur->sessions << endl;
-
-		pCur = pCur->pNext;
-	}
-
-	file.close();
-
-}
-
 
 void printCourseToConsole(Course* pHead)
 {
@@ -681,18 +589,6 @@ void updateCourse(Course*& pHead)
 	return;
 }
 
-void deAllocateCourse(Course*& pHead)
-{
-	Course* cur = pHead;
-	Course* temp = cur->pNext;
-	while (cur != nullptr)
-	{
-		delete cur;
-		cur = temp;
-		temp = temp->pNext;
-	}
-}
-
 void addStudentCourseWithFile()
 {
 	ifstream file;
@@ -709,12 +605,7 @@ void addStudentCourseWithFile()
 	file >> courseID_string;
 	int courseID_int = stoi(courseID_string);
 
-	while (!file.eof())
-	{
-
-	}
 }
-
 
 void addStudentCourseWithConsole(Course* pHead)
 {
@@ -810,74 +701,7 @@ void addStudentCourseWithConsole(Course* pHead)
 	cout << "Add Student to Course successfully";
 }
 
-
-//Get stundet data from file and pass these datas into the linked list Students.
-void getStudentInfoFromFile(Student*& pHead, string get, ifstream& file)
-{
-	Student* pCur = pHead;
-
-	//Get the data and save to the list of Course until it read to the end of the file
-	while (!file.eof())
-	{
-		//if pHead is nullpointer, create new one
-		if (pHead == nullptr)
-		{
-			pHead = new Student;
-			pCur = pHead;
-		}
-
-		//if pHead is not nullpointer, means there is data in the list of Nodes, so add one next to the current.
-		else
-		{
-			pCur->pNext = new Student;
-			pCur = pCur->pNext;
-		}
-
-		string student_ID;
-		getline(file, student_ID, ',');
-		pCur->student_ID = stoi(student_ID);
-
-
-		getline(file, pCur->first_name, ',');
-
-		getline(file, pCur->last_name, ',');
-
-		getline(file, pCur->gender, ',');
-
-		getline(file, pCur->date_of_birth, ',');
-
-		string social_ID;
-		getline(file, social_ID, '\n');
-
-		pCur->social_ID = stoi(social_ID);
-
-		pCur->pNext = nullptr;
-	}
-}
-
-void print1StudentDataToFile(Student* pHead, string get)
-{
-	ofstream file;
-	file.open(currentSchoolYear_Semester_Cpp_string() + "course" + get + ".txt", ofstream::app);
-
-	Student* pCur = pHead;
-
-	//print the new data of students to the end of file .txt.
-	while (pCur != nullptr)
-	{
-		file << pCur->student_ID << ","
-			<< pCur->first_name << ","
-			<< pCur->last_name << ","
-			<< pCur->gender << ","
-			<< pCur->date_of_birth << ","
-			<< pCur->social_ID << "\n";
-		pCur = pCur->pNext;
-	}
-	file.close();
-}
-
-
-void removeStudentFromCourse(Student*& pHead)
+void removeStudent_Course(Student*& pHead)
 {
 	int getID;
 	cout << "Enter the course ID: ";
@@ -931,7 +755,42 @@ void removeStudentFromCourse(Student*& pHead)
 
 	cout << "There is no student ID matching with your typing!!!";
 	return;
+}
 
-
-
+void deallocated(SchoolYear*& pHead_schoolYear)
+{
+	SchoolYear* pCur_schoolYear = pHead_schoolYear;
+	while (pHead_schoolYear != nullptr)
+	{
+		Semester* pHead_semester = pCur_schoolYear->semester;
+		Semester* pCur_semester = pHead_semester;
+		if (pCur_semester == nullptr) break;
+		while (pHead_semester != nullptr)
+		{
+			Course* pHead_course = pHead_semester->course;
+			Course* pCur_course = pHead_course;
+			if (pCur_course == nullptr) break;
+			while (pHead_course != nullptr)
+			{
+				Student* pHead_student = pHead_course->student;
+				Student* pCur_student = pHead_student;
+				if (pCur_student == nullptr) break;
+				while (pHead_student != nullptr)
+				{
+					pHead_student = pHead_student->pNext;
+					delete pCur_student;
+					pCur_student = pHead_student;
+				}
+				pHead_course = pHead_course->pNext;
+				delete pCur_course;
+				pCur_course = pHead_course;
+			}
+			pHead_semester = pHead_semester->pNext;
+			delete pCur_semester;
+			pCur_semester = pHead_semester;
+		}
+		pHead_schoolYear = pHead_schoolYear->pNext;
+		delete pCur_schoolYear;
+		pCur_schoolYear = pHead_schoolYear;
+	}
 }
