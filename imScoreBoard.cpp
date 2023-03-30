@@ -1,366 +1,354 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-using namespace std;
-struct Student {
-	string No;
-	string ID;
-	string FName;
-	string LName;
-	string gender;
-	string date_of_birth;
-	string social_ID;
-	double fMark;
-	double midMark;
-	double oMark;
-	double toMark;
-	Student* pNext;
-	
-};
-void import_scoreboard_toCourse(Student* &pHead){
-	string schoolYear;
-	cout<<"Enter School Year: ";
-	cin>>schoolYear;
-	string semester;
-	cout<<"Enter Semester: "; 
-	cin>>semester;
-	string course;
-	cout<<"Enter Course: ";
-	cin>>course;
-	string file=schoolYear+"/"+semester+"/"+course+".txt";
-	string scoreboard="scoreboard/"+file;
-	fstream inF;
-	inF.open(file,ios::in);
-	if(inF.fail()){
-		cout<<"FiLe does not exist!";
+#include "imScore.h"
+void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name)
+{
+	ifstream file;
+	file.open(schoolYear_name + "\\" + semester_name + "\\" + course_name + ".txt");
+	if (!file.is_open())
+	{
+		ifstream file;
+		file.open(schoolYear_name + "\\" + semester_name + "\\" + course_name + ".txt",ios::app);	
 	}
+	Student* pCur = nullptr;
+	pHead = new Student();
+	pCur = pHead;
+	string get_studentID;
+	getline(file, get_studentID, ',');
+	pCur->student_ID = std::stoi(get_studentID);
+	getline(file, pCur->first_name, ',');
+	getline(file, pCur->last_name,',');
+	getline(file,pCur->gender,',');
+	getline(file,pCur->date_of_birth,',');
+	getline(file,get_studentID);
+	if(!file.eof()){
+		pCur->pNext = new Student();	
+		pCur = pCur->pNext;
+		} 
 	else{
-		cout<<"Enter 0: =Get File ScoreBoard= \t Enter 1: =Edit ScoreBoard=\n";
-		int option;
-		cin>>option;
-		if(option==0){
+		pCur->pNext =nullptr;	
+		}
+	while (!file.eof())
+	{
+		string get_studentID;
+		getline(file, get_studentID, ',');
+		pCur->student_ID = std::stoi(get_studentID);
+		getline(file, pCur->first_name, ',');
+		getline(file, pCur->last_name,',');
+		getline(file,get_studentID);
+		if(!file.eof()){
+		pCur->pNext = new Student();	
+		pCur = pCur->pNext;
+		} 
+		else{
+		pCur->pNext =nullptr;	
+		}
+	}
+	file.close();
+}
+void load_course(Course*& pHead, string schoolYear_name, string semester_name)
+{
+	ifstream file;
+	file.open(schoolYear_name +"\\"+semester_name+"\\courseList.txt");
+	pHead=new Course();
+	Course* pCur = nullptr;
+	pCur=pHead;
+	getline(file,pCur->id, ',');
+	getline(file, pCur->course_name, ',');
+	getline(file, pCur->class_name, ',');
+	getline(file, pCur->teacher_name, ',');
+	string get_numberCredit;
+	getline(file, get_numberCredit, ',');
+	pCur->number_credits = std::stoi(get_numberCredit);
+	string get_numberStudent;
+	getline(file, get_numberStudent, ',');
+	pCur->number_students = std::stoi(get_numberStudent);
+	getline(file, pCur->day_of_week, ',');
+	getline(file, pCur->sessions, ',');
+	getline(file, get_numberCredit);
+	if(!file.eof()){
+		pCur->pNext = new Course();	
+		pCur = pCur->pNext;
+		} 
+	else{
+		pCur->pNext =nullptr;	
+		}
+	while (!file.eof())
+	{
+		getline(file,pCur->id, ',');
+		getline(file, pCur->course_name, ',');
+		getline(file, pCur->class_name, ',');
+		getline(file, pCur->teacher_name, ',');
+		string get_numberCredit;
+		getline(file, get_numberCredit, ',');
+		pCur->number_credits = std::stoi(get_numberCredit);
+		string get_numberStudent;
+		getline(file, get_numberStudent, ',');
+		pCur->number_students = std::stoi(get_numberStudent);
+		getline(file, pCur->day_of_week, ',');
+		getline(file, pCur->sessions, ',');
+		getline(file, get_numberCredit);
+		if(!file.eof()){
+		pCur->pNext = new Course();	
+		pCur = pCur->pNext;
+		} 
+		else{
+		pCur->pNext =nullptr;	
+		}
+	}
+	file.close();
+}
+void load_semester(Semester*& pHead, string schoolYear_name){
+	ifstream file;
+	file.open(schoolYear_name + "\\semesterList.txt");
+	if (!file.is_open())
+	{
+		cout << "Khong mo duoc file semesterList.txt";
+		return;
+	}
+	Semester* pCur = nullptr;
+	pHead=new Semester();
+	pCur=pHead;
+	getline(file,pCur->semester_name,',');
+	string tmp;
+	getline(file,tmp);
+	if (!file.eof())
+	{
+		pCur->pNext = new Semester();	
+		pCur=pCur->pNext; 	
+		}
+	else
+		{
+		pCur->pNext=nullptr;
+		}
+	while (!file.eof())
+	{
+		getline(file,pCur->semester_name,',');
+		getline(file,tmp);
+		if (!file.eof())
+		{
+		pCur->pNext = new Semester();	
+		pCur=pCur->pNext; 	
+		}
+		else
+		{
+		pCur->pNext=nullptr;
+		}
+	} 
+	file.close();
+}
+void load_schoolYear(SchoolYear*& pHead)
+{
+	ifstream file;
+	file.open("schoolYearList.txt");
+	if (!file.is_open())
+	{
+		cout << "Khong mo duoc file schoolYearList.txt";
+		return;
+	};
+	SchoolYear* pCur = nullptr;
+	while (!file.eof())
+	{
+		if (pHead == nullptr)
+		{
+			pHead = new SchoolYear();
+			pCur=pHead;
+		}
+		else
+		{
+			pCur = new SchoolYear();
+		}
+		file >> pCur->year_name;
+		pCur->pNext =nullptr;
+		pCur = pCur->pNext;
+	}
+	file.close();
+}
+void load_input(SchoolYear*& pHead_schoolYear){
+	pHead_schoolYear = nullptr;
+	load_schoolYear(pHead_schoolYear);
+	SchoolYear* pCur = nullptr;
+	pCur=pHead_schoolYear;
+	while (pCur != nullptr)
+	{
+		Semester* pHead_Semester=nullptr;
+		load_semester(pHead_Semester, pCur->year_name);
+		pCur->semester=pHead_Semester;
+		Semester* currSemester=pCur->semester;
+		while(currSemester!=nullptr){
+		Course* pHead_Course=nullptr;	
+		load_course(pHead_Course, pCur->year_name, currSemester->semester_name);
+		currSemester->course=pHead_Course;
+		Course* currCourse=currSemester->course;
+		while(currCourse!=nullptr){
+		Student* pHead_Student = nullptr;
+		load_student_InCourse(pHead_Student, pCur->year_name, currSemester->semester_name, currCourse->id);
+		currCourse->student=pHead_Student;
+		currCourse=currCourse->pNext;
+		}
+		currSemester=currSemester->pNext;
+		}
+		pCur = pCur->pNext;
+	}
+}
+void view_scoreboard_toCourse(SchoolYear* &list_year,string year){
+	SchoolYear* pCur= NULL;
+	pCur= list_year;
+	while(pCur!=nullptr){
+		if(pCur->year_name.compare(year)==0){
+			break;
+		}
+		pCur=pCur->pNext;
+		}
+		Semester* Cur_Semester=nullptr;
+		string Semester;
+		cout<<"Enter Semester: "; cin>>Semester;
+		Cur_Semester=pCur->semester;
+		while(Cur_Semester->semester_name.compare(Semester)!=0){
+			Cur_Semester=Cur_Semester->pNext;
+		}
+		Course* Cur_course=nullptr;
+		string Course;
+		cout<<"Enter Course: "; cin>>Course;
+		Cur_course=Cur_Semester->course;
+			while(Cur_course->course_name.compare(Course)!=0){
+				Cur_course=Cur_course->pNext;
+			}
+		Student* studentF=nullptr;
+		studentF=Cur_course->student;
+		cout<<setw(12)<<left<<"ID"<<setw(16)<<left<<"Name"<<setw(16)<<left<<"Middle Score"<<setw(15)<<left<<"Final Score"<<setw(15)<<left<<"Other Score\tTotal Score\n";
+		cout<<setfill('-');
+		cout<<setw(80)<<'-'<<endl;
+		cout << setfill(' ');
+		while(studentF!=nullptr){
+			cout<<setw(12)<<left<<studentF->student_ID<<setw(8)<<left<<studentF->first_name<<setw(10)<<left<<studentF->last_name<<setw(15)<<left<<studentF->midMark<<setw(15)<<left<<studentF->fMark<<setw(15)<<left<<studentF->oMark<<setw(15)<<left<<studentF->toMark<<endl;
+			studentF=studentF->pNext;
+		}
+}
+void import_scoreboard_toCourse(SchoolYear* &list_year,string year){
+	int option;
+	cout<<"Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other. Quit=\n";
+	cin>>option;
+	while(option==0||option==1||option==2)	{
+		SchoolYear* pCur= NULL;
+		pCur=list_year;
+		if (option==0){
+			string yes;
+			do{
+			while(pCur!=nullptr){
+			if(pCur->year_name.compare(year)==0){
+			break;
+			}
+			pCur=pCur->pNext;
+			}
+			Semester* Cur_Semester=nullptr;
+			string Semester;
+			cout<<"Enter Semester: "; cin>>Semester;
+			Cur_Semester=pCur->semester;
+			while(Cur_Semester->semester_name.compare(Semester)!=0){
+				Cur_Semester=Cur_Semester->pNext;
+			}
+			Course* Cur_course=nullptr;
+			string Course;
+			cout<<"Enter Course: "; cin>>Course;
+			Cur_course=Cur_Semester->course;
+			while(Cur_course->course_name.compare(Course)!=0){
+				Cur_course=Cur_course->pNext;
+			}
 			fstream F;
 			F.open("import_scoreboard.txt",ios::app);
-			while(!inF.eof()){
-				string s;
-				getline(inF,s);
-				if(inF.eof()) 	F<<s<<" "<<0<<" "<<0<<" "<<0<<" "<<0;
-				else	F<<s<<" "<<0<<" "<<0<<" "<<0<<" "<<0<<"\n";		
+			Student* studentF=nullptr;
+			studentF=Cur_course->student;
+			while(studentF!=nullptr){
+			F<<studentF->student_ID<<","<<studentF->first_name<<","<<studentF->last_name<<",x,x,x,";
+			if(studentF->pNext!=nullptr) F<<"\n";
+			studentF=studentF->pNext;
 			}
 			F.close();
-			string done="no";
-			while(done!="yes") {
-				cout<<"Enter yes to Done!\n";
-				cin>>done;
-			}
-			fstream iF;
-			iF.open("import_scoreboard.txt",ios::in);
-			pHead=new Student();		
-			Student* pCur1=new Student();
-			pHead=pCur1;
-			string s;
-			getline(iF,s,',');
-			pCur1->No=s;
-			getline(iF,s,',');
-			pCur1->ID=s;
-			getline(iF,s,',');
-			pCur1->FName=s;
-			getline(iF,s,',');
-			pCur1->LName=s;
-			getline(iF,s,',');
-			pCur1->gender=s;
-			getline(iF,s,',');
-			pCur1->date_of_birth=s;
-			getline(iF,s,',');
-			pCur1->social_ID=s;
-			double t;
-			iF>>t;
-			pCur1->midMark=t;
-			iF>>t;
-			pCur1->fMark=t;
-			iF>>t;
-			pCur1->oMark=t;
-			pCur1->toMark=(pCur1->fMark+pCur1->midMark)/2.0+pCur1->oMark;
-			getline(iF,s);
-			pCur1->pNext=new Student();
-			pHead=pCur1;
-			pCur1=pCur1->pNext;
-		while(!iF.eof()){
-			string s;
-			getline(iF,s,',');
-			pCur1->No=s;
-			getline(iF,s,',');
-			pCur1->ID=s;
-			getline(iF,s,',');
-			pCur1->FName=s;
-			getline(iF,s,',');
-			pCur1->LName=s;
-			getline(iF,s,',');
-			pCur1->gender=s;
-			getline(iF,s,',');
-			pCur1->date_of_birth=s;
-			getline(iF,s,',');
-			pCur1->social_ID=s;
-			double t;
-			iF>>t;
-			pCur1->midMark=t;
-			iF>>t;
-			pCur1->fMark=t;
-			iF>>t;
-			pCur1->oMark=t;
-			pCur1->toMark=(pCur1->fMark+pCur1->midMark)/2.0+pCur1->oMark;
-			getline(iF,s);
-			pCur1->pNext=new Student();
-			pCur1=pCur1->pNext;
-		}
-		pCur1=NULL;
-		fstream enterF;
-		enterF.open(scoreboard,ios::out|ios::trunc);
-		Student* pCur2=new Student();
-		pCur2=pHead;
-		while(pCur2!=NULL&&pCur2->No!=""){
-		enterF<<pCur2->No<<","<<pCur2->ID<<","<<pCur2->FName<<","<<pCur2->LName<<","<<pCur2->gender<<","<<pCur2->date_of_birth<<","<<pCur2->social_ID<<","<<pCur2->midMark<<" "<<pCur2->fMark<<" "<<pCur2->oMark<<" "<<pCur2->toMark;	
-		if(pCur2->pNext!=NULL) enterF<<"\n";
-		pCur2=pCur2->pNext;
-		}
-		}
-		if (option==1){
+			cout<<"Created a file containing the information of the course: "<<pCur->semester->course->course_name<<" , Please enter your score into the file (enter 0 = agree): ";
+			cin>>yes;
+			if(yes!="0") remove("import_scoreboard.txt");
+			else{
 			fstream outF;
-			outF.open(scoreboard,ios::in);
-			if(!outF.fail()){
-				inF.close();
-				outF.close();
+			outF.open("import_scoreboard.txt",ios::in);
+			string tmp;
+			Student* score=Cur_course->student;
+			while(!outF.eof()){
+			getline(outF,tmp,',');
+			getline(outF,tmp,',');
+			getline(outF,tmp,',');
+			string get_mid_score;
+			getline(outF,get_mid_score,',');
+			score->midMark= atof(get_mid_score.c_str());
+			string get_final_score;	
+			getline(outF,get_final_score,',');
+			score->fMark=atof(get_final_score.c_str());
+			string get_other_score;
+			getline(outF,get_other_score,',');
+			score->oMark=atof(get_other_score.c_str());
+			getline(outF,tmp);
+			if(score->oMark<=10&&score->midMark<=10&&score->fMark<=10){
+				score->toMark=(score->fMark+score->midMark)/2.0+score->oMark;
+				score=score->pNext;
 			}
 			else{
-			fstream newF;
-			newF.open(scoreboard,ios::app);
-			while(!inF.eof()){
-				string s;
-				getline(inF,s);
-				if(inF.eof()) 	newF<<s<<" "<<0<<" "<<0<<" "<<0<<" "<<0;
-				else	newF<<s<<" "<<0<<" "<<0<<" "<<0<<" "<<0<<"\n";		
+				yes="0";
+				remove("import_scoreboard.txt");
+				break;
 			}
-			newF.close();
-			inF.close();
-			outF.close();	
 			}
-			fstream inF;
-			inF.open(scoreboard,ios::in);
-			pHead=new Student();		
-			Student* pCur=new Student();
-			pHead=pCur;
-			string s;
-			getline(inF,s,',');
-			pCur->No=s;
-			getline(inF,s,',');
-			pCur->ID=s;
-			getline(inF,s,',');
-			pCur->FName=s;
-			getline(inF,s,',');
-			pCur->LName=s;
-			getline(inF,s,',');
-			pCur->gender=s;
-			getline(inF,s,',');
-			pCur->date_of_birth=s;
-			getline(inF,s,',');
-			pCur->social_ID=s;
-			double t;
-			inF>>t;
-			pCur->midMark=t;
-			inF>>t;
-			pCur->fMark=t;
-			inF>>t;
-			pCur->oMark=t;
-			inF>>t;
-			pCur->toMark=t;
-			getline(inF,s);
-			pCur->pNext=new Student();
-			pHead=pCur;
+			outF.close();
+			remove("import_scoreboard.txt");
+			}
+			}
+		while(yes!="0");
+	}
+	else if(option==1){
+		while(pCur!=nullptr){
+		if(pCur->year_name.compare(year)==0){
+			break;
+			}
 			pCur=pCur->pNext;
-		while(!inF.eof()){
-			string s;
-			getline(inF,s,',');
-			pCur->No=s;
-			getline(inF,s,',');
-			pCur->ID=s;
-			getline(inF,s,',');
-			pCur->FName=s;
-			getline(inF,s,',');
-			pCur->LName=s;
-			getline(inF,s,',');
-			pCur->gender=s;
-			getline(inF,s,',');
-			pCur->date_of_birth=s;
-			getline(inF,s,',');
-			pCur->social_ID=s;
-			double t;
-			inF>>t;
-			pCur->midMark=t;
-			inF>>t;
-			pCur->fMark=t;
-			inF>>t;
-			pCur->oMark=t;
-			inF>>t;
-			pCur->toMark=t;
-			getline(inF,s);
-			pCur->pNext=new Student();
-			pCur=pCur->pNext;
-		}
-		pCur=NULL;
-		inF.close();
-	string ID="1";	
-	while(ID!="0"){
-	cout<<"Enter ID student to edit:";
-	cin>>ID;	
-	Student* pCur3=new Student();
-	pCur3=pHead;
-	while(pCur3!=NULL&&pCur3->No!=""){
-		if(ID==pCur3->ID){
-		cout<<pCur3->No<<","<<pCur3->ID<<","<<pCur3->FName<<" "<<pCur3->LName<<","<<pCur3->gender<<","<<pCur3->date_of_birth<<","<<pCur3->midMark<<","<<pCur3->fMark<<","<<pCur3->oMark<<","<<pCur3->toMark<<"\n";
-		cout<<"Course grades are not available: ";
-		if(pCur3->midMark==0) cout<<"=Middle Mark=\t";
-		if(pCur3->fMark==0) cout<<"=Final Mark=\t"; 
-		if(pCur3->oMark==0) cout<<"=Other Mark=\n"; 
-		if(pCur3->toMark!=0) cout<<"Scores are full!!\n";
-		cout<<"\tAre you edit course mark ?\n \t1.Middle Mark\t2.Final Mark\t3.Other Mark\t 4.Skip\n";
-		int choose;
-		string get;
-		cin>>choose;
-		while(choose==1||choose==2||choose==3){
-		switch(choose){
-			case 1: 
-			cout<<"Enter Middle Mark: ";
-			cin>>pCur3->midMark;
-			break;
-			case 2:
-			cout<<"Enter Final Mark: "; 
-			cin>>pCur3->fMark;
-			break;
-			case 3:
-			cout<<"Enter Other Mark: "; 
-			cin>>pCur3->oMark;	
-			break;
-			default: cout<<"\n"; break;			
-		}
-		if(pCur3->midMark!=0&&pCur3->fMark!=0&&pCur3->oMark!=0) {
-			pCur3->toMark=(pCur3->fMark+pCur3->midMark)/2.0+pCur3->oMark;
-		}
-		cout<<"Course grades are not available: ";
-		if(pCur3->midMark==0) cout<<"=Middle Mark=\t"; 
-		if(pCur3->fMark==0) cout<<"=Final Mark=\t"; 
-		if(pCur3->oMark==0) cout<<"=Other Mark=\n"; 
-		cout<<"\tAre you enter course mark ?\n \t1.Middle Mark\t2.Final Mark\t3.Other Mark\t 4.Skip\n";
-		cin>>choose;
-		}
-		}
-		pCur3=pCur3->pNext;
-		cout<<"press 'yes' to stop enter course mark, otherwise press another!\n";
-		string end;
-		cin>>end;
-		if(end=="yes") break;	
+			}
+			Semester* Cur_Semester=nullptr;
+			string Semester;
+			cout<<"Enter Semester: "; cin>>Semester;
+			Cur_Semester=pCur->semester;
+			while(Cur_Semester->semester_name.compare(Semester)!=0){
+				Cur_Semester=Cur_Semester->pNext;
+			}
+			Course* Cur_course=nullptr;
+			string Course;
+			cout<<"Enter Course: "; cin>>Course;
+			Cur_course=Cur_Semester->course;
+			while(Cur_course->course_name.compare(Course)!=0){
+				Cur_course=Cur_course->pNext;
+			}
+		Student* studentF=nullptr;
+		studentF=Cur_course->student;
+		while(studentF!=nullptr){
+			cout<<"ID: "<<studentF->student_ID<<" Name: "<<studentF->first_name<<" "<<studentF->last_name<<" \n";
+			cout<<"Enter Middle Score: "; cin>>studentF->midMark;
+			cout<<"Enter Final Score: "; cin>>studentF->fMark;
+			cout<<"Enter other Score: "; cin>>studentF->oMark;
+			studentF->toMark =(studentF->fMark+studentF->midMark)/2.0+studentF->oMark;
+			studentF=studentF->pNext;
+		}	
 	}
+	else if(option==2){
+		view_scoreboard_toCourse(list_year,year);
 	}
-	fstream enterF;
-	enterF.open(scoreboard,ios::out|ios::trunc);
-	Student* pCur1=new Student();
-	pCur1=pHead;
-	while(pCur1!=NULL&&pCur1->No!=""){
-	enterF<<pCur1->No<<","<<pCur1->ID<<","<<pCur1->FName<<","<<pCur1->LName<<","<<pCur1->gender<<","<<pCur1->date_of_birth<<","<<pCur1->social_ID<<","<<pCur1->midMark<<" "<<pCur1->fMark<<" "<<pCur1->oMark<<" "<<pCur1->toMark;	
-	if(pCur1->pNext!=NULL) enterF<<"\n";
-	pCur1=pCur1->pNext;
-	}
-	enterF.close();
+	cout<<"Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other. Quit=\n";
+	cin>>option;
 	}
 }
-}
-void view_scoreboard_toCourse(Student*&pHead){
-	string schoolYear;
-	cout<<"Enter School Year: ";
-	cin>>schoolYear;
-	string semester;
-	cout<<"Enter Semester: "; 
-	cin>>semester;
-	string course;
-	cout<<"Enter Course: ";
-	cin>>course;
-	string scoreboard="scoreboard/"+schoolYear+"/"+semester+"/"+course+".txt";
-	fstream inF;
-	inF.open(scoreboard,ios::in);
-	if(inF.fail()){
-		cout<<"Course does not exist!";
-	}
-	else{
-			pHead=new Student();		
-			Student* pCur=new Student();
-			pHead=pCur;
-			string s;
-			getline(inF,s,',');
-			pCur->No=s;
-			getline(inF,s,',');
-			pCur->ID=s;
-			getline(inF,s,',');
-			pCur->FName=s;
-			getline(inF,s,',');
-			pCur->LName=s;
-			getline(inF,s,',');
-			pCur->gender=s;
-			getline(inF,s,',');
-			pCur->date_of_birth=s;
-			getline(inF,s,',');
-			pCur->social_ID=s;
-			double t;
-			inF>>t;
-			pCur->midMark=t;
-			inF>>t;
-			pCur->fMark=t;
-			inF>>t;
-			pCur->oMark=t;
-			inF>>t;
-			pCur->toMark=t;
-			getline(inF,s);
-			pCur->pNext=new Student();
-			pHead=pCur;
-			pCur=pCur->pNext;
-		while(!inF.eof()){
-			string s;
-			getline(inF,s,',');
-			pCur->No=s;
-			getline(inF,s,',');
-			pCur->ID=s;
-			getline(inF,s,',');
-			pCur->FName=s;
-			getline(inF,s,',');
-			pCur->LName=s;
-			getline(inF,s,',');
-			pCur->gender=s;
-			getline(inF,s,',');
-			pCur->date_of_birth=s;
-			getline(inF,s,',');
-			pCur->social_ID=s;
-			double t;
-			inF>>t;
-			pCur->midMark=t;
-			inF>>t;
-			pCur->fMark=t;
-			inF>>t;
-			pCur->oMark=t;
-			inF>>t;
-			pCur->toMark=t;
-			getline(inF,s);
-			pCur->pNext=new Student();
-			pCur=pCur->pNext;
-		}
-		pCur=NULL;
-		while(pHead->pNext!=NULL&&pHead->No!=""){
-				cout<<pHead->No<<","<<pHead->ID<<","<<pHead->FName<<" "<<pHead->LName<<","<<pHead->gender<<","<<pHead->date_of_birth<<","<<pHead->midMark<<","<<pHead->fMark<<","<<pHead->oMark<<","<<pHead->toMark<<"\n";
-				pHead=pHead->pNext;
-				}	
-		}
-	}	
 int main(){
-	Student* head;
-	import_scoreboard_toCourse(head);
-	view_scoreboard_toCourse(head);
+	SchoolYear * head;
+	Class* clas;
+	load_input(head);
+	string year;
+	cin>>year;
+	import_scoreboard_toCourse(head,year);
+	view_scoreboard_toCourse(head,year);
 	return 0;
 }
+	
 	
