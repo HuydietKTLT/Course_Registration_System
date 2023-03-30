@@ -70,7 +70,11 @@ struct Student
 	Student* pNext;
 };
 
+
+//About loading data
 void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name);
+
+void load_student_InClass(Student*& pHead, string class_name);
 
 void load_course(Course*& pHead, string schoolYear_name, string semester_name);
 
@@ -78,16 +82,25 @@ void load_semester(Semester*& pHead, string schoolYear_name);
 
 void load_schoolYear(SchoolYear*& pHead);
 
-void load_input(SchoolYear*& pHead_schoolYear);
+void load_class(Class*& pHead);
+
+void load_input(SchoolYear*& pHead_schoolYear, Class*& pHead_class);
 
 void print_student_InCourse(Student* pHead, string schoolYear_name, string Semester_name, string Course_name);
+
+void print_student_InClass(Student* pHead, string class_name);
 
 void print_course(Course* pHead, string schoolYear_name, string Semester_name);
 
 void print_Semester(Semester* pHead_Semester, string Schoolyear_name);
 
-void print_output(SchoolYear* pHead_SchoolYear);
+void print_output(SchoolYear* pHead_SchoolYear, Class* pHead_class);
 
+void deallocated(SchoolYear*& pHead_schoolYear, Class*& pHead_class);
+
+
+
+//Working with courses.
 void printCourseToConsole(Course* pHead);
 
 void addCourse(Course*& pHead);
@@ -112,6 +125,8 @@ void update_session(Course*& pCur);
 
 void update_Course(Course*& pCur);
 
+
+//Find any course with specific schoolyear and semester.
 Course* Find_Course(SchoolYear* pHead);
 
 void add_Student_to_Course_By_File(Course*& pCur);
@@ -119,7 +134,4 @@ void add_Student_to_Course_By_File(Course*& pCur);
 void add_Student_to_Course_By_Console(Course*& pCur);
 
 void remove_Student_from_Course(Course*& pCur);
-
-void deallocated(SchoolYear*& pHead_schoolYear);
-
 #endif
