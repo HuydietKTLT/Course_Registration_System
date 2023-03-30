@@ -31,6 +31,10 @@ struct Student
 	string gender;
 	string date_of_birth;
 	string social_ID;
+	double fMark;
+	double midMark;
+	double oMark;
+	double toMark;
 	Student* pNext;
 };
 
@@ -128,6 +132,9 @@ void update_session(Course*& pCur);
 
 void update_Course(Course*& pCur);
 
+void import_scoreboard_toCourse(SchoolYear*& list_year, string year); // chỉ cần truyền năm và linked list của một năm là quản lý được điểm của năm đó 
+
+void view_scoreboard_toCourse(SchoolYear* &list_year,string year);
 
 //Find any course with specific schoolyear and semester.
 Course* Find_Course(SchoolYear* pHead);
