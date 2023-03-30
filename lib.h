@@ -22,25 +22,16 @@ typedef long int li;
 
 using namespace std;
 
-struct Class
-{
-	string class_name;
-	Student* student;
-	Class* pNext;
-};
 
-struct SchoolYear
+struct Student
 {
-	string year_name;
-	Semester* semester;
-	SchoolYear* pNext;
-};
-
-struct Semester
-{
-	string semester_name;
-	Course* course;
-	Semester* pNext;
+	string student_ID;
+	string first_name;
+	string last_name;
+	string gender;
+	string date_of_birth;
+	string social_ID;
+	Student* pNext;
 };
 
 struct Course
@@ -59,16 +50,28 @@ struct Course
 	Course* pNext;
 };
 
-struct Student
+
+struct Semester
 {
-	string student_ID;
-	string first_name;
-	string last_name;
-	string gender;
-	string date_of_birth;
-	string social_ID;
-	Student* pNext;
+	string semester_name;
+	Course* course;
+	Semester* pNext;
 };
+
+struct Class
+{
+	string class_name;
+	Student* student;
+	Class* pNext;
+};
+
+struct SchoolYear
+{
+	string year_name;
+	Semester* semester;
+	SchoolYear* pNext;
+};
+
 
 
 //About loading data
