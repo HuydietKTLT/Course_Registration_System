@@ -54,7 +54,11 @@ struct Course
 	string day_of_week;
 	string sessions;
 
+<<<<<<< Updated upstream
 	Student* student;
+=======
+	Student *student;
+>>>>>>> Stashed changes
 
 	Course* pNext;
 };
@@ -68,8 +72,10 @@ struct Student
 	string date_of_birth;
 	string social_ID;
 	Student* pNext;
+	Score score;
 };
 
+<<<<<<< Updated upstream
 void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name);
 
 void load_course(Course*& pHead, string schoolYear_name, string semester_name);
@@ -89,6 +95,14 @@ void print_Semester(Semester* pHead_Semester, string Schoolyear_name);
 void print_output(SchoolYear* pHead_SchoolYear);
 
 void deallocated(SchoolYear*& pHead_schoolYear);
+=======
+struct Score {
+	float total_mark;
+	float final_mark;
+	float mid_mark;
+	float other_mark;
+};
+>>>>>>> Stashed changes
 
 
 
