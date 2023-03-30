@@ -88,33 +88,38 @@ void print_Semester(Semester* pHead_Semester, string Schoolyear_name);
 
 void print_output(SchoolYear* pHead_SchoolYear);
 
-void deallocated(SchoolYear*& pHead_schoolYear);
+void printCourseToConsole(Course* pHead);
 
-
-
-//Use for adding a course.
 void addCourse(Course*& pHead);
 
-//Use for deleting a course.
-void deleteCourse(Course*& pHead);
+void deleteCourse(Course*& pHead, Course*& pDelete);
 
-void update_course_ID(Course*& cur);
-void update_course_name(Course*& cur);
-void update_class_name(Course*& cur);
-void update_number_credits(Course*& cur);
-void update_number_students(Course*& cur);
-void update_day_week(Course*& cur);
-void update_session(Course*& cur);
+void update_course_ID(Course*& pCur);
 
-void update(Course*& cur);
+void update_course_name(Course*& pCur);
 
-void updateCourse(Course*& pHead);
+void update_class_name(Course*& pCur);
 
-//Add student one by one from the console.
-void addStudentCourseWithConsole(Course* pHead);
+void update_teacher_name(Course*& pCur);
 
-void getStudentInfoFromFile(Student*& pHead);
+void update_number_credits(Course*& pCur);
 
-void removeStudent_Course(Student*& pHead);
+void update_number_students(Course*& pCur);
+
+void update_day_week(Course*& pCur);
+
+void update_session(Course*& pCur);
+
+void update_Course(Course*& pCur);
+
+Course* Find_Course(SchoolYear* pHead);
+
+void add_Student_to_Course_By_File(Course*& pCur);
+
+void add_Student_to_Course_By_Console(Course*& pCur);
+
+void remove_Student_from_Course(Course*& pCur);
+
+void deallocated(SchoolYear*& pHead_schoolYear);
 
 #endif
