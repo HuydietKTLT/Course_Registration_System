@@ -26,7 +26,7 @@ void addStudent(string schoolYear,student &st){
 		check.open(text,ios::in);
 		if(!check.fail()){
 		int choose;	
-		cout<<"\n\t\t\t============\n\t=Get from your file (0)____Enter from the keyboard (1) =\n\t";
+		cout<<"\n\t\t\t=========\n\t=Get from your file (0)____Enter from the keyboard (1) =\n\t";
 		cin>>choose;
 		if(choose){
 		cout<<"ID: "; cin>>st.ID;
