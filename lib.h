@@ -135,8 +135,6 @@ struct Score {
 void deallocated(SchoolYear*& pHead_schoolYear, Class*& pHead_class);
 >>>>>>> 6d9a762884200ae5cfc04bb6f155ee886da889c7
 
-
-
 //Working with courses.
 void printCourseToConsole(Course* pHead);
 
