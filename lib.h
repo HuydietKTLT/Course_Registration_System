@@ -4,7 +4,6 @@
 #ifndef _ADDCOURSE_H_
 #define _ADDCOURSE_H_
 
-//Thanh niên cái 
 
 #include <iostream>
 #include <string>
@@ -15,12 +14,18 @@
 #include <direct.h>
 #include <conio.h>
 
-//////////////////
 
 typedef long long ll;
 typedef long int li;
 
 using namespace std;
+
+struct Score {
+	float total_mark;
+	float final_mark;
+	float mid_mark;
+	float other_mark;
+};
 
 
 struct Student
@@ -31,10 +36,8 @@ struct Student
 	string gender;
 	string date_of_birth;
 	string social_ID;
-	double fMark;
-	double midMark;
-	double oMark;
-	double toMark;
+
+	Score score;
 	Student* pNext;
 };
 
@@ -49,31 +52,16 @@ struct Course
 	string day_of_week;
 	string sessions;
 
-<<<<<<< Updated upstream
-	Student* student;
-=======
-	Student *student;
->>>>>>> Stashed changes
 
+	Student* student;
 	Course* pNext;
 };
 
 
+
+
 struct Semester
 {
-<<<<<<< HEAD
-	string student_ID;
-	string first_name;
-	string last_name;
-	string gender;
-	string date_of_birth;
-	string social_ID;
-	Student* pNext;
-	Score score;
-};
-
-<<<<<<< Updated upstream
-=======
 	string semester_name;
 	Course* course;
 	Semester* pNext;
@@ -96,7 +84,6 @@ struct SchoolYear
 
 
 //About loading data
->>>>>>> 6d9a762884200ae5cfc04bb6f155ee886da889c7
 void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name);
 
 void load_student_InClass(Student*& pHead, string class_name);
@@ -121,19 +108,8 @@ void print_Semester(Semester* pHead_Semester, string Schoolyear_name);
 
 void print_output(SchoolYear* pHead_SchoolYear, Class* pHead_class);
 
-<<<<<<< HEAD
-void deallocated(SchoolYear*& pHead_schoolYear);
-=======
-struct Score {
-	float total_mark;
-	float final_mark;
-	float mid_mark;
-	float other_mark;
-};
->>>>>>> Stashed changes
-=======
+
 void deallocated(SchoolYear*& pHead_schoolYear, Class*& pHead_class);
->>>>>>> 6d9a762884200ae5cfc04bb6f155ee886da889c7
 
 //Working with courses.
 void printCourseToConsole(Course* pHead);

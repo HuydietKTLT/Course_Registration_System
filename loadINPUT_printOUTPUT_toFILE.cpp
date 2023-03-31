@@ -94,6 +94,7 @@ void load_course(Course*& pHead, string schoolYear_name, string semester_name)
 			pCur->pNext = new Course;
 			pCur = pCur->pNext;
 		}
+
 		getline(file, pCur->id, ',');
 		getline(file, pCur->course_name, ',');
 		getline(file, pCur->class_name, ',');
