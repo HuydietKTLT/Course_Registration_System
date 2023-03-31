@@ -11,21 +11,6 @@ void load_student_InCourse(Student*& pHead, string schoolYear_name, string semes
 	Student* pCur = nullptr;
 	pHead = new Student();
 	pCur = pHead;
-	string get_studentID;
-	getline(file, get_studentID, ',');
-	pCur->student_ID = std::stoi(get_studentID);
-	getline(file, pCur->first_name, ',');
-	getline(file, pCur->last_name,',');
-	getline(file,pCur->gender,',');
-	getline(file,pCur->date_of_birth,',');
-	getline(file,get_studentID);
-	if(!file.eof()){
-		pCur->pNext = new Student();	
-		pCur = pCur->pNext;
-		} 
-	else{
-		pCur->pNext =nullptr;	
-		}
 	while (!file.eof())
 	{
 		string get_studentID;
@@ -51,26 +36,6 @@ void load_course(Course*& pHead, string schoolYear_name, string semester_name)
 	pHead=new Course();
 	Course* pCur = nullptr;
 	pCur=pHead;
-	getline(file,pCur->id, ',');
-	getline(file, pCur->course_name, ',');
-	getline(file, pCur->class_name, ',');
-	getline(file, pCur->teacher_name, ',');
-	string get_numberCredit;
-	getline(file, get_numberCredit, ',');
-	pCur->number_credits = std::stoi(get_numberCredit);
-	string get_numberStudent;
-	getline(file, get_numberStudent, ',');
-	pCur->number_students = std::stoi(get_numberStudent);
-	getline(file, pCur->day_of_week, ',');
-	getline(file, pCur->sessions, ',');
-	getline(file, get_numberCredit);
-	if(!file.eof()){
-		pCur->pNext = new Course();	
-		pCur = pCur->pNext;
-		} 
-	else{
-		pCur->pNext =nullptr;	
-		}
 	while (!file.eof())
 	{
 		getline(file,pCur->id, ',');
@@ -108,17 +73,6 @@ void load_semester(Semester*& pHead, string schoolYear_name){
 	pHead=new Semester();
 	pCur=pHead;
 	getline(file,pCur->semester_name,',');
-	string tmp;
-	getline(file,tmp);
-	if (!file.eof())
-	{
-		pCur->pNext = new Semester();	
-		pCur=pCur->pNext; 	
-		}
-	else
-		{
-		pCur->pNext=nullptr;
-		}
 	while (!file.eof())
 	{
 		getline(file,pCur->semester_name,',');
