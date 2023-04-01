@@ -46,50 +46,40 @@ void printCourseToConsole(Course* pHead)
 
 void addCourse(Course*& pHead)
 {
-	Course* pCur;
-	pCur = pHead;
-
+	Course* pCur = pHead;
 	while (pCur->pNext != nullptr)
-	{
 		pCur = pCur->pNext;
-	}
 	pCur->pNext = new Course;
 	pCur = pCur->pNext;
 
-	cout << "Enter Course ID";
+	cout << "Enter Course ID: ";
 	cin >> pCur->id;
-	cout << endl;
 
-	cout << "Enter Course Name";
+	cout << "Enter Course Name: ";
 	cin >> pCur->course_name;
-	cout << endl;
 
-	cout << "Enter Class Name";
+	cout << "Enter Class Name: ";
 	cin >> pCur->class_name;
-	cout << endl;
 
-	cout << "Enter Teacher Name";
+	cout << "Enter Teacher Name: ";
 	cin >> pCur->teacher_name;
-	cout << endl;
 
 	cout << "Enter Number of credits: ";
 	cin >> pCur->number_credits;
-	cout << endl;
 
 	cout << "Enter Number of students: ";
 	cin >> pCur->number_students;
-	cout << endl;
 
-	cout << "    Enter day of week" << endl;
-	cout << "MON / TUE / WED / THU / FRI / SAT ";
+	cout << "Enter day of week: " << endl;
+	cout << "MON / TUE / WED / THU / FRI / SAT:  ";
 	cin >> pCur->day_of_week;
-	cout << endl;
 
-
-	cout << "    Enter session" << endl;
-	cout << "S1(07:30) -- S2 (09:30) -- S3(13:30) -- S4(15:30)";
+	cout << "Enter session" << endl;
+	cout << "S1(07:30) -- S2 (09:30) -- S3(13:30) -- S4(15:30): ";
 	cin >> pCur->sessions;
 	pCur->pNext = nullptr;
+
+	pCur->student = nullptr;
 }
 
 //The pDelete is surely found.
@@ -267,6 +257,40 @@ void update_Course(Course*& pCur)
 	}
 }
 
+Semester* Find_Semester(SchoolYear* pHead)
+{
+	string get_schoolyear;
+	cout << "Enter shool Year: ";
+	cin >> get_schoolyear;
+	while (pHead != nullptr && pHead->year_name != get_schoolyear)
+	{
+		pHead = pHead->pNext;
+	}
+	if (pHead == nullptr)
+	{
+		cout << "There is no schoolyear matching with your typing!!!" << endl;
+		return NULL;
+	}
+
+
+	Semester* pCur_semester = pHead->semester;
+	string get_semester;
+	cout << "Enter semester: ";
+	cin >> get_semester;
+
+	while (pCur_semester != nullptr && pCur_semester->semester_name != get_semester)
+	{
+		pCur_semester = pCur_semester->pNext;
+	}
+	if (pCur_semester == nullptr)
+	{
+		cout << "There is no semester matching with your typing!!!" << endl;
+		return NULL;
+	}
+	else
+		return pCur_semester;
+}
+
 //Make sure that at the end of the code, we will find the Course with specific Schoolyear, semester and course. If not found, the console will show it out.
 Course* Find_Course(SchoolYear* pHead)
 {
@@ -283,6 +307,7 @@ Course* Find_Course(SchoolYear* pHead)
 		cout << "There is no schoolyear matching with your typing!!!" << endl;
 		return NULL;
 	}
+
 	Semester* pCur_Semester = pHead->semester;
 	//These code is used for traversing the linked list of Semester, to found the specific Semester.
 	string get_semester;
@@ -290,39 +315,36 @@ Course* Find_Course(SchoolYear* pHead)
 	cin >> get_semester;
 
 	while (pCur_Semester != nullptr && pCur_Semester->semester_name != get_semester)
-	{
 		pCur_Semester = pCur_Semester->pNext;
-	}
+
 	if (pCur_Semester == nullptr)
 	{
 		cout << "There is no semester matching with your typing !!!" << endl;
 		return NULL;
 	}
+
 	Course* pCur_Course = pCur_Semester->course;
 	cout << "Enter Course ID: ";
 	string get_course_ID;
 	cin >> get_course_ID;
 
-	while (pCur_Course != nullptr && pCur_Course->course_name == get_course_ID)
+
+	while (pCur_Course != nullptr && pCur_Course->id != get_course_ID)
 	{
 		pCur_Course = pCur_Course->pNext;
 	}
-
 	if (pCur_Course == nullptr)
 	{
 		cout << "There is no course ID matching with your typing !!!" << endl;
 		return NULL;
 	}
-
 	//To make sure that the pCur_course is not a null pointer.
 	if (pCur_Course != nullptr)
 		return pCur_Course;
 }
 
-void add_Student_to_Course_By_File(Course*& pCur)
+void add_Student_to_Course_By_File(Student*& pHead)
 {
-	Student* pHead_Student = pCur->student;
-
 	ifstream file;
 	//The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be addedd
 	//The following next lines are the students information.
@@ -332,80 +354,111 @@ void add_Student_to_Course_By_File(Course*& pCur)
 		cout << "Khong mo duoc file addStudentToCourse.txt" << endl;
 		return;
 	}
+	Student* pCur;
+	if (pHead == nullptr)
+		pCur = nullptr;
+	else
+		pCur = pHead;
 
-	Student* pTail = pHead_Student;
-	while (pTail->pNext != nullptr)
-		pTail = pTail->pNext;
+	while (pCur != nullptr && pCur->pNext != nullptr)
+		pCur = pCur->pNext;
+
 	while (!file.eof())
 	{
-		pTail->pNext = new Student;
+		if (pCur == nullptr)
+			pCur = new Student;
+		else
+		{
+			pCur->pNext = new Student;
+			pCur = pCur->pNext;
+		}
+		getline(file, pCur->student_ID, ',');
+		getline(file, pCur->first_name, ',');
+		getline(file, pCur->last_name, ',');
+		getline(file, pCur->gender, ',');
+		getline(file, pCur->date_of_birth, ',');
+		getline(file, pCur->social_ID, ',');
 
-		pTail = pTail->pNext;
+		string temp;
+		getline(file, temp, ',');
+		pCur->score.total_mark = stoi(temp);
 
-		getline(file, pTail->student_ID, ',');
-		getline(file, pTail->first_name, ',');
-		getline(file, pTail->last_name, ',');
-		getline(file, pTail->gender, ',');
-		getline(file, pTail->date_of_birth, ',');
-		getline(file, pTail->social_ID, '\n');
+		getline(file, temp, ',');
+		pCur->score.final_mark = stoi(temp);
 
-		pTail->pNext = nullptr;
+		getline(file, temp, ',');
+		pCur->score.mid_mark = stoi(temp);
+
+		getline(file, temp, '\n');
+		pCur->score.other_mark = stoi(temp);
+
+		pCur->pNext = nullptr;
 	}
 	file.close();
-
 }
 
-void add_Student_to_Course_By_Console(Course* &pCur)
+void add_Student_to_Course_By_Console(Student*& pHead)
 {
-	Student* pHead_Student = pCur->student;
+	Student* pCur = pHead;
+	while (pCur->pNext != nullptr)
+		pCur = pCur->pNext;
 
-	while (pHead_Student->pNext != nullptr)
-		pHead_Student = pHead_Student->pNext;
-
-	pHead_Student->pNext = new Student;
-	pHead_Student = pHead_Student->pNext;
+	pCur->pNext = new Student;
+	pCur = pCur->pNext;
 
 	cout << "Enter new student ID: ";
-	cin >> pHead_Student->student_ID;
+	cin >> pCur->student_ID;
 
 	cout << "Enter new student first name: ";
-	cin >> pHead_Student->first_name;
+	cin >> pCur->first_name;
 
 	cout << "Enter new student last name: ";
-	cin >> pHead_Student->last_name;
+	cin >> pCur->last_name;
 
 	cout << "Enter new student gender: ";
-	cin >> pHead_Student->gender;
+	cin >> pCur->gender;
 
 	cout << "Enter new student date of birth: ";
-	cin >> pHead_Student->date_of_birth;
+	cin >> pCur->date_of_birth;
 
 	cout << "Enter new student social ID: ";
-	cin >> pHead_Student->social_ID;
+	cin >> pCur->social_ID;
 
-	pHead_Student->pNext = nullptr;
+	cout << "Enter new student total mark";
+	cin >> pCur->score.total_mark;
+
+	cout << "Enter new student final mark";
+	cin >> pCur->score.final_mark;
+
+	cout << "Enter new student mid mark";
+	cin >> pCur->score.mid_mark;
+
+	cout << "Enter new student other mark";
+	cin >> pCur->score.other_mark;
+
+	pCur->pNext = nullptr;
 }
 
-void remove_Student_from_Course(Course*& pCur)
+void remove_Student_from_Course(Student*& pHead)
 {
-	Student* pHead_Student = pCur->student;
-	Student* pPrevCur_Student = pCur->student;
+	Student* pCur = pHead;;
+	Student* pPrevCur = pHead;
 	string get_student_ID;
 	cout << "Enter student ID: ";
 	cin >> get_student_ID;
-	while (pHead_Student != nullptr && pHead_Student->student_ID != get_student_ID)
+	while (pCur != nullptr && pCur->student_ID != get_student_ID)
 	{
-		pPrevCur_Student = pHead_Student;
-		pHead_Student = pHead_Student->pNext;
+		pPrevCur = pCur;
+		pCur = pCur->pNext;
 	}
 
-	if (pHead_Student != nullptr)
+	if (pCur != nullptr)
 	{
-		pPrevCur_Student->pNext = pHead_Student->pNext;
-		delete pHead_Student;
+		pPrevCur->pNext = pCur->pNext;
+		delete pCur;
 		cout << "Delete Student from Course successfully!!!" << endl;
-		pHead_Student = nullptr;
-		pPrevCur_Student = nullptr;
+		pCur = nullptr;
+		pPrevCur = nullptr;
 		return;
 	}
 	cout << "There is no student ID matching with your typing !!!" << endl;
