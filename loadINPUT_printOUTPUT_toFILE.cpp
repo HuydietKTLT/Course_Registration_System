@@ -28,7 +28,24 @@ void load_student_InCourse(Student*& pHead, string schoolYear_name, string semes
 		getline(file, pCur->last_name, ',');
 		getline(file, pCur->gender, ',');
 		getline(file, pCur->date_of_birth, ',');
-		getline(file, pCur->social_ID, '\n');
+		getline(file, pCur->social_ID, ',');
+
+		string temp;
+		getline(file, temp,',');
+		pCur->score.total_mark = stof(temp);
+
+		string temp1;
+		getline(file, temp1, ',');
+		pCur->score.final_mark = stof(temp);
+		
+		string temp2;
+		getline(file, temp2, ',');
+		pCur->score.mid_mark = stof(temp);
+
+		string temp3;
+		getline(file, temp3, '\n');
+		pCur->score.other_mark = stof(temp);
+
 
 		pCur->pNext = nullptr;
 	}
@@ -69,7 +86,6 @@ void load_student_InClass(Student*& pHead, string class_name)
 	}
 	file.close();
 }
-
 
 void load_course(Course*& pHead, string schoolYear_name, string semester_name)
 {
@@ -246,7 +262,7 @@ void load_input(SchoolYear*& pHead_schoolYear, Class*& pHead_class)
 		pCur_class = pCur_class->pNext;
 	}
 
-	//PRINT SOMETHING
+	//PRINT SOMETHING ON CONSOLE
 	/*SchoolYear* pTemp1 = pHead_schoolYear;
 	while (pHead_schoolYear != nullptr)
 	{
@@ -269,7 +285,9 @@ void load_input(SchoolYear*& pHead_schoolYear, Class*& pHead_class)
 					cout << endl;
 					cout << pHead_schoolYear->semester->course->student->student_ID << " " << pHead_schoolYear->semester->course->student->first_name << " "
 						<< pHead_schoolYear->semester->course->student->last_name << " " << pHead_schoolYear->semester->course->student->gender << " "
-						<< pHead_schoolYear->semester->course->student->date_of_birth << " " << pHead_schoolYear->semester->course->student->social_ID << endl;
+						<< pHead_schoolYear->semester->course->student->date_of_birth << " " << pHead_schoolYear->semester->course->student->social_ID << " "
+						<< pHead_schoolYear->semester->course->student->score.total_mark << " " << pHead_schoolYear->semester->course->student->score.final_mark << " "
+						<< pHead_schoolYear->semester->course->student->score.mid_mark << " " << pHead_schoolYear->semester->course->student->score.other_mark << endl;
 					cout << endl;
 
 					pHead_schoolYear->semester->course->student = pHead_schoolYear->semester->course->student->pNext;
@@ -281,6 +299,7 @@ void load_input(SchoolYear*& pHead_schoolYear, Class*& pHead_class)
 		pHead_schoolYear = pHead_schoolYear->pNext;
 	}
 	pHead_schoolYear = pTemp1;
+
 
 	Class* pTemp2 = pHead_class;
 	while (pHead_class != nullptr)
@@ -333,7 +352,11 @@ void print_student_InCourse(Student* pHead, string schoolYear_name, string semes
 			<< pHead->last_name << ","
 			<< pHead->gender << ","
 			<< pHead->date_of_birth << ","
-			<< pHead->social_ID;
+			<< pHead->social_ID << ","
+			<< pHead->score.total_mark << ","
+			<< pHead->score.final_mark << ","
+			<< pHead->score.mid_mark << ","
+			<< pHead->score.other_mark;
 		if (pHead->pNext != nullptr)
 			file << '\n';
 		pHead = pHead->pNext;
@@ -380,7 +403,6 @@ void print_Semester(Semester* pHead_Semester, string schoolYear_name)
 
 void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 {
-
 	////-------------------------------------------PRINTTT TO FILE------------------------------------------
 	//Print schoolYear to schoolYearList.txt
 
@@ -394,9 +416,9 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 		else
 			file << pHead_schoolYear->year_name;
 		pHead_schoolYear = pHead_schoolYear->pNext;
-
 	}
 	file.close();
+
 	/*pHead_schoolYear = pTemp1;
 	while (pHead_schoolYear != nullptr)
 	{
@@ -491,7 +513,10 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 					cout << endl;
 					cout << pHead1->semester->course->student->student_ID << " " << pHead1->semester->course->student->first_name << " "
 						<< pHead1->semester->course->student->last_name << " " << pHead1->semester->course->student->gender << " "
-						<< pHead1->semester->course->student->date_of_birth << " " << pHead1->semester->course->student->social_ID << " " << endl;
+						<< pHead1->semester->course->student->date_of_birth << " " << pHead1->semester->course->student->social_ID << " "
+						<< pHead1->semester->course->student->score.total_mark << " " << pHead1->semester->course->student->score.final_mark << " "
+						<< pHead1->semester->course->student->score.mid_mark << " " << pHead1->semester->course->student->score.other_mark << endl;
+
 					pHead1->semester->course->student = pHead1->semester->course->student->pNext;
 				}
 				cout << endl;
