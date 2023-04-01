@@ -7,7 +7,7 @@
 using namespace std;
 struct Student {
 	string No;
-	int student_ID;
+	string student_ID;
 	string first_name;
 	string last_name;
 	string gender;
