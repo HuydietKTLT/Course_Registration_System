@@ -13,10 +13,11 @@ void load_student_InCourse(Student*& pHead, string schoolYear_name, string semes
 	pCur = pHead;
 	while (!file.eof())
 	{
+		string tmp;
 		getline(file, pCur->student_ID , ',');
 		getline(file, pCur->first_name, ',');
 		getline(file, pCur->last_name,',');
-		getline(file,get_studentID);
+		getline(file,tmp);
 		if(!file.eof()){
 		pCur->pNext = new Student();	
 		pCur = pCur->pNext;
