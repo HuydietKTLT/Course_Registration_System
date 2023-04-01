@@ -34,18 +34,14 @@ void load_student_InCourse(Student*& pHead, string schoolYear_name, string semes
 		getline(file, temp,',');
 		pCur->score.total_mark = stof(temp);
 
-		string temp1;
-		getline(file, temp1, ',');
+		getline(file, temp, ',');
 		pCur->score.final_mark = stof(temp);
 		
-		string temp2;
-		getline(file, temp2, ',');
+		getline(file, temp, ',');
 		pCur->score.mid_mark = stof(temp);
 
-		string temp3;
-		getline(file, temp3, '\n');
+		getline(file, temp, '\n');
 		pCur->score.other_mark = stof(temp);
-
 
 		pCur->pNext = nullptr;
 	}
@@ -406,7 +402,7 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 	////-------------------------------------------PRINTTT TO FILE------------------------------------------
 	//Print schoolYear to schoolYearList.txt
 
-	ofstream file;
+	/*ofstream file;
 	file.open("schoolYearlist.txt");
 	SchoolYear* pTemp1 = pHead_schoolYear;
 	while (pHead_schoolYear != nullptr)
@@ -418,38 +414,6 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 		pHead_schoolYear = pHead_schoolYear->pNext;
 	}
 	file.close();
-
-	/*pHead_schoolYear = pTemp1;
-	while (pHead_schoolYear != nullptr)
-	{
-		Semester* pTemp2 = pHead_schoolYear->semester;
-		while (pHead_schoolYear->semester != nullptr)
-		{
-			print_Semester(pHead_schoolYear->semester, pHead_schoolYear->year_name);
-			Course* pTemp3 = pHead_schoolYear->semester->course;
-			while (pHead_schoolYear->semester->course != nullptr)
-			{
-				Student* pTemp4 = pHead_schoolYear->semester->course->student;
-				print_course(pHead_schoolYear->semester->course, pHead_schoolYear->year_name, pHead_schoolYear->semester->semester_name);
-				while (pHead_schoolYear->semester->course->student != nullptr)
-				{
-					print_student_InCourse(pHead_schoolYear->semester->course->student, pHead_schoolYear->year_name, pHead_schoolYear->semester->semester_name, pHead_schoolYear->semester->course->id);
-					pHead_schoolYear->semester->course->student = pHead_schoolYear->semester->course->student->pNext;
-				}
-				pHead_schoolYear->semester->course->student = pTemp4;
-
-				pHead_schoolYear->semester->course = pHead_schoolYear->semester->course->pNext;
-			}
-			pHead_schoolYear->semester->course = pTemp3;
-
-
-			pHead_schoolYear->semester = pHead_schoolYear->semester->pNext;
-		}
-		pHead_schoolYear->semester = pTemp2;
-
-
-		pHead_schoolYear = pHead_schoolYear->pNext;
-	}*/
 
 	pHead_schoolYear = pTemp1;
 	while (pHead_schoolYear != nullptr)
@@ -469,12 +433,11 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 			pCur_semester = pCur_semester->pNext;
 		}
 		pHead_schoolYear = pHead_schoolYear->pNext;
-	}
-	/////////PRINT CLASS AND STUDENT IN CLASS TO FILE.
+	}*/
 
 
 	////NO BUG IN THESE LINES OF CODE.
-	file.open("classList.txt");
+	/*file.open("classList.txt");
 	Class* pTemp9 = pHead_class;
 	while (pHead_class != nullptr)
 	{
@@ -487,16 +450,14 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 
 	pHead_class = pTemp9;
 	while (pHead_class != nullptr)
-	{
-	//	//Print the elements of class.
-		print_student_InClass(pHead_class->student, pHead_class->class_name);
+	{*/
+		//Print the elements of class.
+		/*print_student_InClass(pHead_class->student, pHead_class->class_name);
 		pHead_class = pHead_class->pNext;
-	}
-
-
+	}*/
 
 	///---------------------------------------------------PRINT TO CONSOLE---------------------------------------------
-	/*SchoolYear* pHead1 = pHead_schoolYear;
+	SchoolYear* pHead1 = pHead_schoolYear;
 	while (pHead1 != nullptr)
 	{
 		cout << pHead1->year_name << " ";
@@ -549,7 +510,7 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 		}
 		cout << endl;
 		pHead2 = pHead2->pNext;
-		}*/
+		}
 }
 
 void deallocated(SchoolYear*& pHead_schoolYear, Class*& pHead_class)
