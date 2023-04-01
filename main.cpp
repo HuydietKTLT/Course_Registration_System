@@ -10,11 +10,7 @@ int main()
 	cout << "Enter when done!!: ";
 	cin >> s;
 	
-
-
-	
 	print_output(pHead_schoolYear, pHead_class);
-
 	deallocated(pHead_schoolYear, pHead_class);
 
 	return 0;

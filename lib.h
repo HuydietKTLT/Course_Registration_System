@@ -52,12 +52,9 @@ struct Course
 	string day_of_week;
 	string sessions;
 
-
 	Student* student;
 	Course* pNext;
 };
-
-
 
 
 struct Semester
