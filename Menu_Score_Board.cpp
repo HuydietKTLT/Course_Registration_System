@@ -1,4 +1,4 @@
-#include "imScore.h"
+#include "menuScore.h"
 void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name)
 {
 	ifstream file;
