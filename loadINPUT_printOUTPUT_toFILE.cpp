@@ -31,12 +31,12 @@ void load_student_InCourse(Student*& pHead, string schoolYear_name, string semes
 		getline(file, pCur->social_ID, ',');
 
 		string temp;
-		getline(file, temp,',');
+		getline(file, temp, ',');
 		pCur->score.total_mark = stof(temp);
 
 		getline(file, temp, ',');
 		pCur->score.final_mark = stof(temp);
-		
+
 		getline(file, temp, ',');
 		pCur->score.mid_mark = stof(temp);
 
@@ -434,8 +434,6 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 		}
 		pHead_schoolYear = pHead_schoolYear->pNext;
 	}*/
-
-
 	////NO BUG IN THESE LINES OF CODE.
 	/*file.open("classList.txt");
 	Class* pTemp9 = pHead_class;
@@ -451,66 +449,68 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 	pHead_class = pTemp9;
 	while (pHead_class != nullptr)
 	{*/
-		//Print the elements of class.
-		/*print_student_InClass(pHead_class->student, pHead_class->class_name);
-		pHead_class = pHead_class->pNext;
-	}*/
+	//Print the elements of class.
+	/*print_student_InClass(pHead_class->student, pHead_class->class_name);
+	pHead_class = pHead_class->pNext;
+}*/
 
-	///---------------------------------------------------PRINT TO CONSOLE---------------------------------------------
+///---------------------------------------------------PRINT TO CONSOLE---------------------------------------------
 	SchoolYear* pHead1 = pHead_schoolYear;
 	while (pHead1 != nullptr)
 	{
 		cout << pHead1->year_name << " ";
-		while (pHead1->semester != nullptr)
+		Semester* pHead2 = pHead1->semester;
+		while (pHead2 != nullptr)
 		{
-			cout << pHead1->semester->semester_name << " ";
-
-			while (pHead1->semester->course != nullptr)
+			cout << pHead2->semester_name << " ";
+			Course* pHead3 = pHead2->course;
+			while (pHead3!= nullptr)
 			{
-				cout << pHead1->semester->course->course_name << " ";
-
-				while (pHead1->semester->course->student != nullptr)
+				cout << pHead3->course_name << " ";
+				Student* pHead4 = pHead3->student;
+				/*if (pHead4 == nullptr)
+					continue;*/
+				while (pHead4 != nullptr)
 				{
 					cout << endl;
-					cout << pHead1->semester->course->student->student_ID << " " << pHead1->semester->course->student->first_name << " "
-						<< pHead1->semester->course->student->last_name << " " << pHead1->semester->course->student->gender << " "
-						<< pHead1->semester->course->student->date_of_birth << " " << pHead1->semester->course->student->social_ID << " "
-						<< pHead1->semester->course->student->score.total_mark << " " << pHead1->semester->course->student->score.final_mark << " "
-						<< pHead1->semester->course->student->score.mid_mark << " " << pHead1->semester->course->student->score.other_mark << endl;
-
-					pHead1->semester->course->student = pHead1->semester->course->student->pNext;
+					cout << pHead4->student_ID << " " << pHead4->first_name << " "
+						<< pHead4->last_name << " " << pHead4->gender << " "
+						<< pHead4->date_of_birth << " " << pHead4->social_ID << " "
+						<< pHead4->score.total_mark << " " << pHead4->score.final_mark << " "
+						<< pHead4->score.mid_mark << " " << pHead4->score.other_mark << endl;
+					pHead4 = pHead4->pNext;
 				}
 				cout << endl;
-				pHead1->semester->course = pHead1->semester->course->pNext;
+				pHead3 = pHead3->pNext;
 			}
 			cout << endl;
-			pHead1->semester = pHead1->semester->pNext;
+			pHead2 = pHead2->pNext;
 		}
 		cout << endl;
 		pHead1 = pHead1->pNext;
 	}
-
 
 	Class* pHead2 = pHead_class;
 	while (pHead2 != nullptr)
 	{
 		cout << endl;
 		cout << pHead2->class_name << " ";
-		while (pHead2->student != nullptr)
+		Student* pHead3 = pHead2->student;
+		while (pHead3 != nullptr)
 		{
 			cout << endl;
-			cout << pHead2->student->student_ID << " "
-				<< pHead2->student->first_name << " "
-				<< pHead2->student->last_name << " "
-				<< pHead2->student->gender << " "
-				<< pHead2->student->date_of_birth << " "
-				<< pHead2->student->social_ID << endl;
+			cout << pHead3->student_ID << " "
+				<< pHead3->first_name << " "
+				<< pHead3->last_name << " "
+				<< pHead3->gender << " "
+				<< pHead3->date_of_birth << " "
+				<< pHead3->social_ID << endl;
 
-			pHead2->student = pHead2->student->pNext;
+			pHead3 = pHead3->pNext;
 		}
 		cout << endl;
 		pHead2 = pHead2->pNext;
-		}
+	}
 }
 
 void deallocated(SchoolYear*& pHead_schoolYear, Class*& pHead_class)
