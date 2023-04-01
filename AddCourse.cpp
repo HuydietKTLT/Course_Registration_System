@@ -1,6 +1,6 @@
 #include "lib.h"
 
-void printCourseToConsole(SchoolYear* pHead_schoolYear)
+void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 {
 	//print to Console the Courses which have the format:
 	//Course_ID---Course_name---Class_name---Teacher_name---Number_of_Credits---Number_of_maximum_students---Day_of_week---Sessions
@@ -14,39 +14,54 @@ void printCourseToConsole(SchoolYear* pHead_schoolYear)
 		{
 			cout << pHead2->semester_name << " " << endl;
 			cout
+				<< left
 				<< setw(15)
-				<< "Course ID"
-				<< setw(20)
-				<< "Course Name"
-				<< setw(20)
-				<< "Class Name"
-				<< setw(20)
-				<< "Teacher Name"
-				<< setw(10)
-				<< "Number of credits"
-				<< setw(10)
-				<< "Number of maximum students"
-				<< setw(10)
-				<< "Day of the week"
+				<< "Course ID| "
+				<< left
 				<< setw(15)
-				<< "Session" << endl;
+				<< "Course Name| "
+				<< left
+				<< setw(20)
+				<< "Class Name|"
+				<< left
+				<< setw(15)
+				<< "Teacher Name| "
+				<< left
+				<< setw(20)
+				<< "Number of credits| "
+				<< left
+				<< setw(27)
+				<< "Number of maximum students| "
+				<< left
+				<< setw(17)
+				<< "Day of the week| "
+				<< setw(15)
+				<< "Session|";
+			cout << endl;
 			Course* pHead3 = pHead2->course;
 			while (pHead3 != nullptr)
 			{
 				cout
+					<< left
 					<< setw(15)
 					<< pHead3->id
-					<< setw(20)
+					<< left
+					<< setw(15)
 					<< pHead3->course_name
+					<< left
 					<< setw(20)
 					<< pHead3->class_name
-					<< setw(20)
+					<< left
+					<< setw(15)
 					<< pHead3->teacher_name
-					<< setw(10)
+					<< left
+					<< setw(20)
 					<< pHead3->number_credits
-					<< setw(10)
+					<< left
+					<< setw(27)
 					<< pHead3->number_students
-					<< setw(10)
+					<< left
+					<< setw(17)
 					<< pHead3->day_of_week
 					<< setw(15)
 					<< pHead3->sessions;
