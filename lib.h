@@ -107,7 +107,7 @@ void print_output(SchoolYear* pHead_SchoolYear, Class* pHead_class);
 void deallocated(SchoolYear*& pHead_schoolYear, Class*& pHead_class);
 
 //Working with courses.
-void printCourseToConsole(Course* pHead);
+void print_All_CourseToConsole(SchoolYear* pHead_schoolYear);
 
 void addCourse(Course*& pHead);
 
