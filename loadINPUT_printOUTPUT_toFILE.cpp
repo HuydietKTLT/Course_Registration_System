@@ -468,8 +468,6 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 			{
 				cout << pHead3->course_name << " ";
 				Student* pHead4 = pHead3->student;
-				/*if (pHead4 == nullptr)
-					continue;*/
 				while (pHead4 != nullptr)
 				{
 					cout << endl;

@@ -1,47 +1,65 @@
 #include "lib.h"
 
-void printCourseToConsole(Course* pHead)
+void printCourseToConsole(SchoolYear* pHead_schoolYear)
 {
 	//print to Console the Courses which have the format:
 	//Course_ID---Course_name---Class_name---Teacher_name---Number_of_Credits---Number_of_maximum_students---Day_of_week---Sessions
-	cout
-		<< setw(15)
-		<< "Course ID"
-		<< setw(20)
-		<< "Course Name"
-		<< setw(20)
-		<< "Class Name"
-		<< setw(20)
-		<< "Teacher Name"
-		<< setw(10)
-		<< "Number of credits"
-		<< setw(10)
-		<< "Number of maximum students"
-		<< setw(10)
-		<< "Day of the week"
-		<< setw(15)
-		<< "Session";
-	while (pHead != nullptr)
+
+	SchoolYear* pHead1 = pHead_schoolYear;
+	while (pHead1 != nullptr)
 	{
-		cout
-			<< setw(15)
-			<< pHead->id
-			<< setw(20)
-			<< pHead->course_name
-			<< setw(20)
-			<< pHead->class_name
-			<< setw(20)
-			<< pHead->teacher_name
-			<< setw(20)
-			<< pHead->number_credits
-			<< setw(10)
-			<< pHead->number_credits
-			<< setw(10)
-			<< pHead->day_of_week
-			<< setw(15)
-			<< pHead->sessions;
-		pHead = pHead->pNext;
+		cout << pHead1->year_name << " ";
+		Semester* pHead2 = pHead1->semester;
+		while (pHead2 != nullptr)
+		{
+			cout << pHead2->semester_name << " " << endl;
+			cout
+				<< setw(15)
+				<< "Course ID"
+				<< setw(20)
+				<< "Course Name"
+				<< setw(20)
+				<< "Class Name"
+				<< setw(20)
+				<< "Teacher Name"
+				<< setw(10)
+				<< "Number of credits"
+				<< setw(10)
+				<< "Number of maximum students"
+				<< setw(10)
+				<< "Day of the week"
+				<< setw(15)
+				<< "Session" << endl;
+			Course* pHead3 = pHead2->course;
+			while (pHead3 != nullptr)
+			{
+				cout
+					<< setw(15)
+					<< pHead3->id
+					<< setw(20)
+					<< pHead3->course_name
+					<< setw(20)
+					<< pHead3->class_name
+					<< setw(20)
+					<< pHead3->teacher_name
+					<< setw(10)
+					<< pHead3->number_credits
+					<< setw(10)
+					<< pHead3->number_students
+					<< setw(10)
+					<< pHead3->day_of_week
+					<< setw(15)
+					<< pHead3->sessions;
+				cout << endl;
+				pHead3 = pHead3->pNext;
+			}
+			cout << endl;
+			pHead2 = pHead2->pNext;
+		}
+		cout << endl;
+		pHead1 = pHead1->pNext;
 	}
+
 }
 
 void addCourse(Course*& pHead)
@@ -272,7 +290,6 @@ Semester* Find_Semester(SchoolYear* pHead)
 		return NULL;
 	}
 
-
 	Semester* pCur_semester = pHead->semester;
 	string get_semester;
 	cout << "Enter semester: ";
@@ -291,7 +308,6 @@ Semester* Find_Semester(SchoolYear* pHead)
 		return pCur_semester;
 }
 
-//Make sure that at the end of the code, we will find the Course with specific Schoolyear, semester and course. If not found, the console will show it out.
 Course* Find_Course(SchoolYear* pHead)
 {
 	//These code is used for traversing the linked list of Schoolyear, to found the specific Schoolyear.
@@ -345,6 +361,10 @@ Course* Find_Course(SchoolYear* pHead)
 
 void add_Student_to_Course_By_File(Student*& pHead)
 {
+	Student* pCur = nullptr;
+	if (pHead != nullptr)
+		pCur = pHead;
+
 	ifstream file;
 	//The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be addedd
 	//The following next lines are the students information.
@@ -354,24 +374,19 @@ void add_Student_to_Course_By_File(Student*& pHead)
 		cout << "Khong mo duoc file addStudentToCourse.txt" << endl;
 		return;
 	}
-	Student* pCur;
-	if (pHead == nullptr)
-		pCur = nullptr;
-	else
-		pCur = pHead;
-
-	while (pCur != nullptr && pCur->pNext != nullptr)
-		pCur = pCur->pNext;
-
 	while (!file.eof())
 	{
-		if (pCur == nullptr)
-			pCur = new Student;
+		if (pHead == nullptr)
+		{
+			pHead = new Student;
+			pCur = pHead;
+		}
 		else
 		{
 			pCur->pNext = new Student;
 			pCur = pCur->pNext;
 		}
+
 		getline(file, pCur->student_ID, ',');
 		getline(file, pCur->first_name, ',');
 		getline(file, pCur->last_name, ',');
@@ -381,16 +396,16 @@ void add_Student_to_Course_By_File(Student*& pHead)
 
 		string temp;
 		getline(file, temp, ',');
-		pCur->score.total_mark = stoi(temp);
+		pCur->score.total_mark = stof(temp);
 
 		getline(file, temp, ',');
-		pCur->score.final_mark = stoi(temp);
+		pCur->score.final_mark = stof(temp);
 
 		getline(file, temp, ',');
-		pCur->score.mid_mark = stoi(temp);
+		pCur->score.mid_mark = stof(temp);
 
 		getline(file, temp, '\n');
-		pCur->score.other_mark = stoi(temp);
+		pCur->score.other_mark = stof(temp);
 
 		pCur->pNext = nullptr;
 	}
