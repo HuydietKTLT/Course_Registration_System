@@ -177,7 +177,7 @@ void view_scoreboard_toCourse(SchoolYear* &list_year,string year){
 			studentF=studentF->pNext;
 		}
 }
-void import_scoreboard_toCourse(SchoolYear* &list_year,string year){
+void Menu_Score_Board(SchoolYear* &list_year,string year){
 	int option;
 	cout<<"Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other. Quit=\n";
 	cin>>option;
