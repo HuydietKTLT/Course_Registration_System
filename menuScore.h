@@ -5,6 +5,8 @@
 #include <iomanip>
 #include <string.h>
 using namespace std;
+
+
 struct Student {
 	string No;
 	string student_ID;
