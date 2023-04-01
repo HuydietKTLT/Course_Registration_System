@@ -1,5 +1,5 @@
-#ifndef _IMSCORE_H_
-#define _IMSCORE_H_
+#ifndef _MENUSCORE_H_
+#define _MENUSCORE_H_
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -57,7 +57,7 @@ void load_course(Course*& pHead, string schoolYear_name, string semester_name);
 void load_semester(Semester*& pHead, string schoolYear_name);
 void load_schoolYear(SchoolYear*& pHead);
 void load_input(SchoolYear*& pHead_schoolYear);
-void import_scoreboard_toCourse(SchoolYear*& list_year, string year);
+void Menu_Score_Board(SchoolYear*& list_year, string year);
 void view_scoreboard_toCourse(SchoolYear* &list_year,string year);
 #endif
 
