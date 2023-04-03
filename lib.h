@@ -133,6 +133,10 @@ void update_Course(Course*& pCur);
 
 void import_score_of_course(Course *&z);
 
+void viewScore (Course *course);
+
+void updateScoreForStudent (Course  *course);
+
 void Menu_Score_Board(SchoolYear*& list_year, string year); // chỉ cần truyền năm và linked list của một năm là quản lý được điểm của năm đó 
 
 void view_scoreboard_toCourse(SchoolYear* &list_year,string year);
