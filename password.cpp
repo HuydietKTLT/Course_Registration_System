@@ -12,6 +12,8 @@ struct passInfo
     string ID;
 };
 
+
+//Check login infomation
 bool LoginCheck(string login, string password, char &type, string &ID, passInfo *readfile)
 {
     while(readfile != nullptr)
@@ -23,6 +25,7 @@ bool LoginCheck(string login, string password, char &type, string &ID, passInfo 
     return false;
 }
 
+//Read password file to linked list
 void ReadPassword(passInfo *&readfile)
 {
     ifstream fi;
@@ -51,6 +54,7 @@ void ReadPassword(passInfo *&readfile)
     readfile = dummyNode;
 }
 
+//Clear the linked list
 void clear(passInfo *&readfile)
 {
     passInfo *temp;
@@ -62,7 +66,7 @@ void clear(passInfo *&readfile)
     }
 }
 
-
+//Login menu
 void login(char &type, string &ID)
 {
     string login, password;
@@ -77,6 +81,8 @@ void login(char &type, string &ID)
     clear(readfile);
 }
 
+
+//Edit password
 bool doTheEdit(string login, string password, string ID, passInfo *&head)
 {
     passInfo *readfile = head;
@@ -105,6 +111,7 @@ bool doTheEdit(string login, string password, string ID, passInfo *&head)
     return true;
 }
 
+//Edit password menu
 void edit(string ID)
 {
     char type;

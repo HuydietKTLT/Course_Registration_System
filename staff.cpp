@@ -1,8 +1,8 @@
 #include "staff.h"
 
+//Temp Menu for staff
 void menuStaff()
-{
-    
+{    
     int i;
     bool check = currentSchoolYear();
     cout << "-------------------------------------------\n";
@@ -33,6 +33,8 @@ void menuStaff()
     menuStaff();
 }
 
+
+//Revese string
 string revString(string a)
 {
     string b = "";
@@ -42,6 +44,7 @@ string revString(string a)
     return b;
 }
 
+//create new school year
 void createNewSchoolYear()
 {
     string year;
@@ -59,7 +62,7 @@ void createNewSchoolYear()
     fo.open("currentschoolyear.txt");
     fo << year;
     fo.close();
-    fo.open("schoolyearlist.txt", ios_base::app);
+    fo.open("schoolyearList.txt", ios_base::app);
     fo << year << '\n';
     fo.close();
     year = year.substr(0, year.find('-'));
@@ -69,6 +72,7 @@ void createNewSchoolYear()
     fo.close();
 }
 
+//create new class menu
 void createNewClass()
 {
     string type, year;
@@ -92,6 +96,8 @@ void createNewClass()
     }
 }
 
+
+//create new class
 void createClasses(string year, string type, int numberOfClasses)
 {
     string ID = "0", yearschool;
@@ -114,6 +120,7 @@ void createClasses(string year, string type, int numberOfClasses)
     }
 }
 
+//add new course menu
 void addCourseMenu()
 {
     currentSchoolYear();
@@ -131,7 +138,7 @@ void addCourseMenu()
         cout << "Pick a school year:\n";
         cin >> a;
         struct stat metaData;
-        if ((a.c_str(), &metaData) != 0)
+        if ((a.c_str(), &metaData) != 0) //Check for the existence of the file
             cout << "The school year doesn't exists.\nPlease create the school year or choose a different school year.\n";
         else
         {
@@ -154,6 +161,7 @@ void addCourseMenu()
     addCourseMenu();
 }
 
+//add new semester
 void addSemester()
 {
     cout << "-------------------------------------------\n";
@@ -162,6 +170,7 @@ void addSemester()
     fi.open("currentschoolyear.txt");
     string path;
     fi >> path;
+    string temp = path;
     fi.close();
     int i;
     cin >> i;
@@ -170,11 +179,19 @@ void addSemester()
     else 
         if (i >= 1 && i <= 3)
         {
-            path = path + "/SM" +to_string(i);
+            path = path + "/semester" +to_string(i);
             struct stat metaData;
-            if ((path.c_str(), &metaData) != 0)
+            if ((path.c_str(), &metaData) != 0)//Check for the existence of the file
                 if (_mkdir(path.c_str()) == 0)
+                {   
+                    ofstream fo;
                     cout << "New semester created successfully.\n";
+                    fo.open(temp + "/semesterList.txt", ios_base::app);
+                    fo << "semester" + to_string(i) << '\n';
+                    fo.close();
+                    fo.open(path + "courseList.txt");
+                    fo.close();
+                }
                 else
                 {
                     cout << "Failed to create new semester.\n";
@@ -182,14 +199,13 @@ void addSemester()
                 }
             ofstream fo;
             fo.open ("currentSemester.txt");
-            fo << "SM" << i;
-            fo.close();
-            fo.open (path + "/listOfCourse.txt");
+            fo << "semester" << i;
             fo.close();
         }
     addSemester();
 }
 
+// check if current school year exists
 bool currentSchoolYear()
 {
     cout << "-------------------------------------------\n";
@@ -207,6 +223,8 @@ bool currentSchoolYear()
     return false;
 }
 
+
+//print current semester to screen
 bool currentSemester()
 {
     cout << "-------------------------------------------\n";
