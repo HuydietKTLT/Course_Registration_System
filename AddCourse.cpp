@@ -157,6 +157,7 @@ void deleteCourse(Course*& pHead, Course*& pDelete)
 void update_course_ID(Course*& pCur)
 {
 	cout << "Enter new Course ID: ";
+	cin.ignore();
 	getline(cin, pCur->id);
 	cout << "Update successfully!" << endl;
 }
@@ -185,10 +186,8 @@ void update_teacher_name(Course*& pCur)
 void update_number_credits(Course*& pCur)
 {
 	cout << "Enter new Number of Credits: ";
-
-	int get_number_credits = 0;
+	int get_number_credits;
 	cin >> get_number_credits;
-
 	while (get_number_credits <= 0)
 	{
 		cout << "Invalid input. Try a new positive number of credits: ";
@@ -201,8 +200,7 @@ void update_number_credits(Course*& pCur)
 void update_number_students(Course*& pCur)
 {
 	cout << "Enter new number of Students: ";
-
-	int get_number_students = 0;
+	int get_number_students;
 	cin >> get_number_students;
 	while (get_number_students <= 0)
 	{
@@ -216,6 +214,7 @@ void update_number_students(Course*& pCur)
 void update_day_week(Course*& pCur)
 {
 	cout << "Enter new Day of week: ";
+	cin.ignore();
 	cin >> pCur->day_of_week;
 	cout << "Update successfully!" << endl;
 
@@ -224,13 +223,14 @@ void update_day_week(Course*& pCur)
 void update_session(Course*& pCur)
 {
 	cout << "Enter new session";
+	cin.ignore();
 	getline(cin, pCur->sessions);
 	cout << "Update successfully!" << endl;
 }
 
 void update_Course(Course*& pCur)
 {
-	cout << "Choose option which have to be updated ";
+	cout << "Choose option which have to be updated " << endl;
 	while (true)
 	{
 		cout << "1. Course ID" << endl;
@@ -272,7 +272,6 @@ void update_Course(Course*& pCur)
 			update_session(pCur);
 			break;
 		case 9:
-
 			update_course_ID(pCur);
 			update_course_name(pCur);
 			update_class_name(pCur);
@@ -283,7 +282,10 @@ void update_Course(Course*& pCur)
 			update_session(pCur);
 			break;
 		case 0:
-			return;
+		{
+		cout << "Finish updating!!!";
+		return;
+		}
 		default:
 			continue;
 		}
@@ -378,7 +380,11 @@ void add_Student_to_Course_By_File(Student*& pHead)
 {
 	Student* pCur = nullptr;
 	if (pHead != nullptr)
+	{
 		pCur = pHead;
+		while (pCur->pNext != nullptr)
+			pCur = pCur->pNext;
+	}
 
 	ifstream file;
 	//The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be addedd
@@ -428,45 +434,63 @@ void add_Student_to_Course_By_File(Student*& pHead)
 }
 
 void add_Student_to_Course_By_Console(Student*& pHead)
-{
-	Student* pCur = pHead;
-	while (pCur->pNext != nullptr)
-		pCur = pCur->pNext;
+{	
+	Student* pCur = nullptr;
+	if (pHead != nullptr)
+		 pCur = pHead;
 
-	pCur->pNext = new Student;
-	pCur = pCur->pNext;
+	if (pHead == nullptr)
+	{
+		pHead = new Student;
+		pHead->pNext = nullptr;
+	}
+	while (pHead != nullptr && pHead->pNext != nullptr)
+		pHead = pHead->pNext;
 
 	cout << "Enter new student ID: ";
-	cin >> pCur->student_ID;
+	cin.ignore();
+	cin >> pHead->student_ID;
 
 	cout << "Enter new student first name: ";
-	cin >> pCur->first_name;
+	cin.ignore();
+	cin >> pHead->first_name;
 
 	cout << "Enter new student last name: ";
-	cin >> pCur->last_name;
+	cin.ignore();
+	cin >> pHead->last_name;
 
 	cout << "Enter new student gender: ";
-	cin >> pCur->gender;
+	cin.ignore();
+	cin >> pHead->gender;
 
 	cout << "Enter new student date of birth: ";
-	cin >> pCur->date_of_birth;
+	cin.ignore();
+	cin >> pHead->date_of_birth;
 
 	cout << "Enter new student social ID: ";
-	cin >> pCur->social_ID;
+	cin.ignore();
+	cin >> pHead->social_ID;
 
 	cout << "Enter new student total mark";
-	cin >> pCur->score.total_mark;
+	cin.ignore();
+	cin >> pHead->score.total_mark;
 
 	cout << "Enter new student final mark";
-	cin >> pCur->score.final_mark;
+	cin.ignore();
+	cin >> pHead->score.final_mark;
 
 	cout << "Enter new student mid mark";
-	cin >> pCur->score.mid_mark;
+	cin.ignore();
+	cin >> pHead->score.mid_mark;
 
 	cout << "Enter new student other mark";
-	cin >> pCur->score.other_mark;
+	cin.ignore();
+	cin >> pHead->score.other_mark;
 
-	pCur->pNext = nullptr;
+	if (pCur != nullptr)
+		pHead = pCur;
+
+	pHead->pNext = nullptr;
 }
 
 void remove_Student_from_Course(Student*& pHead)

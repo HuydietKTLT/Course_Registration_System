@@ -3,21 +3,17 @@
 //Set the max length of the password
 const int max_value = 20;
 
-struct passInfo
-{
-    passInfo *next;
-    string login;
-    string password;
-    char type;
-    string ID;
-};
 
 bool LoginCheck(string login, string password, char &type, string &ID, passInfo *readfile)
 {
     while(readfile != nullptr)
     {
         if (password == readfile->password && login == readfile->login)
+        {
+            type = readfile->type;
+            ID = readfile->ID;
             return true;
+        }
         readfile = readfile->next;
     }
     return false;
@@ -32,7 +28,7 @@ void ReadPassword(passInfo *&readfile)
         cout << "Error cannot open file.";
         return;
     }
-    passInfo *dummyNode;
+    passInfo *dummyNode = new passInfo;
     passInfo *temp;
     dummyNode->next = readfile;
     passInfo *cur = dummyNode;
@@ -44,15 +40,23 @@ void ReadPassword(passInfo *&readfile)
         cur->next = temp;
         cur = cur->next;
     }
-    temp = dummyNode;
-    dummyNode = dummyNode->next;
+    readfile = dummyNode->next;
     delete dummyNode;
     fi.close();
-    readfile = dummyNode;
 }
 
 void clear(passInfo *&readfile)
 {
+    ofstream fo;
+    fo.open("password.cpp", ios_base::app);
+    passInfo* cur = readfile;
+    while (cur != nullptr)
+    {
+        fo << cur->login << ' ' << cur->password << ' ' << cur->type << ' ' << cur->ID << '\n';
+        cur = cur->next;
+    }
+    fo.close();
+
     passInfo *temp;
     while (readfile != nullptr)
     {
@@ -63,18 +67,15 @@ void clear(passInfo *&readfile)
 }
 
 
-void login(char &type, string &ID)
+void login(char &type, string &ID, passInfo *readfile)
 {
     string login, password;
     cout << "Enter your account name: ";
     cin >> login;
     cout << "Enter your password: ";
     password = pass();
-    passInfo *readfile = nullptr;
-    ReadPassword(readfile);
     if(LoginCheck(login, password, type, ID, readfile) == true)
         cout << "Login successful! " << type << " " << ID << endl;
-    clear(readfile);
 }
 
 bool doTheEdit(string login, string password, string ID, passInfo *&head)
@@ -105,14 +106,11 @@ bool doTheEdit(string login, string password, string ID, passInfo *&head)
     return true;
 }
 
-void edit(string ID)
+void edit(string ID, passInfo* readfile)
 {
-    char type;
     int i;
     string temp_ID;
     string new_login, new_password;
-    passInfo *readfile = nullptr;
-    ReadPassword(readfile);
     do
     {
         cout << "Do you want to change your username and password:\n";
@@ -126,23 +124,13 @@ void edit(string ID)
         new_password = pass();
     }
     while (doTheEdit(new_login, new_password, ID, readfile));
-    ofstream fo;
-    fo.open("password.cpp", ios_base::app);
-    passInfo *cur = readfile;
-    while (cur != nullptr)
-    {
-        fo << cur->login << ' ' << cur->password << ' ' << cur->type << ' ' << cur->ID << '\n';
-        cur = cur->next;
-    }
-    fo.close();
-    clear(readfile);
 }
 
 string pass()
 {
     char *password = new char[max_value];
     int i = 0;   
-    while((password[i]=getch() ) != '\n' && password[i] != '\r' && i < (max_value - 1))
+    while((password[i]=_getch() ) != '\n' && password[i] != '\r' && i < (max_value - 1))
     {
         if (password[i] != '\b')
         {

@@ -78,6 +78,15 @@ struct SchoolYear
 	SchoolYear* pNext;
 };
 
+struct passInfo
+{
+	passInfo* next;
+	string login;
+	string password;
+	char type;
+	string ID;
+};
+
 //About loading data
 void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name);
 
