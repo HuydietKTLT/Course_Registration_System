@@ -5,34 +5,35 @@ void menuStaff()
 {    
     int i;
     bool check = currentSchoolYear();
-    cout << "-------------------------------------------\n";
-    cout << "1. New school year.\n2. New classess for current school year.\n4. New semester.\n0. Exit\nEnter options: ";
-    cin >> i;
-    switch (i)
-    {
-    case 0:
-        return;
-    case 1:
-        createNewSchoolYear();
-        break;
-    case 2:
-        if (check == true)
-            createNewClass();
-        else
-            cout << "There are no current year. Please create a new school year.\n";
-        break;
-    case 4:
-        if (check == true)
-            addCourseMenu();
-        else
-            cout << "There are no current year. Please create a new school year.\n";
-        break;
-    default:
-        break;
+    while (true)
+    {       
+        cout << "-------------------------------------------\n";
+        cout << "1. New school year.\n2. New classess for current school year.\n4. New semester.\n0. Exit\nEnter options: ";
+        cin >> i;
+        switch (i)
+        {
+        case 0:
+            return;
+        case 1:
+            createNewSchoolYear();
+            break;
+        case 2:
+            if (check == true)
+                createNewClass();
+            else
+                cout << "There are no current year. Please create a new school year.\n";
+            break;
+        case 4:
+            if (check == true)
+                addCourseMenu();
+            else
+                cout << "There are no current year. Please create a new school year.\n";
+            break;
+        default:
+            break;
+        }
     }
-    menuStaff();
 }
-
 
 //Revese string
 string revString(string a)
@@ -82,20 +83,23 @@ void createNewClass()
     fi >> year;
     fi.close();
     int i;
-    cout << "-------------------------------------------\n";
-    cout << "1. New classes\n0. Exit\nEnter options: ";
-    cin >> i;
-    if (i != 0)
-    {
-        cout << "Type of education: ";
-        cin >> type;
-        cout << "Number of classes: ";
-        cin >> numberOfClasses;
-        createClasses(year, type,numberOfClasses);
-        createNewClass();
+    while (true)
+    {   
+        cout << "-------------------------------------------\n";
+        cout << "1. New classes\n0. Exit\nEnter options: ";
+        cin >> i;
+        if (i != 0)
+        {
+            cout << "Type of education: ";
+            cin >> type;
+            cout << "Number of classes: ";
+            cin >> numberOfClasses;
+            createClasses(year, type,numberOfClasses);
+        } 
+        else 
+            break;
     }
 }
-
 
 //create new class
 void createClasses(string year, string type, int numberOfClasses)
@@ -125,40 +129,42 @@ void addCourseMenu()
 {
     currentSchoolYear();
     currentSemester();
-    cout << "-------------------------------------------\n";
-    cout << "1. Choose a different school year\n2. Choose a semester\n0. Exit\nEnter options: ";
     int i;
-    cin >> i;
-    string a;
-    switch (i)
+    while(true)
     {
-    case 0:
-        return;
-    case 1:
-        cout << "Pick a school year:\n";
-        cin >> a;
-        struct stat metaData;
-        if ((a.c_str(), &metaData) != 0) //Check for the existence of the file
-            cout << "The school year doesn't exists.\nPlease create the school year or choose a different school year.\n";
-        else
+        cout << "-------------------------------------------\n";
+        cout << "1. Choose a different school year\n2. Choose a semester\n0. Exit\nEnter options: ";
+        cin >> i;
+        string a;
+        switch (i)
         {
-            ofstream fo;
-            fo.open("currentschoolyear.txt");
-            fo << a;
-            a = a.substr(0, a.find('-'));
-            a = revString(a);
-            fo.open("currrentclass.txt");
-            fo << a[1] << a[0] << '\n';
-            fo.close();
+        case 0:
+            return;
+        case 1:
+            cout << "Pick a school year:\n";
+            cin >> a;
+            struct stat metaData;
+            if ((a.c_str(), &metaData) != 0) //Check for the existence of the file
+                cout << "The school year doesn't exists.\nPlease create the school year or choose a different school year.\n";
+            else
+            {
+                ofstream fo;
+                fo.open("currentschoolyear.txt");
+                fo << a;
+                a = a.substr(0, a.find('-'));
+                a = revString(a);
+                fo.open("currrentclass.txt");
+                fo << a[1] << a[0] << '\n';
+                fo.close();
+            }
+            break;
+        case 2:
+            addSemester();
+            break;
+        default:
+            break;
         }
-        break;
-    case 2:
-        addSemester();
-        break;
-    default:
-        break;
     }
-    addCourseMenu();
 }
 
 //add new semester
@@ -189,7 +195,7 @@ void addSemester()
                     fo.open(temp + "/semesterList.txt", ios_base::app);
                     fo << "semester" + to_string(i) << '\n';
                     fo.close();
-                    fo.open(path + "courseList.txt");
+                    fo.open(path + "/courseList.txt");
                     fo.close();
                 }
                 else
@@ -199,7 +205,7 @@ void addSemester()
                 }
             ofstream fo;
             fo.open ("currentSemester.txt");
-            fo << "semester" << i;
+            fo << "Semester " << i;
             fo.close();
         }
     addSemester();
@@ -222,7 +228,6 @@ bool currentSchoolYear()
     fi.close();
     return false;
 }
-
 
 //print current semester to screen
 bool currentSemester()

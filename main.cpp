@@ -1,4 +1,7 @@
 #include "scoreview.h"
+#include "password.h"
+#include "lib.h"
+#include "staff.h"
 
 int main ()
 {
@@ -15,5 +18,13 @@ int main ()
     }
     fin.close();
     deleteClass(pHead);
+
+    passInfo *readfilePass = nullptr;
+    ReadPassword(readfilePass);
+    char type;
+    string ID;
+    login(type, ID, readfilePass);
+    edit(ID, readfilePass);
+    clear(readfilePass);
     return 0;
 }
