@@ -142,6 +142,25 @@ void load_input(SchoolYear*& pHead_schoolYear){
 		pCur = pCur->pNext;
 	}
 }
+void import_score_of_course (Course *&z)
+{
+    cout << "Course information: " << endl;
+    cout << z->id << "  " << z->course_name << endl;
+    cout << z->class_name << endl;
+    cout << "Now we import score for each students : " << endl << endl;
+    Student *s = z->student; // from now just use branch Student of this Course
+    while (s != nullptr) {
+        cout << "Student id: " << s->student_ID << "\t" << s->last_name << " " << s->first_name << endl;
+        cout << "Midterm mark:"; cin >> s->score.mid_mark;
+        cout << "Final mark:"; cin >> s->score.final_mark;
+        cout << "Other mark:"; cin >> s->score.other_mark;
+
+        // just assume the logic math calculate, staff can fix it
+        s->score.total_mark = (s->score.final_mark*2 + s->score.mid_mark) / 3 + s->score.other_mark;
+        cout << "Total mark is: " << s->score.total_mark;
+        s = s->pNext;
+    }
+}
 void view_scoreboard_toCourse(SchoolYear* &list_year,string year){
 	SchoolYear* pCur= NULL;
 	pCur= list_year;
@@ -275,16 +294,7 @@ void Menu_Score_Board(SchoolYear* &list_year,string year){
 			while(Cur_course->course_name.compare(Course)!=0){
 				Cur_course=Cur_course->pNext;
 			}
-		Student* studentF=nullptr;
-		studentF=Cur_course->student;
-		while(studentF!=nullptr){
-			cout<<"ID: "<<studentF->student_ID<<" Name: "<<studentF->first_name<<" "<<studentF->last_name<<" \n";
-			cout<<"Enter Middle Score: "; cin>>studentF->midMark;
-			cout<<"Enter Final Score: "; cin>>studentF->fMark;
-			cout<<"Enter other Score: "; cin>>studentF->oMark;
-			studentF->toMark =(studentF->fMark+studentF->midMark)/2.0+studentF->oMark;
-			studentF=studentF->pNext;
-		}	
+			import_score_of_course (Cur_course);
 	}
 	else if(option==2){
 		view_scoreboard_toCourse(list_year,year);
