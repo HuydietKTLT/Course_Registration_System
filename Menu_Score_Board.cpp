@@ -1,147 +1,4 @@
 #include "menuScore.h"
-void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name)
-{
-	ifstream file;
-	file.open(schoolYear_name + "\\" + semester_name + "\\" + course_name + ".txt");
-	if (!file.is_open())
-	{
-		ifstream file;
-		file.open(schoolYear_name + "\\" + semester_name + "\\" + course_name + ".txt",ios::app);	
-	}
-	Student* pCur = nullptr;
-	pHead = new Student();
-	pCur = pHead;
-	while (!file.eof())
-	{
-		string tmp;
-		getline(file, pCur->student_ID , ',');
-		getline(file, pCur->first_name, ',');
-		getline(file, pCur->last_name,',');
-		getline(file,tmp);
-		if(!file.eof()){
-		pCur->pNext = new Student();	
-		pCur = pCur->pNext;
-		} 
-		else{
-		pCur->pNext =nullptr;	
-		}
-	}
-	file.close();
-}
-void load_course(Course*& pHead, string schoolYear_name, string semester_name)
-{
-	ifstream file;
-	file.open(schoolYear_name +"\\"+semester_name+"\\courseList.txt");
-	pHead=new Course();
-	Course* pCur = nullptr;
-	pCur=pHead;
-	while (!file.eof())
-	{
-		getline(file,pCur->id, ',');
-		getline(file, pCur->course_name, ',');
-		getline(file, pCur->class_name, ',');
-		getline(file, pCur->teacher_name, ',');
-		string get_numberCredit;
-		getline(file, get_numberCredit, ',');
-		pCur->number_credits = std::stoi(get_numberCredit);
-		string get_numberStudent;
-		getline(file, get_numberStudent, ',');
-		pCur->number_students = std::stoi(get_numberStudent);
-		getline(file, pCur->day_of_week, ',');
-		getline(file, pCur->sessions, ',');
-		getline(file, get_numberCredit);
-		if(!file.eof()){
-		pCur->pNext = new Course();	
-		pCur = pCur->pNext;
-		} 
-		else{
-		pCur->pNext =nullptr;	
-		}
-	}
-	file.close();
-}
-void load_semester(Semester*& pHead, string schoolYear_name){
-	ifstream file;
-	file.open(schoolYear_name + "\\semesterList.txt");
-	if (!file.is_open())
-	{
-		cout << "Khong mo duoc file semesterList.txt";
-		return;
-	}
-	Semester* pCur = nullptr;
-	pHead=new Semester();
-	pCur=pHead;
-	getline(file,pCur->semester_name,',');
-	while (!file.eof())
-	{
-		getline(file,pCur->semester_name,',');
-		getline(file,tmp);
-		if (!file.eof())
-		{
-		pCur->pNext = new Semester();	
-		pCur=pCur->pNext; 	
-		}
-		else
-		{
-		pCur->pNext=nullptr;
-		}
-	} 
-	file.close();
-}
-void load_schoolYear(SchoolYear*& pHead)
-{
-	ifstream file;
-	file.open("schoolYearList.txt");
-	if (!file.is_open())
-	{
-		cout << "Khong mo duoc file schoolYearList.txt";
-		return;
-	};
-	SchoolYear* pCur = nullptr;
-	while (!file.eof())
-	{
-		if (pHead == nullptr)
-		{
-			pHead = new SchoolYear();
-			pCur=pHead;
-		}
-		else
-		{
-			pCur = new SchoolYear();
-		}
-		file >> pCur->year_name;
-		pCur->pNext =nullptr;
-		pCur = pCur->pNext;
-	}
-	file.close();
-}
-void load_input(SchoolYear*& pHead_schoolYear){
-	pHead_schoolYear = nullptr;
-	load_schoolYear(pHead_schoolYear);
-	SchoolYear* pCur = nullptr;
-	pCur=pHead_schoolYear;
-	while (pCur != nullptr)
-	{
-		Semester* pHead_Semester=nullptr;
-		load_semester(pHead_Semester, pCur->year_name);
-		pCur->semester=pHead_Semester;
-		Semester* currSemester=pCur->semester;
-		while(currSemester!=nullptr){
-		Course* pHead_Course=nullptr;	
-		load_course(pHead_Course, pCur->year_name, currSemester->semester_name);
-		currSemester->course=pHead_Course;
-		Course* currCourse=currSemester->course;
-		while(currCourse!=nullptr){
-		Student* pHead_Student = nullptr;
-		load_student_InCourse(pHead_Student, pCur->year_name, currSemester->semester_name, currCourse->id);
-		currCourse->student=pHead_Student;
-		currCourse=currCourse->pNext;
-		}
-		currSemester=currSemester->pNext;
-		}
-		pCur = pCur->pNext;
-	}
-}
 void import_score_of_course (Course *&z)
 {
     cout << "Course information: " << endl;
@@ -174,16 +31,28 @@ void view_scoreboard_toCourse(SchoolYear* &list_year,string year){
 		string Semester;
 		cout<<"Enter Semester: "; cin>>Semester;
 		Cur_Semester=pCur->semester;
-		while(Cur_Semester->semester_name.compare(Semester)!=0){
+		while(Cur_Semester->semester_name.compare(Semester)!=0&&check_pass_Semester(Cur_Semester)){
 			Cur_Semester=Cur_Semester->pNext;
+		}
+		if (Cur_Semester->semester_name.compare(Semester)!=0){
+				cout<<Cur_Semester->semester_name<<" is not over yet\n";
+				return; 
 		}
 		Course* Cur_course=nullptr;
 		string Course;
 		cout<<"Enter Course: "; cin>>Course;
 		Cur_course=Cur_Semester->course;
-			while(Cur_course->course_name.compare(Course)!=0){
+		bool flag=false;
+		while(Cur_course->course_name.compare(Course)!=0){
 				Cur_course=Cur_course->pNext;
-			}
+				if(Cur_course==nullptr){
+					flag=true;
+					break;
+				}
+		}
+		if(flag){
+			return;
+		}
 		Student* studentF=nullptr;
 		studentF=Cur_course->student;
 		cout<<setw(12)<<left<<"ID"<<setw(16)<<left<<"Name"<<setw(16)<<left<<"Middle Score"<<setw(15)<<left<<"Final Score"<<setw(15)<<left<<"Other Score\tTotal Score\n";
@@ -195,15 +64,15 @@ void view_scoreboard_toCourse(SchoolYear* &list_year,string year){
 			studentF=studentF->pNext;
 		}
 }
-void Menu_Score_Board(SchoolYear* &list_year,string year){
+void import_scoreboard_toCourse(SchoolYear* &list_year,string year){
 	int option;
 	cout<<"Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other. Quit=\n";
 	cin>>option;
 	while(option==0||option==1||option==2)	{
 		SchoolYear* pCur= NULL;
 		pCur=list_year;
+		string yes;
 		if (option==0){
-			string yes;
 			do{
 			while(pCur!=nullptr){
 			if(pCur->year_name.compare(year)==0){
@@ -215,8 +84,21 @@ void Menu_Score_Board(SchoolYear* &list_year,string year){
 			string Semester;
 			cout<<"Enter Semester: "; cin>>Semester;
 			Cur_Semester=pCur->semester;
-			while(Cur_Semester->semester_name.compare(Semester)!=0){
+			bool flag=false;
+			while(Cur_Semester->semester_name.compare(Semester)!=0&&check_pass_Semester(Cur_Semester)){
 				Cur_Semester=Cur_Semester->pNext;
+				if(Cur_Semester==nullptr){
+				flag=true;
+				break;
+			}
+			}
+			if(flag){
+				break;
+			}
+			if (Cur_Semester->semester_name.compare(Semester)!=0){
+				cout<<Cur_Semester->semester_name<<" is not over yet\n";
+				option=0;
+				continue;
 			}
 			Course* Cur_course=nullptr;
 			string Course;
@@ -224,6 +106,13 @@ void Menu_Score_Board(SchoolYear* &list_year,string year){
 			Cur_course=Cur_Semester->course;
 			while(Cur_course->course_name.compare(Course)!=0){
 				Cur_course=Cur_course->pNext;
+				if(Cur_course==nullptr){
+					flag=true;
+					break;
+			}
+			}
+			if(flag){
+				break;
 			}
 			fstream F;
 			F.open("import_scoreboard.txt",ios::app);
@@ -260,8 +149,10 @@ void Menu_Score_Board(SchoolYear* &list_year,string year){
 			if(score->oMark<=10&&score->midMark<=10&&score->fMark<=10){
 				score->toMark=(score->fMark+score->midMark)/2.0+score->oMark;
 				score=score->pNext;
+				Cur_course->check_course="O";
 			}
 			else{
+				cout<<"Course score entry failed!\n";
 				yes="0";
 				remove("import_scoreboard.txt");
 				break;
@@ -284,8 +175,17 @@ void Menu_Score_Board(SchoolYear* &list_year,string year){
 			string Semester;
 			cout<<"Enter Semester: "; cin>>Semester;
 			Cur_Semester=pCur->semester;
-			while(Cur_Semester->semester_name.compare(Semester)!=0){
+			while(Cur_Semester->semester_name.compare(Semester)!=0&&check_pass_Semester(Cur_Semester)){
 				Cur_Semester=Cur_Semester->pNext;
+			}
+			if (Cur_Semester->semester_name.compare(Semester)!=0){
+				cout<<Cur_Semester->semester_name<<" is not over yet\n";
+				option=1;
+				continue;
+			}
+			if(Cur_Semester==nullptr){
+				option=1;
+				continue;
 			}
 			Course* Cur_course=nullptr;
 			string Course;
@@ -294,10 +194,15 @@ void Menu_Score_Board(SchoolYear* &list_year,string year){
 			while(Cur_course->course_name.compare(Course)!=0){
 				Cur_course=Cur_course->pNext;
 			}
-			import_score_of_course (Cur_course);
+			if(Cur_course==nullptr){
+				option=1;
+				continue;
+			}
+		import_score_of_course (Cur_course);
+		Cur_course->check_course="O";	
 	}
 	else if(option==2){
-		view_scoreboard_toCourse(list_year,year);
+		 view_scoreboard_toCourse(list_year,year);
 	}
 	cout<<"Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other. Quit=\n";
 	cin>>option;
