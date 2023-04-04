@@ -6,7 +6,7 @@
 void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 {
 	int i;
-	currentSchoolYear(pHead_schoolYear);
+	SchoolYear* current_schoolyear = currentSchoolYear(pHead_schoolYear);
 	while (true)
 	{
 		cout << "-------------------------------------------\n";
@@ -31,10 +31,15 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 			break;
 		}
 		case 4:
-			addCourseMenu(pHead_schoolYear);
+			if (current_schoolyear != nullptr)
+				addCourseMenu(current_schoolyear);
 			break;
-		case 5:	
-			Menu_Score_Board(pHead_schoolYear);	
+		case 5:
+			if (current_schoolyear != nullptr)
+				Menu_Score_Board(current_schoolyear);
+			else
+
+				break;
 		default:
 			continue;
 		}
@@ -156,93 +161,52 @@ void createClasses(string year, string type, int numberOfClasses)
 		file.open(year + type + ID + ".txt");
 		file.close();
 	}
-
-	/*string ID = "0", yearschool;
-	ifstream fi;
-	fi.open("currentschoolyear.txt");
-	fi >> yearschool;
-	fi.close();
-	ofstream fo;
-	year = yearschool + "\\" + year;
-	year = yearschool + type;
-	for (int i = 1; i <= numberOfClasses; i++)
-	{
-		int k = atoi(ID.c_str()) + 1;
-		ID = to_string(k);
-		if (ID.length() == 1)
-			ID = "0" + ID;
-		string classes = year + ID + ".txt";
-		fo.open(classes);
-		fo.close();
-	}*/
 }
 
 //add new course menu
 void addCourseMenu(SchoolYear* pHead_schoolYear)
 {
-	SchoolYear* current_Schoolyear = currentSchoolYear(pHead_schoolYear);
-	if (current_Schoolyear != nullptr)
-		Semester* current_Semester = currentSemester(current_Schoolyear->semester);
 	int i;
 	while (true)
 	{
 		cout << "-------------------------------------------\n";
-		cout << "1. Choose a different school year\n2. Choose a semester\n0. Exit\nEnter options: ";
+		cout << "1. Choose a semester\n0. Exit\nEnter options: ";
 		cin >> i;
 		string a;
 		switch (i)
 		{
+
 		case 0:
 			return;
+			/*case 1:
+				cout << "Pick a school year:\n";
+				cin >> a;
+				struct stat metaData;
+				if ((a.c_str(), &metaData) != 0)
+					cout << "The school year doesn't exists.\nPlease create the school year or choose a different school year.\n";
+				else
+				{
+					ofstream fo;
+					fo.open("currentschoolyear.txt");
+					fo << a;
+					a = a.substr(0, a.find('-'));
+					a = revString(a);
+					fo.open("currrentclass.txt");
+					fo << a[1] << a[0] << '\n';
+					fo.close();
+				}
+				break;*/
 		case 1:
-			cout << "Pick a school year:\n";
-			cin >> a;
-			struct stat metaData;
-			if ((a.c_str(), &metaData) != 0) //Check for the existence of the file
-				cout << "The school year doesn't exists.\nPlease create the school year or choose a different school year.\n";
-			else
-			{
-				ofstream fo;
-				fo.open("currentschoolyear.txt");
-				fo << a;
-				a = a.substr(0, a.find('-'));
-				a = revString(a);
-				fo.open("currrentclass.txt");
-				fo << a[1] << a[0] << '\n';
-				fo.close();
-			}
-			break;
-		case 2:
-			addSemester();
+			addSemester(pHead_schoolYear->semester);
 			break;
 		default:
-			break;
+			continue;
 		}
 	}
 }
 
-
-bool check_semester(Semester* pHead,string schoolyear,string semester)
-{
-	string path = schoolyear + BACKSLASH + semester;
-	if (pHead == nullptr) return false;
-	while (pHead != nullptr && pHead->semester_name != semester)
-		pHead = pHead->pNext;
-	if (pHead == nullptr)
-		return false;
-	if (_mkdir(path.c_str()) == 1)
-		return false;
-	return true;
-}
-
-
-
-
-
-
-
 //add new semester
-void addSemester(Semester* pHead)
+void addSemester(Semester*& pHead)
 {
 	int option;
 	while (true)
@@ -253,10 +217,22 @@ void addSemester(Semester* pHead)
 		switch (option)
 		{
 		case 1:
+			if (!check_semester(pHead, "Semester1"))
+				cout << "Failed to create new semester. Semester has been created!";
+			else
+				add_semester(pHead, "Semester1");
 			break;
 		case 2:
+			if (!check_semester(pHead, "Semester2"))
+				cout << "Failed to create new semester. Semester has been created!";
+			else
+				add_semester(pHead, "Semester2");
 			break;
-		case 3: 
+		case 3:
+			if (!check_semester(pHead, "Semester3"))
+				cout << "Failed to create new semester. Semester has been created!";
+			else
+				add_semester(pHead, "Semester3");
 			break;
 		case 0:
 			return;
@@ -265,49 +241,30 @@ void addSemester(Semester* pHead)
 		}
 	}
 
-
-
-
-
-
-
-
-
-	ifstream fi;
-	fi.open("currentschoolyear.txt");
-	string path;
-	fi >> path;
-	string temp = path;
-	fi.close();
-	int i;
-	cin >> i;
-	if (i == 0)
-		return;
-	else
-		if (i >= 1 && i <= 3)
-		{
-			path = path + "\\semester" + to_string(i);
-			struct stat metaData;
-			if ((path.c_str(), &metaData) != 0)//Check for the existence of the file
-				if (_mkdir(path.c_str()) == 0)
-				{
-					ofstream fo;
-					cout << "New semester created successfully.\n";
-					fo.open(temp + "\\semesterList.txt", ios_base::app);
-					fo << "semester" + to_string(i) << '\n';
-					fo.close();
-					fo.open(path + "\\courseList.txt");
-					fo.close();
-				}
-				else
-				{
-					cout << "Failed to create new semester.\n";
-					return addSemester();
-				}
-			ofstream fo;
-			fo.open("currentSemester.txt");
-			fo << "Semester " << i;
-			fo.close();
-		}
 }
+
+bool check_semester(Semester* pHead, string semester)
+{
+	if (pHead == nullptr) return false;
+	while (pHead != nullptr && pHead->semester_name != semester)
+		pHead = pHead->pNext;
+	if (pHead == nullptr)
+		return false;
+	return true;
+}
+
+void add_semester(Semester*& pHead, string semester)
+{
+	Semester* pTail = pHead;
+	while (pTail != nullptr && pTail->pNext != nullptr)
+		pTail = pTail->pNext;
+
+	pTail->pNext = new Semester;
+	pTail = pTail->pNext;
+	pTail->course = nullptr;
+	pTail->semester_name = semester;
+	pTail->pNext = nullptr;
+}
+
+
 

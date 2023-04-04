@@ -21,10 +21,10 @@ typedef long int li;
 using namespace std;
 
 struct Score {
-	float total_mark;
-	float final_mark;
-	float mid_mark;
-	float other_mark;
+	float total_mark = 0;
+	float final_mark = 0;
+	float mid_mark = 0;
+	float other_mark = 0;
 };
 
 
@@ -141,15 +141,6 @@ void update_session(Course*& pCur);
 
 void update_Course(Course*& pCur);
 
-void import_score_of_course(Course *&z);
-
-void viewScore (Course *course);
-
-void updateScoreForStudent (Course  *course);
-
-void Menu_Score_Board(SchoolYear*& list_year, string year); // chỉ cần truyền năm và linked list của một năm là quản lý được điểm của năm đó 
-
-void view_scoreboard_toCourse(SchoolYear* &list_year,string year);
 
 //Find any semester with specififc schoolyear;
 Semester* Find_Semester(SchoolYear* pHead);

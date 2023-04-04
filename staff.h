@@ -10,7 +10,11 @@ void createClasses(string year, string type,int numberOfClasses);
 string revString(string a);
 SchoolYear* currentSchoolYear(SchoolYear* pHead);
 void addCourseMenu(SchoolYear* pHead_schoolYear);
-void addSemester(Semester* pHead);
+
+void addSemester(Semester* &pHead);
+bool check_semester(Semester* pHead, string semester);
+void add_semester(Semester*& pHead, string semester);
+
 Semester* currentSemester(Semester* pHead);
 
 #endif

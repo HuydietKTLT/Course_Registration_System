@@ -310,9 +310,6 @@ void load_input(SchoolYear*& pHead_schoolYear, Class*& pHead_class)
 	}*/
 }
 
-
-
-
 void print_student_InClass(Student* pHead, string class_name)
 {
 	ofstream file;
@@ -429,6 +426,7 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 			file << pHead_schoolYear->year_name << endl;
 		else
 			file << pHead_schoolYear->year_name;
+		_mkdir(pHead_schoolYear->year_name.c_str());
 		pHead_schoolYear = pHead_schoolYear->pNext;
 	}
 	file.close();
@@ -452,6 +450,8 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 		}
 		pHead_schoolYear = pHead_schoolYear->pNext;
 	}
+
+
 	////NO BUG IN THESE LINES OF CODE.
 	file.open("classList.txt");
 	Class* pTemp9 = pHead_class;
