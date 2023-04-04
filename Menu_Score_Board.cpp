@@ -1,4 +1,4 @@
-#include "menuScore.h"
+#include "lib.h"
 void import_score_of_course (Course *&z)
 {
     cout << "Course information: " << endl;
