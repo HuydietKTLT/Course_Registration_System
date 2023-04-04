@@ -1,6 +1,7 @@
 #include "staff.h"
 #include "password.h"
 #include "lib.h"
+#include "menuScore.h"
 //Temp Menu for staff
 void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 {
@@ -10,7 +11,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 	{
 		cout << "-------------------------------------------\n";
 		cout << "1. New school year.\n2. New classess for current school year\n";
-		cout << "3. Add new 1st year students to 1st-year classes\n4. New semester.\n0. Exit\nEnter options: ";
+		cout << "3. Add new 1st year students to 1st-year classes\n4. New semester.\n5. Admin scores for the current school year.\n0. Exit\nEnter options: ";
 		cin >> i;
 		switch (i)
 		{
@@ -32,6 +33,8 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 		case 4:
 			addCourseMenu(pHead_schoolYear);
 			break;
+		case 5:	
+			Menu_Score_Board(pHead_schoolYear);	
 		default:
 			continue;
 		}
