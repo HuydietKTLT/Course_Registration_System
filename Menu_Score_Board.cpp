@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "imScore.h"
 void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name)
 {
@@ -222,6 +223,27 @@ void load_input(SchoolYear*& pHead_schoolYear){
 		}
 		pCur = pCur->pNext;
 	}
+=======
+#include "lib.h"
+void import_score_of_course (Course *&z)
+{
+    cout << "Course information: " << endl;
+    cout << z->id << "  " << z->course_name << endl;
+    cout << z->class_name << endl;
+    cout << "Now we import score for each students : " << endl << endl;
+    Student *s = z->student; // from now just use branch Student of this Course
+    while (s != nullptr) {
+        cout << "Student id: " << s->student_ID << "\t" << s->last_name << " " << s->first_name << endl;
+        cout << "Midterm mark:"; cin >> s->score.mid_mark;
+        cout << "Final mark:"; cin >> s->score.final_mark;
+        cout << "Other mark:"; cin >> s->score.other_mark;
+
+        // just assume the logic math calculate, staff can fix it
+        s->score.total_mark = (s->score.final_mark*2 + s->score.mid_mark) / 3 + s->score.other_mark;
+        cout << "Total mark is: " << s->score.total_mark;
+        s = s->pNext;
+    }
+>>>>>>> 9e9c6cd01ffd683805f975e040d58497fc298825
 }
 void view_scoreboard_toCourse(SchoolYear* &list_year,string year){
 	SchoolYear* pCur= NULL;
@@ -248,7 +270,11 @@ void view_scoreboard_toCourse(SchoolYear* &list_year,string year){
 		cout<<"Enter Course: "; cin>>Course;
 		Cur_course=Cur_Semester->course;
 		bool flag=false;
+<<<<<<< HEAD
 		while(Cur_course->course_name.compare(Course)!=0&&){
+=======
+		while(Cur_course->course_name.compare(Course)!=0){
+>>>>>>> 9e9c6cd01ffd683805f975e040d58497fc298825
 				Cur_course=Cur_course->pNext;
 				if(Cur_course==nullptr){
 					flag=true;
@@ -403,6 +429,7 @@ void import_scoreboard_toCourse(SchoolYear* &list_year,string year){
 				option=1;
 				continue;
 			}
+<<<<<<< HEAD
 		Student* studentF=nullptr;
 		studentF=Cur_course->student;
 		while(studentF!=nullptr){
@@ -413,6 +440,9 @@ void import_scoreboard_toCourse(SchoolYear* &list_year,string year){
 			studentF->toMark =(studentF->fMark+studentF->midMark)/2.0+studentF->oMark;
 			studentF=studentF->pNext;
 		}
+=======
+		import_score_of_course (Cur_course);
+>>>>>>> 9e9c6cd01ffd683805f975e040d58497fc298825
 		Cur_course->check_course="O";	
 	}
 	else if(option==2){
