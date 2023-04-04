@@ -1,15 +1,18 @@
 #include "lib.h"
 
+bool isFileEmpty(string filename)
+{
+	ifstream file(filename);
+	return file.peek() == ifstream::traits_type::eof();
+}
+
 void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_id)
 {
 	ifstream file;
 	file.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt");
 
 	if (!file.is_open())
-	{
-		cout << "Khong mo duoc file .txt cua course";
 		return;
-	}
 	Student* pCur = pHead;
 	while (!file.eof())
 	{
@@ -53,10 +56,7 @@ void load_student_InClass(Student*& pHead, string class_name)
 	ifstream file;
 	file.open(class_name + ".txt");
 	if (!file.is_open())
-	{
-		cout << "Khong mo duoc file class_name.txt";
 		return;
-	}
 
 	Student* pCur = pHead;
 	while (!file.eof())
@@ -88,12 +88,7 @@ void load_course(Course*& pHead, string schoolYear_name, string semester_name)
 	ifstream file;
 	file.open(schoolYear_name + "\\" + semester_name + "\\courseList.txt");
 	if (!file.is_open())
-	{
-		cout << "Khong mo duoc file courseList.txt" << endl;
 		return;
-	}
-
-
 	Course* pCur = pHead;
 	while (!file.eof())
 	{
@@ -117,6 +112,7 @@ void load_course(Course*& pHead, string schoolYear_name, string semester_name)
 		getline(file, pCur->day_of_week, ',');
 		getline(file, pCur->sessions, '\n');
 
+		pCur->student = nullptr;
 		pCur->pNext = nullptr;
 	}
 	file.close();
@@ -130,9 +126,11 @@ void load_semester(Semester*& pHead, string schoolYear_name)
 	Semester* pCur = pHead;
 	if (!file.is_open())
 	{
-		cout << "Khong mo duoc file semesterList.txt";
+		file.close();
 		return;
 	}
+	if (isFileEmpty(schoolYear_name + "\\semesterList.txt") == true)
+		return;
 	while (!file.eof())
 	{
 		if (pHead == nullptr)
@@ -146,6 +144,7 @@ void load_semester(Semester*& pHead, string schoolYear_name)
 			pCur = pCur->pNext;
 		}
 		file >> pCur->semester_name;
+		pCur->course = nullptr;
 		pCur->pNext = nullptr;
 	}
 	file.close();
@@ -156,10 +155,7 @@ void load_schoolYear(SchoolYear*& pHead)
 	ifstream file;
 	file.open("schoolYearList.txt");
 	if (!file.is_open())
-	{
-		cout << "Khong mo duoc file schoolYearList.txt";
 		return;
-	};
 	SchoolYear* pCur = pHead;
 	while (!file.eof())
 	{
@@ -171,6 +167,7 @@ void load_schoolYear(SchoolYear*& pHead)
 		else
 		{
 			pCur->pNext = new SchoolYear;
+			pCur->semester = nullptr;
 			pCur = pCur->pNext;
 		}
 		file >> pCur->year_name;
@@ -185,10 +182,7 @@ void load_class(Class*& pHead)
 	file.open("classList.txt");
 
 	if (!file.is_open())
-	{
-		cout << "Khong mo duoc classList.txt";
 		return;
-	}
 
 	Class* pCur = pHead;
 	while (!file.eof())
@@ -316,6 +310,9 @@ void load_input(SchoolYear*& pHead_schoolYear, Class*& pHead_class)
 	}*/
 }
 
+
+
+
 void print_student_InClass(Student* pHead, string class_name)
 {
 	ofstream file;
@@ -339,59 +336,80 @@ void print_student_InClass(Student* pHead, string class_name)
 
 void print_student_InCourse(Student* pHead, string schoolYear_name, string semester_name, string course_id)
 {
-	ofstream file;
-	file.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt");
-	while (pHead != nullptr)
+	ifstream check_file_exist;
+	check_file_exist.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt");
+	bool check = 0;
+	if (check_file_exist.is_open())
+		check = 1;
+	check_file_exist.close();
+	if (check == 1)
 	{
-		file << pHead->student_ID << ","
-			<< pHead->first_name << ","
-			<< pHead->last_name << ","
-			<< pHead->gender << ","
-			<< pHead->date_of_birth << ","
-			<< pHead->social_ID << ","
-			<< pHead->score.total_mark << ","
-			<< pHead->score.final_mark << ","
-			<< pHead->score.mid_mark << ","
-			<< pHead->score.other_mark;
-		if (pHead->pNext != nullptr)
-			file << '\n';
-		pHead = pHead->pNext;
+		ofstream file;
+		file.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt");
+		while (pHead != nullptr)
+		{
+			file << pHead->student_ID << ","
+				<< pHead->first_name << ","
+				<< pHead->last_name << ","
+				<< pHead->gender << ","
+				<< pHead->date_of_birth << ","
+				<< pHead->social_ID << ","
+				<< pHead->score.total_mark << ","
+				<< pHead->score.final_mark << ","
+				<< pHead->score.mid_mark << ","
+				<< pHead->score.other_mark;
+			if (pHead->pNext != nullptr)
+				file << '\n';
+			pHead = pHead->pNext;
+		}
+		file.close();
 	}
-	file.close();
 }
 
 void print_course(Course* pHead, string schoolYear_name, string semester_name)
 {
-	ofstream file;
-	file.open(schoolYear_name + "\\" + semester_name + "\\" + "courseList.txt");
-	while (pHead != nullptr)
+	ifstream check_file_exist;
+	check_file_exist.open(schoolYear_name + "\\" + semester_name + "\\" + "courseList.txt");
+	bool check = 0;
+	if (check_file_exist.is_open())
+		check = 1;
+	check_file_exist.close();
+	if (check == 1)
 	{
-		file
-			<< pHead->id << ","
-			<< pHead->course_name << ","
-			<< pHead->class_name << ","
-			<< pHead->teacher_name << ","
-			<< pHead->number_credits << ","
-			<< pHead->number_students << ","
-			<< pHead->day_of_week << ","
-			<< pHead->sessions;
-		if (pHead->pNext != nullptr)
-			file << '\n';
+		ofstream file;
+		file.open(schoolYear_name + "\\" + semester_name + "\\" + "courseList.txt");
+		while (pHead != nullptr)
+		{
+			file
+				<< pHead->id << ","
+				<< pHead->course_name << ","
+				<< pHead->class_name << ","
+				<< pHead->teacher_name << ","
+				<< pHead->number_credits << ","
+				<< pHead->number_students << ","
+				<< pHead->day_of_week << ","
+				<< pHead->sessions;
+			if (pHead->pNext != nullptr)
+				file << '\n';
 
-		pHead = pHead->pNext;
+			pHead = pHead->pNext;
+		}
+		file.close();
 	}
-	file.close();
 }
 
 void print_Semester(Semester* pHead_Semester, string schoolYear_name)
 {
+	string path;
 	ofstream file;
 	file.open(schoolYear_name + "\\" + "semesterList.txt");
 	while (pHead_Semester != nullptr)
 	{
+		path = schoolYear_name + BACKSLASH + pHead_Semester;
 		file << pHead_Semester->semester_name;
 		if (pHead_Semester->pNext != nullptr)
 			file << endl;
+		_mkdir(path.c_str());
 		pHead_Semester = pHead_Semester->pNext;
 	}
 	file.close();
@@ -402,7 +420,7 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 	////-------------------------------------------PRINTTT TO FILE------------------------------------------
 	//Print schoolYear to schoolYearList.txt
 
-	/*ofstream file;
+	ofstream file;
 	file.open("schoolYearlist.txt");
 	SchoolYear* pTemp1 = pHead_schoolYear;
 	while (pHead_schoolYear != nullptr)
@@ -433,9 +451,9 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 			pCur_semester = pCur_semester->pNext;
 		}
 		pHead_schoolYear = pHead_schoolYear->pNext;
-	}*/
+	}
 	////NO BUG IN THESE LINES OF CODE.
-	/*file.open("classList.txt");
+	file.open("classList.txt");
 	Class* pTemp9 = pHead_class;
 	while (pHead_class != nullptr)
 	{
@@ -448,67 +466,67 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 
 	pHead_class = pTemp9;
 	while (pHead_class != nullptr)
-	{*/
-	//Print the elements of class.
-	/*print_student_InClass(pHead_class->student, pHead_class->class_name);
-	pHead_class = pHead_class->pNext;
-}*/
-
-///---------------------------------------------------PRINT TO CONSOLE---------------------------------------------
-	SchoolYear* pHead1 = pHead_schoolYear;
-	while (pHead1 != nullptr)
 	{
-		cout << pHead1->year_name << " ";
-		Semester* pHead2 = pHead1->semester;
-		while (pHead2 != nullptr)
+		//Print the elements of class.
+		print_student_InClass(pHead_class->student, pHead_class->class_name);
+		pHead_class = pHead_class->pNext;
+	}
+
+	///---------------------------------------------------PRINT TO CONSOLE---------------------------------------------
+		/*SchoolYear* pHead1 = pHead_schoolYear;
+		while (pHead1 != nullptr)
 		{
-			cout << pHead2->semester_name << " ";
-			Course* pHead3 = pHead2->course;
-			while (pHead3!= nullptr)
+			cout << pHead1->year_name << " ";
+			Semester* pHead2 = pHead1->semester;
+			while (pHead2 != nullptr)
 			{
-				cout << pHead3->course_name << " ";
-				Student* pHead4 = pHead3->student;
-				while (pHead4 != nullptr)
+				cout << pHead2->semester_name << " ";
+				Course* pHead3 = pHead2->course;
+				while (pHead3!= nullptr)
 				{
+					cout << pHead3->course_name << " ";
+					Student* pHead4 = pHead3->student;
+					while (pHead4 != nullptr)
+					{
+						cout << endl;
+						cout << pHead4->student_ID << " " << pHead4->first_name << " "
+							<< pHead4->last_name << " " << pHead4->gender << " "
+							<< pHead4->date_of_birth << " " << pHead4->social_ID << " "
+							<< pHead4->score.total_mark << " " << pHead4->score.final_mark << " "
+							<< pHead4->score.mid_mark << " " << pHead4->score.other_mark << endl;
+						pHead4 = pHead4->pNext;
+					}
 					cout << endl;
-					cout << pHead4->student_ID << " " << pHead4->first_name << " "
-						<< pHead4->last_name << " " << pHead4->gender << " "
-						<< pHead4->date_of_birth << " " << pHead4->social_ID << " "
-						<< pHead4->score.total_mark << " " << pHead4->score.final_mark << " "
-						<< pHead4->score.mid_mark << " " << pHead4->score.other_mark << endl;
-					pHead4 = pHead4->pNext;
+					pHead3 = pHead3->pNext;
 				}
 				cout << endl;
+				pHead2 = pHead2->pNext;
+			}
+			cout << endl;
+			pHead1 = pHead1->pNext;
+		}
+
+		Class* pHead2 = pHead_class;
+		while (pHead2 != nullptr)
+		{
+			cout << endl;
+			cout << pHead2->class_name << " ";
+			Student* pHead3 = pHead2->student;
+			while (pHead3 != nullptr)
+			{
+				cout << endl;
+				cout << pHead3->student_ID << " "
+					<< pHead3->first_name << " "
+					<< pHead3->last_name << " "
+					<< pHead3->gender << " "
+					<< pHead3->date_of_birth << " "
+					<< pHead3->social_ID << endl;
+
 				pHead3 = pHead3->pNext;
 			}
 			cout << endl;
 			pHead2 = pHead2->pNext;
-		}
-		cout << endl;
-		pHead1 = pHead1->pNext;
-	}
-
-	Class* pHead2 = pHead_class;
-	while (pHead2 != nullptr)
-	{
-		cout << endl;
-		cout << pHead2->class_name << " ";
-		Student* pHead3 = pHead2->student;
-		while (pHead3 != nullptr)
-		{
-			cout << endl;
-			cout << pHead3->student_ID << " "
-				<< pHead3->first_name << " "
-				<< pHead3->last_name << " "
-				<< pHead3->gender << " "
-				<< pHead3->date_of_birth << " "
-				<< pHead3->social_ID << endl;
-
-			pHead3 = pHead3->pNext;
-		}
-		cout << endl;
-		pHead2 = pHead2->pNext;
-	}
+		}*/
 }
 
 void deallocated(SchoolYear*& pHead_schoolYear, Class*& pHead_class)

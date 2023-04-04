@@ -1,93 +1,66 @@
-#include "header.h"
-using namespace std;
-int row(string clas){
-	fstream Student;
-	Student.open(clas,ios::in);
-	int count=0;
-	while(!Student.eof()){
-	string t;	
-	getline(Student,t);
-	count++;
+#include "lib.h"
+#include "password.h"
+#include "staff.h"
+
+Class* Find_Class(Class* pHead)
+{
+	string get_class;
+	cout << "Enter Class: ";
+	cin >> get_class;
+	while (pHead != nullptr && pHead->class_name != get_class)
+		pHead = pHead->pNext;
+
+	if (pHead == nullptr)
+	{
+		cout << "There is no class matching with your typing!!!" << endl;
+		return NULL;
+	}
+	return pHead;
 }
-return count;
-}
-void addStudent(string schoolYear,student &st){
-	string folder="",text="";
-	int x=stoi(schoolYear);
-	x++;	
-	std::string t = std::to_string(x);
-	folder=folder+schoolYear+"-"+t;
-	cout<<folder;
-	text=folder+".txt";
-	fstream InF;
-	InF.open("addStudent.txt",ios::in);
-	if(!InF.fail()){
-		fstream check;
-		check.open(text,ios::in);
-		if(!check.fail()){
-		int choose;	
-		cout<<"\n\t\t\t=========\n\t=Get from your file (0)____Enter from the keyboard (1) =\n\t";
-		cin>>choose;
-		if(choose){
-		cout<<"ID: "; cin>>st.ID;
-		cout<<"First name: "; cin>>st.Fname;
-		cout<<"Last name: "; cin>>st.Lname;
-		cout<<"Gender: ";cin>>st.gender;
-		cout<<"Student class: "; cin>>st.clas;	
-		cout<<"Date of birth year of birth: "<<endl;
-		cout<<"Date: "; cin>>st.date;
-		string sd=st.clas;
-		sd=sd+".txt";
-		folder=folder+"/"+sd;
-		fstream stu;
-		stu.open(folder,ios::in);
-		if(!stu.fail())	{
-			fstream add;
-			add.open(folder,ios::app);
-			add<<"\n"<<row(folder)+1<<" "<<st.ID<<" "<<st.Fname<<" "<<st.Lname<<" "<<" "<<st.gender<<" "<<st.date;
-			cout<<"Add student succesfull!";
-		}	
-		else {
-			cout<<"Class does not exist";	
-				}	
-		}	
-		else{
-			string sd[2];
-			int w=0;
-			while(!InF.eof()){
-				getline(InF,sd[w++]);
-			}
-			sd[0]=sd[0]+".txt";
-			folder=folder+"/"+sd[0];
-			fstream stu;
-			stu.open(folder,ios::in);
-			if(!stu.fail())	{
-			fstream add;
-			add.open(folder,ios::app);
-			add<<"\n"<<row(folder)+1<<" "<<sd[1];
-			cout<<"Add student succesfull!";
-			}	
-			else {
-			cout<<"Class does not exist";	
-				}	
-		}	
+
+void add_Student_To_Class_By_File(Student*& pHead)
+{
+	ifstream file;
+	//The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be addedd
+	//The following next lines are the students information.
+	file.open("addStudentToClass.txt");
+	if (!file.is_open())
+	{
+		cout << "Khong mo duoc file addStudentToClass.txt" << endl;
+		file.close();
+		return;
+	}
+	Student* pCur = nullptr;
+	if (pHead != nullptr)
+	{
+		pCur = pHead;
+		while (pCur->pNext != nullptr)
+			pCur = pCur->pNext;
+	}
+
+	while (!file.eof())
+	{
+		if (pHead == nullptr)
+		{
+			pHead = new Student;
+			pCur = pHead;
 		}
-		else{
-		cout<<"School year does not exist";	
+		else
+		{
+			pCur->pNext = new Student;
+			pCur = pCur->pNext;
 		}
+
+		getline(file, pCur->student_ID, ',');
+		getline(file, pCur->first_name, ',');
+		getline(file, pCur->last_name, ',');
+		getline(file, pCur->gender, ',');
+		getline(file, pCur->date_of_birth, ',');
+		getline(file, pCur->social_ID);
+
+		pCur->pNext = nullptr;
 	}
-else{	
-		InF.open("addStudent.txt",ios::app);
-		cout<<"Please enter student information into the file addStudent.txt";
-	}
-}
-int main(){
-	student st;
-	string year;
-	cout<<"Enter year:";
-	cin>>year;
-	{  
-	addStudent(year,st);
-	}
-	return 0;
+	file.close();
+
+
 }

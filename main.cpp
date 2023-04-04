@@ -4,32 +4,25 @@
 #include "staff.h"
 
 
-
 int main()
 {
-	SchoolYear* pHead = nullptr;
-	load_input(pHead);
+	SchoolYear* pHead_schoolYear = nullptr;
+	Class* pHead_class = nullptr;
 
-
-
-
+	load_input(pHead_schoolYear, pHead_class);
 	char type;
 	string ID;
-	passInfo* headPass;
+	passInfo* headPass = nullptr;
 	ReadPassword(headPass);
-	//login(type, ID, headPass);
-	//edit(ID, headPass);
+	login(type, ID, headPass);
 
-	//if (type == 't')
+	if (type == 't')
 	{
-		menuStaff();
+		menuStaff(pHead_schoolYear, pHead_class);
 	}
 
 
-
-	clear(headPass);
-
-
-
-
+	print_output(pHead_schoolYear, pHead_class);
+	deallocated(pHead_schoolYear, pHead_class);
 	return 0;
+}

@@ -86,6 +86,7 @@ struct passInfo
 	char type;
 	string ID;
 };
+bool isFileEmpty(string filename);
 
 //About loading data
 void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name);
@@ -146,16 +147,20 @@ void Menu_Score_Board(SchoolYear*& list_year, string year); // chỉ cần truy�
 
 void view_scoreboard_toCourse(SchoolYear* &list_year,string year);
 
-
 //Find any semester with specififc schoolyear;
 Semester* Find_Semester(SchoolYear* pHead);
 
 //Find any course with specific schoolyear, semester and courseID.
 Course* Find_Course(SchoolYear* pHead);
 
+Class* Find_Class(Class* pHead);
+
 void add_Student_to_Course_By_File(Student*& pHead);
 
 void add_Student_to_Course_By_Console(Student*& pHead);
 
 void remove_Student_from_Course(Student*& pHead);
+
+void add_Student_To_Class_By_File(Student*& pHead);
+
 #endif

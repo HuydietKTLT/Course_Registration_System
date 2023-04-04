@@ -3,14 +3,14 @@
 
 #include "lib.h"
 
-void menuStaff();
-void createNewSchoolYear();
+void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class);
 void createNewClass();
+void createNewSchoolYear(SchoolYear*& pHead_schoolYear);
 void createClasses(string year, string type,int numberOfClasses);
 string revString(string a);
-bool currentSchoolYear();
-void addCourseMenu();
-void addSemester();
-bool currentSemester();
+SchoolYear* currentSchoolYear(SchoolYear* pHead);
+void addCourseMenu(SchoolYear* pHead_schoolYear);
+void addSemester(Semester* pHead);
+Semester* currentSemester(Semester* pHead);
 
 #endif
