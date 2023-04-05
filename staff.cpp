@@ -19,6 +19,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 		cout << "\n12. Add scores for the current school year.";
 		cout << "\n13. View a list of students in a class";
 		cout << "\n14. View a list of students in a course";
+		cout << "\n15. Export list of students in course to CSV file!";
 		cout << "\n0.Log out";
 		cout << " \nEnter options :";
 		cin >> i;
@@ -102,7 +103,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 			if (pHead == nullptr)
 			{
 				cout << "There is no schoolyear matching with your typing!!!" << endl;
-				return;
+				break;
 			}
 
 			Semester* pCur_Semester = pHead->semester;
@@ -117,7 +118,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 			if (pCur_Semester == nullptr)
 			{
 				cout << "There is no semester matching with your typing !!!" << endl;
-				return;
+				break;
 			}
 
 			Course* pCur_Course = pCur_Semester->course;
@@ -156,6 +157,53 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 				Print_All_Student_In_A_Course(course_print_student->student);
 			break;
 		}
+		case 15:
+		{
+			string get_schoolyear;
+			cout << "Enter School Year: ";
+			cin >> get_schoolyear;
+			SchoolYear* pHead = pHead_schoolYear;
+			while (pHead != nullptr && pHead->year_name != get_schoolyear)
+			{
+				pHead = pHead->pNext;
+			}
+			if (pHead == nullptr)
+			{
+				cout << "There is no schoolyear matching with your typing!!!" << endl;
+				break;
+			}
+
+			Semester* pCur_Semester = pHead->semester;
+			//These code is used for traversing the linked list of Semester, to found the specific Semester.
+			string get_semester;
+			cout << "Enter Semester: ";
+			cin >> get_semester;
+
+			while (pCur_Semester != nullptr && pCur_Semester->semester_name != get_semester)
+				pCur_Semester = pCur_Semester->pNext;
+
+			if (pCur_Semester == nullptr)
+			{
+				cout << "There is no semester matching with your typing !!!" << endl;
+				break;
+			}
+
+			Course* pCur_Course = pCur_Semester->course;
+			cout << "Enter Course ID: ";
+			string get_course_ID;
+			cin >> get_course_ID;
+			while (pCur_Course != nullptr && pCur_Course->id != get_course_ID)
+			{
+				pCur_Course = pCur_Course->pNext;
+			}
+			if (pCur_Course == nullptr)
+			{
+				cout << "There is no course ID matching with your typing !!!" << endl;
+				break;
+			}
+			export_list_of_student_ToCSVFile(pCur_Course->student, pHead->year_name, pCur_Semester->semester_name, pCur_Course->id);
+			break;
+		}
 		default:
 			continue;
 		}
@@ -170,6 +218,7 @@ SchoolYear* currentSchoolYear(SchoolYear* pHead)
 	SchoolYear* currentshoolyear = pHead;
 	while (currentshoolyear->pNext != nullptr)
 		currentshoolyear = currentshoolyear->pNext;
+	cout << currentshoolyear->year_name << endl;
 	return currentshoolyear;
 }
 

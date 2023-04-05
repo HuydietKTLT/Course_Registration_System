@@ -145,38 +145,8 @@ void print_All_Student_In_A_class(Student* pCur)
 	cout << endl;
 }
 
-void Print_All_Student_In_A_Course(Student* pCur)
+void Print_All_Student_In_A_Course_With_score(Student* pCur)
 {
-	cout << left
-		<< setw(13)
-		<< "Student ID| "
-		<< left
-		<< setw(13)
-		<< "First Name| "
-		<< left
-		<< setw(13)
-		<< "Last Name|"
-		<< left
-		<< setw(13)
-		<< "Gender| "
-		<< left
-		<< setw(13)
-		<< "Date of birth| "
-		<< left
-		<< setw(13)
-		<< "Social ID| "
-		<< left
-		<< setw(9)
-		<< "Total mark| "
-		<< left
-		<< setw(9)
-		<< "Final mark|"
-		<< left
-		<< setw(13)
-		<< "Midterm mark|"
-		<< left
-		<< setw(13)
-		<< "Other mark|" << endl;
 	while (pCur != nullptr)
 	{
 		cout
@@ -212,6 +182,51 @@ void Print_All_Student_In_A_Course(Student* pCur)
 
 		pCur = pCur->pNext;
 	}
+}
+
+void Print_All_Student_In_A_Course(Student* pCur)
+{
+	cout << left
+		<< setw(13)
+		<< "Student ID| "
+		<< left
+		<< setw(13)
+		<< "First Name| "
+		<< left
+		<< setw(13)
+		<< "Last Name|"
+		<< left
+		<< setw(13)
+		<< "Gender| "
+		<< left
+		<< setw(13)
+		<< "Date of birth| "
+		<< left
+		<< setw(13)
+		<< "Social ID| " << endl;
+	while (pCur != nullptr)
+	{
+		cout
+			<< setw(13)
+			<< pCur->student_ID << " "
+			<< left
+			<< setw(13)
+			<< pCur->first_name << " "
+			<< left
+			<< setw(13)
+			<< pCur->last_name << " "
+			<< left
+			<< setw(13)
+			<< pCur->gender << " "
+			<< left
+			<< setw(13)
+			<< pCur->date_of_birth << " "
+			<< left
+			<< setw(13)
+			<< pCur->social_ID << " " << endl;
+		pCur = pCur->pNext;
+	}
+
 }
 
 void addCourse(Course*& pHead)
@@ -250,6 +265,29 @@ void addCourse(Course*& pHead)
 	pCur->pNext = nullptr;
 
 	pCur->student = nullptr;
+}
+
+void export_list_of_student_ToCSVFile(Student* pCur, string year_name, string semester_name, string course_id)
+{
+	ofstream file;
+	file.open("student_In_A_Course.txt");
+	file << year_name << endl;
+	file << semester_name << endl;
+	file << course_id << endl;
+	while (pCur != nullptr)
+	{
+		file << pCur->student_ID << ","
+			<< pCur->first_name << ","
+			<< pCur->last_name << ","
+			<< pCur->gender << ","
+			<< pCur->date_of_birth << ","
+			<< pCur->social_ID;
+		if (pCur->pNext != nullptr)
+			file << endl;
+
+		pCur = pCur->pNext;
+	}
+	file.close();
 }
 
 //The pDelete is surely found.

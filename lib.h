@@ -125,6 +125,10 @@ void print_All_Student_In_A_class(Student* pCur);
 
 void Print_All_Student_In_A_Course(Student* pCur);
 
+void Print_All_Student_In_A_Course_With_score(Student* pCur);
+
+void export_list_of_student_ToCSVFile(Student* pCur, string year_name, string semester_name, string course_name);
+
 void addCourse(Course*& pHead);
 
 void deleteCourse(Course*& pHead, Course*& pDelete, string year_name, string semester_name);
