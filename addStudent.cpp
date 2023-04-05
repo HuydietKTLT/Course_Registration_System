@@ -2,17 +2,24 @@
 #include "password.h"
 #include "staff.h"
 
+
 Class* Find_Class(Class* pHead)
 {
+	if (pHead == nullptr)
+	{
+		cout << "There is no class has been created yet!!" << endl << endl;
+		return NULL;
+	}
 	string get_class;
-	cout << "Enter Class: ";
+	cout << "Enter class: ";
 	cin >> get_class;
+
 	while (pHead != nullptr && pHead->class_name != get_class)
 		pHead = pHead->pNext;
 
 	if (pHead == nullptr)
 	{
-		cout << "There is no class matching with your typing!!!" << endl;
+		cout << "There is no class matching with your typing !!" << endl;
 		return NULL;
 	}
 	return pHead;

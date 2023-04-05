@@ -22,7 +22,7 @@ void view_scoreboard_toCourse(SchoolYear* list_year) {
 	cout << "Enter Course: "; cin >> Course;
 	Cur_course = Cur_Semester->course;
 	bool flag = false;
-	while (Cur_course->course_name.compare(Course) != 0) {
+	while (Cur_course->id.compare(Course) != 0) {
 		Cur_course = Cur_course->pNext;
 		if (Cur_course == nullptr) {
 			flag = true;
@@ -52,7 +52,7 @@ void import_score_of_course(Course* z)
 	cout << "Now we import score for each students : " << endl << endl;
 	Student* s = z->student; // from now just use branch Student of this Course
 	while (s != nullptr) {
-		cout << "Student id: " << s->student_ID << "\t" << s->first_name << " " << s->last_name << s->gender << s->date_of_birth << s->social_ID << endl;
+		cout << "Student id: " << s->student_ID << " " << s->first_name << " " << s->last_name << " " << s->gender << " " << s->date_of_birth << " " <<  s->social_ID << endl;
 		cout << "Midterm mark:"; cin >> s->score.mid_mark;
 		cout << "Final mark:"; cin >> s->score.final_mark;
 		cout << "Other mark:"; cin >> s->score.other_mark;
@@ -98,7 +98,7 @@ void Menu_Score_Board(SchoolYear* list_year)
 				string Course;
 				cout << "Enter Course: "; cin >> Course;
 				Cur_course = Cur_Semester->course;
-				while (Cur_course->course_name.compare(Course) != 0) {
+				while (Cur_course->id.compare(Course) != 0) {
 					Cur_course = Cur_course->pNext;
 					if (Cur_course == nullptr) {
 						flag = true;
@@ -120,7 +120,7 @@ void Menu_Score_Board(SchoolYear* list_year)
 					studentF = studentF->pNext;
 				}
 				F.close();
-				cout << "Created a file containing the information of the course: " << pCur->semester->course->course_name << " , Please enter your score into the file (enter 0 = agree): ";
+				cout << "Created a file containing the information of the course: " << Cur_course->id << " , Please enter your score into the file (enter 0 = agree): ";
 				cin >> yes;
 				if (yes != "0") remove("import_scoreboard.txt");
 				else {
@@ -187,7 +187,7 @@ void Menu_Score_Board(SchoolYear* list_year)
 			string Course;
 			cout << "Enter Course: "; cin >> Course;
 			Cur_course = Cur_Semester->course;
-			while (Cur_course->course_name.compare(Course) != 0) {
+			while (Cur_course->id.compare(Course) != 0) {
 				Cur_course = Cur_course->pNext;
 			}
 			if (Cur_course == nullptr) {

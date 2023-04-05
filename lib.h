@@ -119,9 +119,15 @@ void deallocated(SchoolYear*& pHead_schoolYear, Class*& pHead_class);
 //Working with courses.
 void print_All_CourseToConsole(SchoolYear* pHead_schoolYear);
 
+void print_All_ClassToConsole(Class* pHead_class);
+
+void print_All_Student_In_A_class(Student* pCur);
+
+void Print_All_Student_In_A_Course(Student* pCur);
+
 void addCourse(Course*& pHead);
 
-void deleteCourse(Course*& pHead, Course*& pDelete);
+void deleteCourse(Course*& pHead, Course*& pDelete, string year_name, string semester_name);
 
 void update_course_ID(Course*& pCur);
 

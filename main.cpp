@@ -16,10 +16,16 @@ int main()
 	ReadPassword(headPass);
 	login(type, ID, headPass);
 
+
 	if (type == 't')
 	{
 		menuStaff(pHead_schoolYear, pHead_class);
 	}
+	else if (type == 's')
+	{
+
+	}
+
 
 
 	print_output(pHead_schoolYear, pHead_class);

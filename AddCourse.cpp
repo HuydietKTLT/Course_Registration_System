@@ -1,4 +1,7 @@
 #include "lib.h"
+#include "menuScore.h"
+#include "password.h"
+#include "staff.h"
 
 void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 {
@@ -36,8 +39,7 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 				<< setw(17)
 				<< "Day of the week| "
 				<< setw(15)
-				<< "Session|";
-			cout << endl;
+				<< "Session|" << endl;
 			Course* pHead3 = pHead2->course;
 			while (pHead3 != nullptr)
 			{
@@ -75,6 +77,141 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 		pHead1 = pHead1->pNext;
 	}
 
+}
+
+void print_All_ClassToConsole(Class* pHead_class)
+{
+	/*if (pHead_class == nullptr)
+	{
+		cout "There is no class has been created yet" << endl;
+		return;
+	}*/
+	Class* pHead2 = pHead_class;
+	while (pHead2 != nullptr)
+	{
+		cout << pHead2->class_name << endl;
+		pHead2 = pHead2->pNext;
+	}
+	cout << endl;
+}
+
+void print_All_Student_In_A_class(Student* pCur)
+{
+	if (pCur == nullptr)
+	{
+		cout << "There is no students have been added yet!" << endl;
+		return;
+	}
+	cout << left
+		<< setw(15)
+		<< "Student ID| "
+		<< left
+		<< setw(15)
+		<< "First Name| "
+		<< left
+		<< setw(15)
+		<< "Last Name|"
+		<< left
+		<< setw(15)
+		<< "Gender| "
+		<< left
+		<< setw(17)
+		<< "Date of birth| "
+		<< left
+		<< setw(15)
+		<< "Social ID| " << endl;
+	while (pCur != nullptr)
+	{
+		cout << left
+			<< setw(15)
+			<< pCur->student_ID << " "
+			<< left
+			<< setw(15)
+			<< pCur->first_name << " "
+			<< left
+			<< setw(15)
+			<< pCur->last_name << " "
+			<< left
+			<< setw(15)
+			<< pCur->gender << " "
+			<< left
+			<< setw(15)
+			<< pCur->date_of_birth << " "
+			<< left
+			<< setw(15)
+			<< pCur->social_ID << endl;
+		pCur = pCur->pNext;
+	}
+	cout << endl;
+}
+
+void Print_All_Student_In_A_Course(Student* pCur)
+{
+	cout << left
+		<< setw(13)
+		<< "Student ID| "
+		<< left
+		<< setw(13)
+		<< "First Name| "
+		<< left
+		<< setw(13)
+		<< "Last Name|"
+		<< left
+		<< setw(13)
+		<< "Gender| "
+		<< left
+		<< setw(13)
+		<< "Date of birth| "
+		<< left
+		<< setw(13)
+		<< "Social ID| "
+		<< left
+		<< setw(9)
+		<< "Total mark| "
+		<< left
+		<< setw(9)
+		<< "Final mark|"
+		<< left
+		<< setw(13)
+		<< "Midterm mark|"
+		<< left
+		<< setw(13)
+		<< "Other mark|" << endl;
+	while (pCur != nullptr)
+	{
+		cout
+			<< setw(13)
+			<< pCur->student_ID << " "
+			<< left
+			<< setw(13)
+			<< pCur->first_name << " "
+			<< left
+			<< setw(13)
+			<< pCur->last_name << " "
+			<< left
+			<< setw(13)
+			<< pCur->gender << " "
+			<< left
+			<< setw(13)
+			<< pCur->date_of_birth << " "
+			<< left
+			<< setw(13)
+			<< pCur->social_ID << " "
+			<< left
+			<< setw(9)
+			<< pCur->score.total_mark << " "
+			<< left
+			<< setw(9)
+			<< pCur->score.final_mark << " "
+			<< left
+			<< setw(13)
+			<< pCur->score.mid_mark << " "
+			<< left
+			<< setw(13)
+			<< pCur->score.other_mark << endl;
+
+		pCur = pCur->pNext;
+	}
 }
 
 void addCourse(Course*& pHead)
@@ -116,7 +253,7 @@ void addCourse(Course*& pHead)
 }
 
 //The pDelete is surely found.
-void deleteCourse(Course*& pHead, Course*& pDelete)
+void deleteCourse(Course*& pHead, Course*& pDelete, string year_name, string semester_name)
 {
 	if (pHead == nullptr)
 	{
@@ -125,33 +262,45 @@ void deleteCourse(Course*& pHead, Course*& pDelete)
 	}
 
 	Course* pCur = pHead;
-	while (pCur->pNext != pDelete)
-		pCur = pCur->pNext;
-	//If found, delete the Node of course in the linked list
-	Course* pTemp = pCur->pNext->pNext;
-	delete pCur->pNext;
-	pCur->pNext = pTemp;
-	pTemp = nullptr;
-	pCur = nullptr;
-	/*Course* pCur = pHead;
-	Course* pPrevCur = pHead;
+	if (pHead == pDelete)
+	{
+		pHead = pHead->pNext;
+		while (pCur->student != nullptr)
+		{
+			Student* pTemp1 = pCur->student;
+			pCur->student = pCur->student->pNext;
+			delete pTemp1;
+		}
+		string path;
+		path = year_name + BACKSLASH + semester_name + BACKSLASH + pCur->id + ".txt";
+		remove(path.c_str());
+		delete pCur;
+		pCur = nullptr;
 
-	while (pCur != nullptr && pCur->id != pX->)
+			
+		return;
+	}
+	Course* pPrevCur = pHead;
+	while (pCur != nullptr && pCur != pDelete)
 	{
 		pPrevCur = pCur;
 		pCur = pCur->pNext;
 	}
-	if (pCur != nullptr)
+	//If found, delete the Node of course in the linked list
+	pPrevCur->pNext = pCur->pNext;
+	string path;
+	path = year_name + BACKSLASH + semester_name + BACKSLASH + pCur->id + ".txt";
+	remove(path.c_str());
+	//Delete the pointer student of a course
+	while (pCur->student != nullptr)
 	{
-		if (temp == pHead)
-			pHead = temp->pNext;
-		else
-			temp->pNext = pCur->pNext;
-		delete temp;
-		temp = nullptr;
-		pCur = nullptr;
-		return;
-	}*/
+		Student* pTemp1 = pCur->student;
+		pCur->student = pCur->student->pNext;
+		delete pTemp1;
+	}
+	delete pCur;
+	pPrevCur = nullptr;
+	pCur = nullptr;
 }
 
 void update_course_ID(Course*& pCur)
@@ -283,8 +432,8 @@ void update_Course(Course*& pCur)
 			break;
 		case 0:
 		{
-		cout << "Finish updating!!!";
-		return;
+			cout << "Finish updating!!!";
+			return;
 		}
 		default:
 			continue;
@@ -360,8 +509,6 @@ Course* Find_Course(SchoolYear* pHead)
 	cout << "Enter Course ID: ";
 	string get_course_ID;
 	cin >> get_course_ID;
-
-
 	while (pCur_Course != nullptr && pCur_Course->id != get_course_ID)
 	{
 		pCur_Course = pCur_Course->pNext;
@@ -434,10 +581,10 @@ void add_Student_to_Course_By_File(Student*& pHead)
 }
 
 void add_Student_to_Course_By_Console(Student*& pHead)
-{	
+{
 	Student* pCur = nullptr;
 	if (pHead != nullptr)
-		 pCur = pHead;
+		pCur = pHead;
 
 	if (pHead == nullptr)
 	{
