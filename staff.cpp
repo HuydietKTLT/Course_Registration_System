@@ -36,7 +36,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 			break;
 		case 5:
 			if (current_schoolyear != nullptr)
-				Menu_Score_Board(current_schoolyear);
+				Menu_Score_Board(pHead_schoolYear);
 			else
 
 				break;
@@ -51,12 +51,10 @@ SchoolYear* currentSchoolYear(SchoolYear* pHead)
 {
 	if (pHead == nullptr) return NULL;
 	cout << "-------------------------------------------\n";
-	string currentshoolyear;
-	while (pHead->pNext != nullptr)
-		pHead = pHead->pNext;
-	currentshoolyear = pHead->year_name;
-	cout << "Current school year: " << currentshoolyear << '\n';
-	return pHead;
+	SchoolYear* currentshoolyear=pHead;
+	while (currentshoolyear->pNext != nullptr)
+		currentshoolyear = currentshoolyear->pNext;
+	return currentshoolyear;
 }
 
 //print current semester to screen
@@ -97,19 +95,16 @@ void createNewSchoolYear(SchoolYear*& pHead)
 		SchoolYear* pCur = nullptr;
 		if (pHead == nullptr)
 		{
-			pHead = new SchoolYear;
+			pHead = new SchoolYear();
 			pCur = pHead;
 		}
 		else
-			pCur = pHead;
-		while (pCur != nullptr && pCur->pNext != nullptr)
+		  pCur = pHead;
+		while (pCur->pNext != nullptr )
 			pCur = pCur->pNext;
-		if (pHead->pNext != nullptr)
-		{
-			pCur->pNext = new SchoolYear;
+			pCur->pNext = new SchoolYear();
 			pCur = pCur->pNext;
-		}
-		pCur->year_name = year;
+			pCur->year_name = year;
 		pCur->semester = nullptr;
 		pCur->pNext = nullptr;
 		cout << "New school year created successfully.\n";
@@ -161,8 +156,26 @@ void createClasses(string year, string type, int numberOfClasses)
 		file.open(year + type + ID + ".txt");
 		file.close();
 	}
-}
 
+	/*string ID = "0", yearschool;
+	ifstream fi;
+	fi.open("currentschoolyear.txt");
+	fi >> yearschool;
+	fi.close();
+	ofstream fo;
+	year = yearschool + "\\" + year;
+	year = yearschool + type;
+	for (int i = 1; i <= numberOfClasses; i++)
+	{
+		int k = atoi(ID.c_str()) + 1;
+		ID = to_string(k);
+		if (ID.length() == 1)
+			ID = "0" + ID;
+		string classes = year + ID + ".txt";
+		fo.open(classes);
+		fo.close();
+	}*/
+}
 //add new course menu
 void addCourseMenu(SchoolYear* pHead_schoolYear)
 {
@@ -204,7 +217,26 @@ void addCourseMenu(SchoolYear* pHead_schoolYear)
 		}
 	}
 }
-
+void add_semester(Semester*& pHead, string semester)
+{
+	if(pHead==nullptr) {
+	pHead=new Semester();
+	Semester* pTail = pHead;
+	pTail->course = nullptr;
+	pTail->semester_name = semester;
+	pTail->pNext = nullptr;
+	}
+	else{
+	Semester* pTail = pHead;	
+	while (pTail->pNext != nullptr )
+	pTail = pTail->pNext;
+	pTail->pNext = new Semester();
+	pTail=	pTail->pNext;
+	pTail->course = nullptr;
+	pTail->semester_name = semester;
+	pTail->pNext= nullptr;
+	}
+}
 //add new semester
 void addSemester(Semester*& pHead)
 {
@@ -245,25 +277,14 @@ void addSemester(Semester*& pHead)
 
 bool check_semester(Semester* pHead, string semester)
 {
-	if (pHead == nullptr) return false;
-	while (pHead != nullptr && pHead->semester_name != semester)
+	if(pHead==nullptr) return true;
+	while (pHead != nullptr ){
+		if(pHead->semester_name.compare(semester)==0){
+			return false;
+		}
 		pHead = pHead->pNext;
-	if (pHead == nullptr)
-		return false;
+	}
 	return true;
-}
-
-void add_semester(Semester*& pHead, string semester)
-{
-	Semester* pTail = pHead;
-	while (pTail != nullptr && pTail->pNext != nullptr)
-		pTail = pTail->pNext;
-
-	pTail->pNext = new Semester;
-	pTail = pTail->pNext;
-	pTail->course = nullptr;
-	pTail->semester_name = semester;
-	pTail->pNext = nullptr;
 }
 
 
