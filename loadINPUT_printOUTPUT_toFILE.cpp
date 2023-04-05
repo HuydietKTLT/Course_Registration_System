@@ -13,6 +13,8 @@ void load_student_InCourse(Student*& pHead, string schoolYear_name, string semes
 
 	if (!file.is_open())
 		return;
+	if (isFileEmpty(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt"))
+		return;
 	Student* pCur = pHead;
 	while (!file.eof())
 	{
@@ -57,7 +59,8 @@ void load_student_InClass(Student*& pHead, string class_name)
 	file.open(class_name + ".txt");
 	if (!file.is_open())
 		return;
-
+	if (isFileEmpty(class_name + ".txt"))
+		return;
 	Student* pCur = pHead;
 	while (!file.eof())
 	{
@@ -88,6 +91,8 @@ void load_course(Course*& pHead, string schoolYear_name, string semester_name)
 	ifstream file;
 	file.open(schoolYear_name + "\\" + semester_name + "\\courseList.txt");
 	if (!file.is_open())
+		return;
+	if (isFileEmpty(schoolYear_name + "\\" + semester_name + "\\courseList.txt"))
 		return;
 	Course* pCur = pHead;
 	while (!file.eof())
@@ -156,6 +161,8 @@ void load_schoolYear(SchoolYear*& pHead)
 	file.open("schoolYearList.txt");
 	if (!file.is_open())
 		return;
+	if (isFileEmpty("schoolYearList.txt"))
+		return;
 	SchoolYear* pCur = pHead;
 	while (!file.eof())
 	{
@@ -167,10 +174,10 @@ void load_schoolYear(SchoolYear*& pHead)
 		else
 		{
 			pCur->pNext = new SchoolYear;
-			pCur->semester = nullptr;
 			pCur = pCur->pNext;
 		}
 		file >> pCur->year_name;
+		pCur->semester = nullptr;
 		pCur->pNext = nullptr;
 	}
 	file.close();
@@ -365,34 +372,27 @@ void print_student_InCourse(Student* pHead, string schoolYear_name, string semes
 
 void print_course(Course* pHead, string schoolYear_name, string semester_name)
 {
-	ifstream check_file_exist;
-	check_file_exist.open(schoolYear_name + "\\" + semester_name + "\\" + "courseList.txt");
-	bool check = 0;
-	if (check_file_exist.is_open())
-		check = 1;
-	check_file_exist.close();
-	if (check == 1)
-	{
-		ofstream file;
-		file.open(schoolYear_name + "\\" + semester_name + "\\" + "courseList.txt");
-		while (pHead != nullptr)
-		{
-			file
-				<< pHead->id << ","
-				<< pHead->course_name << ","
-				<< pHead->class_name << ","
-				<< pHead->teacher_name << ","
-				<< pHead->number_credits << ","
-				<< pHead->number_students << ","
-				<< pHead->day_of_week << ","
-				<< pHead->sessions;
-			if (pHead->pNext != nullptr)
-				file << '\n';
 
-			pHead = pHead->pNext;
-		}
-		file.close();
+	ofstream file;
+	file.open(schoolYear_name + "\\" + semester_name + "\\" + "courseList.txt");
+	while (pHead != nullptr)
+	{
+		file
+			<< pHead->id << ","
+			<< pHead->course_name << ","
+			<< pHead->class_name << ","
+			<< pHead->teacher_name << ","
+			<< pHead->number_credits << ","
+			<< pHead->number_students << ","
+			<< pHead->day_of_week << ","
+			<< pHead->sessions;
+		if (pHead->pNext != nullptr)
+			file << '\n';
+
+		pHead = pHead->pNext;
 	}
+	file.close();
+
 }
 
 void print_Semester(Semester* pHead_Semester, string schoolYear_name)
@@ -402,7 +402,7 @@ void print_Semester(Semester* pHead_Semester, string schoolYear_name)
 	file.open(schoolYear_name + "\\" + "semesterList.txt");
 	while (pHead_Semester != nullptr)
 	{
-		path = schoolYear_name + BACKSLASH + pHead_Semester;
+		path = schoolYear_name + BACKSLASH + pHead_Semester->semester_name;
 		file << pHead_Semester->semester_name;
 		if (pHead_Semester->pNext != nullptr)
 			file << endl;

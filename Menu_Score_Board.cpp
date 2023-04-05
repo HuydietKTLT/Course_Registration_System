@@ -43,6 +43,7 @@ void view_scoreboard_toCourse(SchoolYear* list_year) {
 		studentF = studentF->pNext;
 	}
 }
+
 void import_score_of_course(Course* z)
 {
 	cout << "Course information: " << endl;
@@ -62,7 +63,6 @@ void import_score_of_course(Course* z)
 		s = s->pNext;
 	}
 }
-
 
 void Menu_Score_Board(SchoolYear* list_year)
 {
