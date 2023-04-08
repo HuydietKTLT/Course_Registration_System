@@ -45,26 +45,6 @@ void viewScore (Course *course)
     }
 }
 
-void clear(passInfo*& readfile)
-{
-    ofstream fo;
-    fo.open("password.txt");
-    passInfo* cur = readfile;
-    while (cur->next != nullptr)
-    {
-        fo << cur->login << ' ' << cur->password << ' ' << cur->type << ' ' << cur->ID << '\n';
-        cur = cur->next;
-    }
-    fo.close();
-    passInfo* temp;
-    while (readfile != nullptr)
-    {
-        temp = readfile;
-        readfile = readfile->next;
-        delete temp;
-    }
-}
-
 void updateScoreForStudent (Course  *course)
 {
     Student *s = course->student;
