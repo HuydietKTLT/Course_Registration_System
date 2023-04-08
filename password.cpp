@@ -11,7 +11,7 @@ bool LoginCheck(string login, string password, char& type, string& ID, passInfo*
         if (password == readfile->password && login == readfile->login)
         {
             type = readfile->type;
-            ID = readfile->ID;
+            ID = readfile->login;
             return true;
         }
         readfile = readfile->next;
@@ -23,12 +23,22 @@ bool LoginCheck(string login, string password, char& type, string& ID, passInfo*
 void login(char& type, string& ID, passInfo* readfile)
 {
     string login, password;
-    cout << "Enter your account name: ";
-    cin >> login;
-    cout << "Enter your password: ";
-    password = pass();
-    if (LoginCheck(login, password, type, ID, readfile) == true)
-        cout << "Login successful! " << type << " " << ID << endl;
+    while (true)
+    {
+        cout << "Enter your account name:0 to exit\n";
+        cout << "Enter your account name: ";
+        cin >> login;
+        cout << "Enter your password: ";
+        password = pass();
+        if (login == "0")
+        {   
+            clear(readfile);
+            exit(0);
+        }
+        if (LoginCheck(login, password, type, ID, readfile) == true)
+            break;
+        cout << "Fail successful! Please try again.\n";
+    }
 }
 //Edit password menu
 void edit(string ID, passInfo*& readfile)
@@ -69,7 +79,7 @@ void ReadPassword(passInfo*& readfile)
     {
         temp = new passInfo;
         temp->next = nullptr;
-        fi >> temp->login >> temp->password >> temp->type >> temp->ID;
+        fi >> temp->login >> temp->password >> temp->type;
         cur->next = temp;
         cur = cur->next;
     }
@@ -86,7 +96,7 @@ void clear(passInfo*& readfile)
     passInfo* cur = readfile;
     while (cur->next != nullptr)
     {
-        fo << cur->login << ' ' << cur->password << ' ' << cur->type << ' ' << cur->ID << '\n';
+        fo << cur->login << ' ' << cur->password << ' ' << cur->type << ' ' << '\n';
         cur = cur->next;
     }
     fo.close();
@@ -115,7 +125,7 @@ bool doTheEdit(string login, string password, string ID, passInfo*& head)
     readfile = head;
     while (readfile != nullptr)
     {
-        if (readfile->ID == ID)
+        if (readfile->login == ID)
         {
             readfile->login = login;
             readfile->password = password;

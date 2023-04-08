@@ -84,7 +84,6 @@ struct passInfo
 	string login;
 	string password;
 	char type;
-	string ID;
 };
 bool isFileEmpty(string filename);
 
