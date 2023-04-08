@@ -16,7 +16,8 @@ int main()
 	ReadPassword(headPass);
 	login(type, ID, headPass);
 
-
+	cout << "Type: " << type << endl;
+	cout << "ID: " << ID << endl;
 	if (type == 't')
 	{
 		menuStaff(pHead_schoolYear, pHead_class);
@@ -27,7 +28,7 @@ int main()
 	}
 
 
-
+	clear(headPass);
 	print_output(pHead_schoolYear, pHead_class);
 	deallocated(pHead_schoolYear, pHead_class);
 	return 0;
