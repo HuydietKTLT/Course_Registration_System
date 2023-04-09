@@ -1,8 +1,7 @@
-#include "staff.h"
-#include "password.h"
 #include "lib.h"
-#include "menuScore.h"
+
 //Temp Menu for staff
+
 void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &headPass)
 {
 	int i;

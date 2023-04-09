@@ -1,7 +1,4 @@
 #include "lib.h"
-#include "menuScore.h"
-#include "password.h"
-#include "staff.h"
 
 void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 {

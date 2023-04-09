@@ -1,7 +1,4 @@
 #include "lib.h"
-#include "password.h"
-#include "staff.h"
-
 
 Class* Find_Class(Class* pHead)
 {

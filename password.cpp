@@ -1,4 +1,4 @@
-#include "password.h"
+#include "lib.h"
 
 //Set the max length of the password
 const int max_value = 20;

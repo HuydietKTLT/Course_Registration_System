@@ -165,9 +165,57 @@ void add_Student_to_Course_By_Console(Student*& pHead);
 
 void remove_Student_from_Course(Student*& pHead);
 
+///////////////////////////////////////////////////////////
 ////////void add_Student_To_Class_By_File(Student*& pHead);
+///////////////////////////////////////////////////////////
 
 void add_Student_to_Course_By_File(Student*& pHead);
+
+//staff menu
+
+void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &headPass);
+
+void createNewClass(Class*& pHead);
+
+void createNewSchoolYear(SchoolYear*& pHead_schoolYear);
+
+string revString(string a);
+
+SchoolYear* currentSchoolYear(SchoolYear* pHead);
+
+void addSemesterMenu(SchoolYear* pHead_schoolYear);
+
+void addSemester(Semester* &pHead);
+
+bool check_semester(Semester* pHead, string semester);
+
+void add_semester(Semester*& pHead, string semester);
+
+Semester* currentSemester(Semester* pHead);
+
+//password
+
+bool LoginCheck(string login, string password, char& type, string& ID, passInfo* readfile);
+
+void login(char& type, string& ID, passInfo* readfile);
+
+void edit(string ID, passInfo*& readfile);
+
+bool doTheEdit(string password, string ID, passInfo*& head);
+
+string pass();
+
+void clear(passInfo*& readfile);
+
+void ReadPassword(passInfo*& readfile);
+
+//Menu Scoreboard
+
+void view_scoreboard_toCourse(SchoolYear* list_year);
+
+void import_score_of_course(Course* z);
+
+void Menu_Score_Board(SchoolYear* list_year);
 
 //Utility functions
 

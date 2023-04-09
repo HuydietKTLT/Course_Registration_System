@@ -2,8 +2,7 @@
 #define _MENUSCORE_H_
 
 #include "lib.h"
-#include "password.h"
-#include "staff.h"
+
 
 void view_scoreboard_toCourse(SchoolYear* list_year);
 void import_score_of_course(Course* z);

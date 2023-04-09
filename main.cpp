@@ -1,7 +1,5 @@
 
 #include "lib.h"
-#include "password.h"
-#include "staff.h"
 
 
 int main()
