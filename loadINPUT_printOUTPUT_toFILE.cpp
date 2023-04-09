@@ -37,16 +37,19 @@ void load_student_InCourse(Student*& pHead, string schoolYear_name, string semes
 
 		string temp;
 		getline(file, temp, ',');
-		pCur->score.total_mark = stof(temp);
+		pCur->score.total_mark = float_one_point_round(stf(temp));
 
 		getline(file, temp, ',');
-		pCur->score.final_mark = stof(temp);
+		pCur->score.final_mark = float_one_point_round(stf(temp));
 
 		getline(file, temp, ',');
-		pCur->score.mid_mark = stof(temp);
+		pCur->score.mid_mark = float_one_point_round(stf(temp));
+
+		getline(file, temp, ',');
+		pCur->score.other_mark = float_one_point_round(stf(temp));
 
 		getline(file, temp, '\n');
-		pCur->score.other_mark = stof(temp);
+		pCur->score.bonus_mark = float_one_point_round(stf(temp));
 
 		pCur->pNext = nullptr;
 	}
@@ -115,8 +118,15 @@ void load_course(Course*& pHead, string schoolYear_name, string semester_name)
 		getline(file, pCur->number_credits, ',');
 		getline(file, pCur->number_students, ',');
 		getline(file, pCur->day_of_week, ',');
-		getline(file, pCur->sessions, '\n');
+		getline(file, pCur->sessions, ',');
 
+		string s;
+		getline(file, s, ',');
+		pCur->final = stf(s);
+		getline(file, s, ',');
+		pCur->midterm = stf(s);
+		getline(file, s, '\n');
+		pCur->other = stf(s);
 		pCur->student = nullptr;
 		pCur->pNext = nullptr;
 	}
@@ -350,7 +360,7 @@ void print_student_InCourse(Student* pHead, string schoolYear_name, string semes
 	{
 		ofstream file;
 		file.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt");
-		while (pHead != nullptr)
+		while (pHead != nullptr && pHead->student_ID != "")
 		{
 			file << pHead->student_ID << ","
 				<< pHead->first_name << ","
@@ -361,7 +371,8 @@ void print_student_InCourse(Student* pHead, string schoolYear_name, string semes
 				<< pHead->score.total_mark << ","
 				<< pHead->score.final_mark << ","
 				<< pHead->score.mid_mark << ","
-				<< pHead->score.other_mark;
+				<< pHead->score.other_mark << ","
+				<< pHead->score.bonus_mark;
 			if (pHead->pNext != nullptr)
 				file << '\n';
 			pHead = pHead->pNext;
@@ -375,7 +386,7 @@ void print_course(Course* pHead, string schoolYear_name, string semester_name)
 
 	ofstream file;
 	file.open(schoolYear_name + "\\" + semester_name + "\\" + "courseList.txt");
-	while (pHead != nullptr)
+	while (pHead != nullptr && pHead->id != "")
 	{
 		file
 			<< pHead->id << ","
@@ -385,7 +396,10 @@ void print_course(Course* pHead, string schoolYear_name, string semester_name)
 			<< pHead->number_credits << ","
 			<< pHead->number_students << ","
 			<< pHead->day_of_week << ","
-			<< pHead->sessions;
+			<< pHead->sessions << ","
+			<< pHead->final << ","
+			<< pHead->midterm << ","
+			<< pHead->other;	
 		if (pHead->pNext != nullptr)
 			file << '\n';
 

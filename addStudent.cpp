@@ -80,7 +80,7 @@ void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass)
 		getline(file, pCur->social_ID);
 
 		pCurPass->login = pCur->student_ID;
-		pCurPass->password = "1234";
+		pCurPass->password = "123";
 		pCurPass->type = 's';
 		
 		pCurPass->next = nullptr;

@@ -1,8 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define BACKSLASH '\\'
 
-#ifndef _ADDCOURSE_H_
-#define _ADDCOURSE_H_
+#ifndef _LIB_H_
+#define _LIB_H_
 
 
 #include <iostream>
@@ -25,6 +25,7 @@ struct Score {
 	float final_mark = 0;
 	float mid_mark = 0;
 	float other_mark = 0;
+	float bonus_mark = 0;
 };
 
 
@@ -51,7 +52,9 @@ struct Course
 	string teacher_name;
 	string day_of_week;
 	string sessions;
-
+	float final = 0.5;
+	float midterm = 0.4;
+	float other = 0.1;
 	Student* student;
 	Course* pNext;
 };
@@ -111,7 +114,6 @@ void print_course(Course* pHead, string schoolYear_name, string Semester_name);
 void print_Semester(Semester* pHead_Semester, string Schoolyear_name);
 
 void print_output(SchoolYear* pHead_SchoolYear, Class* pHead_class);
-
 
 void deallocated(SchoolYear*& pHead_schoolYear, Class*& pHead_class);
 
@@ -219,6 +221,10 @@ void Menu_Score_Board(SchoolYear* list_year);
 
 //Utility functions
 
+float float_one_point_round(float value);
+
 void clrscr();
+
+float stf(string str);
 
 #endif

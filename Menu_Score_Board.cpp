@@ -1,7 +1,5 @@
-#include "menuScore.h"
 #include "lib.h"
-#include "password.h"
-#include "staff.h"
+
 
 void view_scoreboard_toCourse(SchoolYear* list_year) {
 	SchoolYear* pCur = list_year;
@@ -64,7 +62,11 @@ void view_scoreboard_toCourse(SchoolYear* list_year) {
 		<< "Midterm mark|"
 		<< left
 		<< setw(13)
-		<< "Other mark|" << endl;
+		<< "Other mark|" 
+		<< left
+		<< setw(13)
+		<< "Bonus mark|"
+		<< endl;
 	cout << setfill('-');
 	cout << setw(80) << '-' << endl;
 	cout << setfill(' ');
@@ -99,7 +101,10 @@ void view_scoreboard_toCourse(SchoolYear* list_year) {
 			<< studentF->score.mid_mark << " "
 			<< left
 			<< setw(13)
-			<< studentF->score.other_mark << endl;
+			<< studentF->score.other_mark << " "
+			<< left
+			<< setw(13)
+			<< studentF->score.bonus_mark << endl;
 		studentF = studentF->pNext;
 	}
 }
@@ -116,9 +121,13 @@ void import_score_of_course(Course* z)
 		cout << "Midterm mark:"; cin >> s->score.mid_mark;
 		cout << "Final mark:"; cin >> s->score.final_mark;
 		cout << "Other mark:"; cin >> s->score.other_mark;
+		cout << "Bonus mark:"; cin >> s->score.bonus_mark;
 
-		// just assume the logic math calculate, staff can fix it
-		s->score.total_mark = (s->score.final_mark * 2 + s->score.mid_mark) / 3 + s->score.other_mark;
+		// just assume the logic math calculate, staff can fix it 
+		float f = z-> final / 100;
+		float m = z-> midterm / 100;
+		float o = z-> other / 100;
+		s->score.total_mark = (s->score.final_mark * f + s->score.mid_mark * m + s->score.other_mark *o) + s->score.bonus_mark;
 		cout << "Total mark is: " << s->score.total_mark;
 		s = s->pNext;
 	}

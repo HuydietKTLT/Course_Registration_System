@@ -35,8 +35,13 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 				<< left
 				<< setw(17)
 				<< "Day of the week| "
+				<< left
 				<< setw(15)
-				<< "Session|" << endl;
+				<< "Session| " 
+				<< left
+				<< setw(30)
+				<< "Percentage of score: M, F, O|"
+				<< endl;
 			Course* pHead3 = pHead2->course;
 			while (pHead3 != nullptr)
 			{
@@ -62,9 +67,13 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 					<< left
 					<< setw(17)
 					<< pHead3->day_of_week
+					<< left
 					<< setw(15)
-					<< pHead3->sessions;
-				cout << endl;
+					<< pHead3->sessions
+					<< left
+					<< setw(30)
+					<< pHead3->midterm << ", " << pHead3->final << ", " << pHead3->other
+					<< endl;
 				pHead3 = pHead3->pNext;
 			}
 			cout << endl;
@@ -259,6 +268,16 @@ void addCourse(Course*& pHead)
 	cout << "Enter session" << endl;
 	cout << "S1(07:30) -- S2 (09:30) -- S3(13:30) -- S4(15:30): ";
 	cin >> pCur->sessions;
+	pCur->other = -1;
+	while(pCur->other < 0)
+	{
+		cout << "The percentage of point form the midterm exam and final exam:  ";
+		cin >> pCur->midterm >> pCur->final;
+		pCur->other = 100 - pCur->midterm - pCur->final;
+		if(pCur->other < 0)
+			cout << "The percentage of point form the other exam is not valid" << endl;
+	}
+
 	pCur->pNext = nullptr;
 
 	pCur->student = nullptr;
@@ -412,6 +431,20 @@ void update_session(Course*& pCur)
 	cout << "Update successfully!" << endl;
 }
 
+void update_percentage(Course*& pCur)
+{
+	pCur->other = -1;
+	while(pCur->other < 0)
+	{
+		cout << "The percentage of point form the midterm exam and final exam:  ";
+		cin >> pCur->midterm >> pCur->final;
+		pCur->other = 100 - pCur->midterm - pCur->final;
+		if(pCur->other < 0)
+			cout << "The percentage of point form the other exam is not valid" << endl;
+	}
+	cout << "Update successfully!" << endl;
+}
+
 void update_Course(Course*& pCur)
 {
 	cout << "Choose option which have to be updated " << endl;
@@ -425,7 +458,8 @@ void update_Course(Course*& pCur)
 		cout << "6, Number of students" << endl;
 		cout << "7. Day of the week" << endl;
 		cout << "8. Sessions" << endl;
-		cout << "9. All of above " << endl;
+		cout << "9. Update the percentage of point form the midterm exam and final exam" << endl;
+		cout << "10. All of above " << endl;
 		cout << "0. Exit" << endl;
 		int option;
 		cin >> option;
@@ -456,6 +490,9 @@ void update_Course(Course*& pCur)
 			update_session(pCur);
 			break;
 		case 9:
+			update_percentage(pCur);
+			break;
+		case 10:
 			update_course_ID(pCur);
 			update_course_name(pCur);
 			update_class_name(pCur);
@@ -464,6 +501,7 @@ void update_Course(Course*& pCur)
 			update_number_students(pCur);
 			update_day_week(pCur);
 			update_session(pCur);
+			update_percentage(pCur);
 			break;
 		case 0:
 		{

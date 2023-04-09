@@ -14,16 +14,22 @@ int main()
 	ReadPassword(headPass);
 	login(type, ID, headPass);
 
-	cout << "Type: " << type << endl;
-	cout << "ID: " << ID << endl;
-	if (type == 't')
+	switch (type)
 	{
+	case '0':
+		break;
+	case 't':
 		menuStaff(pHead_schoolYear, pHead_class, headPass);
+		break;
+	case 's':
+		//menuStudent(pHead_schoolYear, pHead_class, ID);
+		break;
+	default:
+		cout << "Error! Pls report to the admin!";
+		break;
 	}
-	else if (type == 's')
-	{
-
-	}
+		
+	clrscr();
 	clear(headPass);
 	print_output(pHead_schoolYear, pHead_class);
 	deallocated(pHead_schoolYear, pHead_class);

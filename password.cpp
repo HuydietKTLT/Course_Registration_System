@@ -32,8 +32,8 @@ void login(char& type, string& ID, passInfo* readfile)
         password = pass();
         if (login == "0")
         {   
-            clear(readfile);
-            exit(0);
+            type = '0';
+            return;
         }
         if (LoginCheck(login, password, type, ID, readfile) == true)
             break;
