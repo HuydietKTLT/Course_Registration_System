@@ -39,6 +39,8 @@ void login(char& type, string& ID, passInfo* readfile)
             break;
         cout << "Fail successful! Please try again.\n";
     }
+    system("pause");
+    system("cls");
 }
 //Edit password menu
 void edit(string ID, passInfo*& readfile)
@@ -54,11 +56,11 @@ void edit(string ID, passInfo*& readfile)
         cin >> i;
         if (i == 0)
             break;
-        cout << "Enter your new account name: ";
-        cin >> new_login;
         cout << "Enter your new password: ";
         new_password = pass();
-    } while (doTheEdit(new_login, new_password, ID, readfile));
+    } while (doTheEdit(new_password, ID, readfile));
+    system("pause");
+    system("cls");
 }
 
 //Read password file to linked list
@@ -110,31 +112,20 @@ void clear(passInfo*& readfile)
 }
 
 //Edit password
-bool doTheEdit(string login, string password, string ID, passInfo*& head)
+bool doTheEdit(string password, string ID, passInfo*& head)
 {
     passInfo* readfile = head;
     while (readfile != nullptr)
     {
-        if (readfile->login == login)
-        {
-            cout << "Username already exists. Please try again:\n";
-            return true;
-        }
-        readfile = readfile->next;
-    }
-    readfile = head;
-    while (readfile != nullptr)
-    {
         if (readfile->login == ID)
         {
-            readfile->login = login;
             readfile->password = password;
-            cout << "Change username and password successfully.\n";
+            cout << "Change password successfully.\n";
             return false;
         }
         readfile = readfile->next;
     }
-    cout << "Change username and password fail. Please try again;\n";
+    cout << "Change password fail. Please try again;\n";
     return true;
 }
 

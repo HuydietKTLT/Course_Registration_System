@@ -471,6 +471,8 @@ void update_Course(Course*& pCur)
 		case 0:
 		{
 			cout << "Finish updating!!!";
+			system("pause");
+			system("cls");
 			return;
 		}
 		default:

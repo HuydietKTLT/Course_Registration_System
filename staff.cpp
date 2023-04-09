@@ -26,7 +26,10 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 		switch (i)
 		{
 		case 0:
+		{
+			system("cls");
 			return;
+		}
 		case 1:
 			createNewSchoolYear(pHead_schoolYear);
 			break;
@@ -316,7 +319,10 @@ void createNewClass(Class*& pHead)
 			pCur->pNext = nullptr;
 		}
 		else
+		{
+			system("cls");
 			break;
+		}
 	}
 }
 
@@ -332,9 +338,11 @@ void addSemesterMenu(SchoolYear* pHead_schoolYear)
 		string a;
 		switch (i)
 		{
-
 		case 0:
+		{
+			system("cls");
 			return;
+		}
 		case 1:
 			addSemester(pHead_schoolYear->semester);
 			break;
@@ -394,7 +402,10 @@ void addSemester(Semester*& pHead)
 				add_semester(pHead, "Semester3");
 			break;
 		case 0:
+		{
+			system("cls");
 			return;
+		}
 		default:
 			continue;
 		}
