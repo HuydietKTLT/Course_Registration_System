@@ -3,7 +3,7 @@
 
 #include "lib.h"
 
-void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class);
+void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &headPass);
 
 void createNewClass(Class*& pHead);
 

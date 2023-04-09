@@ -3,7 +3,7 @@
 #include "lib.h"
 #include "menuScore.h"
 //Temp Menu for staff
-void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
+void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &headPass)
 {
 	int i;
 	SchoolYear* current_schoolyear = currentSchoolYear(pHead_schoolYear);
@@ -27,7 +27,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 		{
 		case 0:
 		{
-			system("cls");
+			clrscr();
 			return;
 		}
 		case 1:
@@ -41,10 +41,9 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 			Class* find_class = Find_Class(pHead_class);
 			if (find_class != nullptr)
 			{
-				cout << "Enter when you finish entering student in file addStudentToClass.txt";
-				string s;
-				cin >> s;
-				add_Student_To_Class_By_File(find_class->student);
+				cout << "Enter when you finish entering student in file addStudentToClass.txt.\nEnter anything to continue:";
+				getchar();
+				add_Student_To_Class_By_File(find_class->student, headPass);
 			}
 			break;
 		}
@@ -57,9 +56,8 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class)
 			Course* course_addStudent_file = Find_Course(pHead_schoolYear);
 			if (course_addStudent_file != nullptr)
 			{
-				cout << "Enter when you finish entering student in file addStudentToCourse.txt";
-				string s;
-				cin >> s;
+				cout << "Enter when you finish entering student in file addStudentToCourse.txt.\nEnter anything to continue:";
+				getchar();
 				add_Student_to_Course_By_File(course_addStudent_file->student);
 			}
 			break;
@@ -340,7 +338,7 @@ void addSemesterMenu(SchoolYear* pHead_schoolYear)
 		{
 		case 0:
 		{
-			system("cls");
+			clrscr();
 			return;
 		}
 		case 1:
@@ -403,7 +401,7 @@ void addSemester(Semester*& pHead)
 			break;
 		case 0:
 		{
-			system("cls");
+			clrscr();
 			return;
 		}
 		default:
@@ -446,5 +444,3 @@ void add_semester(Semester*& pHead, string semester)
 	pTail->course = nullptr;
 	pTail->pNext = nullptr;
 }
-
-

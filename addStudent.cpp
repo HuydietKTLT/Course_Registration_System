@@ -25,7 +25,7 @@ Class* Find_Class(Class* pHead)
 	return pHead;
 }
 
-void add_Student_To_Class_By_File(Student*& pHead)
+void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass)
 {
 	ifstream file;
 	//The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be addedd
@@ -44,7 +44,13 @@ void add_Student_To_Class_By_File(Student*& pHead)
 		while (pCur->pNext != nullptr)
 			pCur = pCur->pNext;
 	}
-
+	passInfo *pCurPass = nullptr;
+	if (headPass != nullptr)
+	{
+		pCurPass = headPass;
+		while (pCurPass->next != nullptr)
+			pCurPass = pCurPass->next;
+	}
 	while (!file.eof())
 	{
 		if (pHead == nullptr)
@@ -58,6 +64,17 @@ void add_Student_To_Class_By_File(Student*& pHead)
 			pCur = pCur->pNext;
 		}
 
+		if (headPass == nullptr)
+		{
+			headPass = new passInfo;
+			pCurPass = headPass;
+		}
+		else
+		{
+			pCurPass->next = new passInfo;
+			pCurPass = pCurPass->next;
+		}
+
 		getline(file, pCur->student_ID, ',');
 		getline(file, pCur->first_name, ',');
 		getline(file, pCur->last_name, ',');
@@ -65,6 +82,11 @@ void add_Student_To_Class_By_File(Student*& pHead)
 		getline(file, pCur->date_of_birth, ',');
 		getline(file, pCur->social_ID);
 
+		pCurPass->login = pCur->student_ID;
+		pCurPass->password = "1234";
+		pCurPass->type = 's';
+		
+		pCurPass->next = nullptr;
 		pCur->pNext = nullptr;
 	}
 	file.close();

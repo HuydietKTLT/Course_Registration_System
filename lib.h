@@ -159,12 +159,18 @@ Course* Find_Course(SchoolYear* pHead);
 
 Class* Find_Class(Class* pHead);
 
-void add_Student_to_Course_By_File(Student*& pHead);
+void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass);
 
 void add_Student_to_Course_By_Console(Student*& pHead);
 
 void remove_Student_from_Course(Student*& pHead);
 
-void add_Student_To_Class_By_File(Student*& pHead);
+////////void add_Student_To_Class_By_File(Student*& pHead);
+
+void add_Student_to_Course_By_File(Student*& pHead);
+
+//Utility functions
+
+void clrscr();
 
 #endif

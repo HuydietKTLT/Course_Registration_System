@@ -39,8 +39,7 @@ void login(char& type, string& ID, passInfo* readfile)
             break;
         cout << "Fail successful! Please try again.\n";
     }
-    system("pause");
-    system("cls");
+    clrscr();
 }
 //Edit password menu
 void edit(string ID, passInfo*& readfile)
@@ -59,8 +58,9 @@ void edit(string ID, passInfo*& readfile)
         cout << "Enter your new password: ";
         new_password = pass();
     } while (doTheEdit(new_password, ID, readfile));
-    system("pause");
-    system("cls");
+    cout << "Press any key to continue...";
+    getchar();
+    clrscr();
 }
 
 //Read password file to linked list

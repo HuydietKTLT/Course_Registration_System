@@ -20,14 +20,12 @@ int main()
 	cout << "ID: " << ID << endl;
 	if (type == 't')
 	{
-		menuStaff(pHead_schoolYear, pHead_class);
+		menuStaff(pHead_schoolYear, pHead_class, headPass);
 	}
 	else if (type == 's')
 	{
 
 	}
-
-
 	clear(headPass);
 	print_output(pHead_schoolYear, pHead_class);
 	deallocated(pHead_schoolYear, pHead_class);

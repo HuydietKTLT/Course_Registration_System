@@ -470,9 +470,9 @@ void update_Course(Course*& pCur)
 			break;
 		case 0:
 		{
-			cout << "Finish updating!!!";
-			system("pause");
-			system("cls");
+			cout << "Finish updating!!!\nPlease press any key to continue...";
+			getchar();
+			clrscr();
 			return;
 		}
 		default:
