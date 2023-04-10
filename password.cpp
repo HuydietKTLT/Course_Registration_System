@@ -165,10 +165,12 @@ void dialocatePass(passInfo* readfile)
     ofstream fo;
     fo.open("password.txt");
     passInfo* cur = readfile;
-    while (cur->next != nullptr && cur->login != "")
+    while (cur != nullptr)
     {
-        fo << cur->login << ' ' << cur->password << ' ' << cur->type << ' ' << '\n';
+        fo << cur->login << ' ' << cur->password << ' ' << cur->type;
         cur = cur->next;
+        if (cur->next != nullptr)
+            fo << '\n';
     }
     fo.close();
 }
