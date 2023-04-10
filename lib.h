@@ -27,6 +27,13 @@ struct Score {
 	float other_mark = 0;
 };
 
+struct passInfo
+{
+	passInfo* next;
+	string login;
+	string password;
+	char type;
+};
 
 struct Student
 {
@@ -78,13 +85,6 @@ struct SchoolYear
 	SchoolYear* pNext;
 };
 
-struct passInfo
-{
-	passInfo* next;
-	string login;
-	string password;
-	char type;
-};
 bool isFileEmpty(string filename);
 
 //About loading data
@@ -194,7 +194,11 @@ void add_semester(Semester*& pHead, string semester);
 Semester* currentSemester(Semester* pHead);
 
 //student's menu
-void menuStudent(SchoolYear* pHead_schoolYear, Class* pHead_class, string student_ID);
+void menuStudent(SchoolYear* pHead_schoolYear, string student_ID);
+
+void view_list_all_courses(SchoolYear* pHead_schoolYear, string student_ID);
+
+void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID);
 
 //password
 

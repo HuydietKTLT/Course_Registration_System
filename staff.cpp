@@ -21,14 +21,13 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 		cout << "\n13. View a list of students in a class";
 		cout << "\n14. View a list of students in a course";
 		cout << "\n15. Export list of students in course to CSV file!";
-		cout << "\n0.Log out";
+		cout << "\n0. Log out";
 		cout << " \nEnter options :";
 		cin >> i;
 		switch (i)
 		{
 		case 0:
 		{
-			clrscr();
 			return;
 		}
 		case 1:
@@ -47,7 +46,6 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 			if (find_class != nullptr)
 			{
 				cout << "Enter when you finish entering student in file addStudentToClass.txt.\nEnter anything to continue:";
-				getchar();
 				add_Student_To_Class_By_File(find_class->student, headPass);
 			}
 			break;
@@ -62,7 +60,6 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 			if (course_addStudent_file != nullptr)
 			{
 				cout << "Enter when you finish entering student in file addStudentToCourse.txt.\nEnter anything to continue:";
-				getchar();
 				add_Student_to_Course_By_File(course_addStudent_file->student);
 			}
 			break;
@@ -343,7 +340,6 @@ void addSemesterMenu(SchoolYear* pHead_schoolYear)
 		{
 		case 0:
 		{
-			clrscr();
 			return;
 		}
 		case 1:
@@ -407,7 +403,6 @@ void addSemester(Semester*& pHead)
 			break;
 		case 0:
 		{
-			clrscr();
 			return;
 		}
 		default:

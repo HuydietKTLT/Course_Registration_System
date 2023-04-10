@@ -15,15 +15,17 @@ int main()
 	string log_in_studentID;
 	login(type, ID, headPass, log_in_studentID);
 
-	cout << "Type: " << type << endl;
-	cout << "ID: " << ID << endl;
 	if (type == 't')
 	{
+		cout << "Type: Teacher " << endl;
+		cout << "ID: " << ID << endl;
 		menuStaff(pHead_schoolYear, pHead_class, headPass);
 	}
 	else if (type == 's')
 	{
-		menuStudent(pHead_schoolYear, pHead_class, log_in_studentID);
+		cout << "Type: Student ";
+		cout << "ID: " << ID << endl;
+		menuStudent(pHead_schoolYear, ID);
 	}
 	clear(headPass);
 	print_output(pHead_schoolYear, pHead_class);

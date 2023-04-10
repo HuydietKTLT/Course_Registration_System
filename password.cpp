@@ -27,7 +27,7 @@ void login(char& type, string& ID, passInfo* readfile, string &login)
 	string password;
 	while (true)
 	{
-		cout << "Enter your account name:0 to exit\n";
+		cout << "Enter your account name: 0 to exit\n";
 		cout << "Enter your account name: ";
 		cin >> login;
 		cout << "Enter your password: ";
@@ -41,12 +41,11 @@ void login(char& type, string& ID, passInfo* readfile, string &login)
 			break;
 		cout << "Fail successful! Please try again.\n";
 	}
-	clrscr();
 }
+
 //Edit password menu
 void edit(string ID, passInfo*& readfile)
 {
-	char type;
 	int i;
 	string temp_ID;
 	string new_login, new_password;
@@ -61,8 +60,6 @@ void edit(string ID, passInfo*& readfile)
 		new_password = pass();
 	} while (doTheEdit(new_password, ID, readfile));
 	cout << "Press any key to continue...";
-	getchar();
-	clrscr();
 }
 
 //Read password file to linked list
@@ -85,7 +82,13 @@ void ReadPassword(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& r
 	{
 		temp = new passInfo;
 		temp->next = nullptr;
-		fi >> temp->login >> temp->password >> temp->type;
+
+		fi >> temp->login;
+		fi >> temp->password;
+		
+
+		fi >> temp->type;
+
 		cur->next = temp;
 		cur = cur->next;
 	}
@@ -94,8 +97,10 @@ void ReadPassword(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& r
 	fi.close();
 
 
+
+
 	//Thai's code
-	temp = readfile;
+	/*temp = readfile;
 	while (temp->next != nullptr)
 		temp = temp->next;
 
@@ -128,7 +133,8 @@ void ReadPassword(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& r
 
 	while (pHead_class != nullptr)
 	{
-		while (pHead_class->student != nullptr)
+		Student* pHead5 = pHead_class->student;
+		while (pHead5 != nullptr)
 		{
 			temp->next = new passInfo;
 			temp = temp->next;
@@ -136,10 +142,10 @@ void ReadPassword(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& r
 			temp->password = "1234";
 			temp->type = 's';
 			temp->next = nullptr;
-			pHead_class->student = pHead_class->student->pNext;
+			pHead5 = pHead5->pNext;
 		}
 		pHead_class = pHead_class->pNext;
-	}
+	}*/
 
 
 }
@@ -152,7 +158,9 @@ void clear(passInfo*& readfile)
 	passInfo* cur = readfile;
 	while (cur->next != nullptr)
 	{
-		fo << cur->login << ' ' << cur->password << ' ' << cur->type << ' ' << '\n';
+		fo << cur->login << ' ' << cur->password << ' ' << cur->type;
+		if (cur->next->next != nullptr)
+			fo << endl;
 		cur = cur->next;
 	}
 	fo.close();
@@ -208,7 +216,7 @@ string pass()
 		password[i] = '\0';
 		cout << '\n';
 		string s = password;
-		delete password;
+		delete[] password;
 		return s;
 	}
 	else

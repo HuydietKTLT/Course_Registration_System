@@ -2,38 +2,6 @@
 #include "menuScoreTemp.h"
 #include "addStudent.h"
 
-
-void menuStudent(SchoolYear* pHead_schoolYear, Class* pHead_class, string student_ID)
-{
-	int i;
-	SchoolYear* current_schoolyear = currentSchoolYear(pHead_schoolYear);
-	while (true)
-	{
-
-		cin >> i;
-		switch (i)
-		{
-		case 1:
-		{
-			view_list_all_courses(pHead_schoolYear, student_ID);
-
-			break;
-		}
-		case 2:
-			break;
-		case 3:
-			break;
-		default:
-			continue;
-		case 0:
-		{
-			clrscr();
-			return;
-		}
-		}
-	}
-}
-
 void view_list_all_courses(SchoolYear* pHead_schoolYear, string student_ID)
 {
 	Semester* pCur_view_courses_semester = Find_Semester(pHead_schoolYear);
@@ -185,7 +153,6 @@ void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID)
 							<< setw(15)
 							<< pHead4->score.other_mark;
 					}
-
 					pHead4 = pHead4->pNext;
 				}
 				pHead3 = pHead3->pNext;
@@ -195,3 +162,36 @@ void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID)
 		pHead_schoolYear = pHead_schoolYear->pNext;
 	}
 }
+
+void menuStudent(SchoolYear* pHead_schoolYear, string student_ID)
+{
+	int i;
+	while (true)
+	{
+		cout << "-------------------------------------------\n";
+		cout << "1. View the courses in semester.\n2. View scoreboard";
+		cout << "\n0. Log out";
+		cout << " \nEnter options:";
+		cin >> i;
+		switch (i)
+		{
+		case 0:
+		{
+			return;
+		}
+		case 1:
+		{
+			view_list_all_courses(pHead_schoolYear, student_ID);
+			break;
+		}
+		case 2:
+		{
+			view_list_all_scoreboard(pHead_schoolYear, student_ID);
+			break;
+		}
+		default:
+			continue;
+		}
+	}
+}
+
