@@ -1,7 +1,6 @@
-#include "menuScore.h"
 #include "lib.h"
-#include "password.h"
-#include "staff.h"
+#include "addStudent.h"
+#include "menuScoreTemp.h"
 
 void view_scoreboard_toCourse(SchoolYear* list_year) {
 	SchoolYear* pCur = list_year;

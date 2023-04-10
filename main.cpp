@@ -11,8 +11,9 @@ int main()
 	char type;
 	string ID;
 	passInfo* headPass = nullptr;
-	ReadPassword(headPass);
-	login(type, ID, headPass);
+	ReadPassword(pHead_schoolYear, pHead_class, headPass);
+	string log_in_studentID;
+	login(type, ID, headPass, log_in_studentID);
 
 	cout << "Type: " << type << endl;
 	cout << "ID: " << ID << endl;
@@ -22,7 +23,7 @@ int main()
 	}
 	else if (type == 's')
 	{
-
+		menuStudent(pHead_schoolYear, pHead_class, log_in_studentID);
 	}
 	clear(headPass);
 	print_output(pHead_schoolYear, pHead_class);
