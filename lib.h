@@ -210,7 +210,7 @@ void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID);
 
 bool LoginCheck(string login, string password, char& type, string& ID, passInfo* readfile);
 
-void login(char& type, string& ID, passInfo* readfile, string& login);
+void login(char& type, string& ID, passInfo* readfile);
 
 void edit(passInfo*& readfile);
 
