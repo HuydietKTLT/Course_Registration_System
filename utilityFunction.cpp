@@ -2,13 +2,11 @@
 
 void clrscr()
 {
-   printf("\e[1;1H\e[2J");
+        if (system("cls")) system("clear");
 }
 
 void stop()
 {
-        cout << "Press any key to continue..." << endl;
-        cin.get();
         cin.get();
 }
 

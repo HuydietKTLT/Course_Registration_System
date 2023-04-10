@@ -13,7 +13,11 @@
 #include <cstdio>
 #include <direct.h>
 #include <conio.h>
-
+#ifdef __cplusplus__
+  #include <cstdlib>
+#else
+  #include <stdlib.h>
+#endif
 
 typedef long long ll;
 typedef long int li;
