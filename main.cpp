@@ -24,6 +24,9 @@ int main()
 	case 's':
 		//menuStudent(pHead_schoolYear, pHead_class, ID);
 		break;
+	case 'm':
+		//menuManager(pHead_schoolYear, pHead_class, headPass);
+		break;
 	default:
 		cout << "Error! Pls report to the admin!";
 		break;

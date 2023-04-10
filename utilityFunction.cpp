@@ -2,8 +2,14 @@
 
 void clrscr()
 {
-   fprintf(stdout, "\033[2J");
-   fprintf(stdout, "\033[1;1H");
+   printf("\e[1;1H\e[2J");
+}
+
+void stop()
+{
+        cout << "Press any key to continue..." << endl;
+        cin.get();
+        cin.get();
 }
 
 float float_one_point_round(float value)

@@ -201,7 +201,7 @@ bool LoginCheck(string login, string password, char& type, string& ID, passInfo*
 
 void login(char& type, string& ID, passInfo* readfile);
 
-void edit(string ID, passInfo*& readfile);
+void edit(passInfo*& readfile);
 
 bool doTheEdit(string password, string ID, passInfo*& head);
 
@@ -210,6 +210,8 @@ string pass();
 void clear(passInfo*& readfile);
 
 void ReadPassword(passInfo*& readfile);
+
+void dialocatePass(passInfo* readfile);
 
 //Menu Scoreboard
 
@@ -226,5 +228,7 @@ float float_one_point_round(float value);
 void clrscr();
 
 float stf(string str);
+
+void stop();
 
 #endif

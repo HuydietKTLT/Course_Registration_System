@@ -42,15 +42,18 @@ void login(char& type, string& ID, passInfo* readfile)
     clrscr();
 }
 //Edit password menu
-void edit(string ID, passInfo*& readfile)
+void edit(passInfo*& readfile)
 {
     char type;
     int i;
-    string temp_ID;
+    string ID;
     string new_login, new_password;
+    login(type, ID, readfile);
+    if (ID == "0")
+        return;
     do
     {
-        cout << "Do you want to change your username and password:\n";
+        cout << "Do you want to change your password:\n";
         cout << "1. Yes. 0. No. Enter options:\n";
         cin >> i;
         if (i == 0)
@@ -58,8 +61,8 @@ void edit(string ID, passInfo*& readfile)
         cout << "Enter your new password: ";
         new_password = pass();
     } while (doTheEdit(new_password, ID, readfile));
-    cout << "Press any key to continue...";
-    getchar();
+    dialocatePass(readfile);
+    stop();
     clrscr();
 }
 
@@ -93,15 +96,7 @@ void ReadPassword(passInfo*& readfile)
 //Clear the linked list
 void clear(passInfo*& readfile)
 {
-    ofstream fo;
-    fo.open("password.txt");
-    passInfo* cur = readfile;
-    while (cur->next != nullptr)
-    {
-        fo << cur->login << ' ' << cur->password << ' ' << cur->type << ' ' << '\n';
-        cur = cur->next;
-    }
-    fo.close();
+    dialocatePass(readfile);
     passInfo* temp;
     while (readfile != nullptr)
     {
@@ -163,4 +158,17 @@ string pass()
         cout << "\nPassword exceeded the maximun number of characters allow.\n Please try again: ";
         return pass();
     }
+}
+
+void dialocatePass(passInfo* readfile)
+{
+    ofstream fo;
+    fo.open("password.txt");
+    passInfo* cur = readfile;
+    while (cur->next != nullptr && cur->login != "")
+    {
+        fo << cur->login << ' ' << cur->password << ' ' << cur->type << ' ' << '\n';
+        cur = cur->next;
+    }
+    fo.close();
 }

@@ -8,6 +8,8 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &head
 	SchoolYear* current_schoolyear = currentSchoolYear(pHead_schoolYear);
 	while (true)
 	{
+		clrscr();
+		deallocated(pHead_schoolYear, pHead_class);
 		cout << "-------------------------------------------\n";
 		cout << "1. New school year.\n2. New classes\n";
 		cout << "3. Add new 1st year students to 1st-year classes\n4. New semester.\n5. Add students to course by file.\n6. Add a student to course by console.\n7. View the list of courses.";
@@ -19,14 +21,15 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &head
 		cout << "\n13. View a list of students in a class";
 		cout << "\n14. View a list of students in a course";
 		cout << "\n15. Export list of students in course to CSV file!";
-		cout << "\n0.Log out";
+		cout << "\n16. Edit password.";
+		cout << "\n0. Log out";
 		cout << " \nEnter options :";
 		cin >> i;
+		clrscr();
 		switch (i)
 		{
 		case 0:
 		{
-			clrscr();
 			return;
 		}
 		case 1:
@@ -40,9 +43,10 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &head
 			Class* find_class = Find_Class(pHead_class);
 			if (find_class != nullptr)
 			{
-				cout << "Enter when you finish entering student in file addStudentToClass.txt.\nEnter anything to continue:";
-				getchar();
+				cout << "Enter when you finish entering student in file addStudentToClass.txt.\n";
+				stop();
 				add_Student_To_Class_By_File(find_class->student, headPass);
+				dialocatePass(headPass);
 			}
 			break;
 		}
@@ -55,8 +59,8 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &head
 			Course* course_addStudent_file = Find_Course(pHead_schoolYear);
 			if (course_addStudent_file != nullptr)
 			{
-				cout << "Enter when you finish entering student in file addStudentToCourse.txt.\nEnter anything to continue:";
-				getchar();
+				cout << "Enter when you finish entering student in file addStudentToCourse.txt.\n";
+				stop();
 				add_Student_to_Course_By_File(course_addStudent_file->student);
 			}
 			break;
@@ -71,10 +75,12 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &head
 		case 7:
 		{
 			print_All_CourseToConsole(pHead_schoolYear);
+			stop();
 			break;
 		}
 		case 8:
 			print_All_ClassToConsole(pHead_class);
+			stop();
 			break;
 		case 9:
 		{
@@ -141,6 +147,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &head
 		case 12:
 		{
 			Menu_Score_Board(pHead_schoolYear);
+			stop();
 			break;
 		}
 		case 13:
@@ -148,6 +155,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &head
 			Class* class_print_student = Find_Class(pHead_class);
 			if (class_print_student != nullptr)
 				print_All_Student_In_A_class(class_print_student->student);
+			stop();
 			break;
 		}
 		case 14:
@@ -155,6 +163,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &head
 			Course* course_print_student = Find_Course(pHead_schoolYear);
 			if (course_print_student != nullptr)
 				Print_All_Student_In_A_Course(course_print_student->student);
+			stop();
 			break;
 		}
 		case 15:
@@ -204,6 +213,12 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &head
 			export_list_of_student_ToCSVFile(pCur_Course->student, pHead->year_name, pCur_Semester->semester_name, pCur_Course->id);
 			break;
 		}
+		case 16:
+		{
+			edit(headPass);
+			break;
+		}
+		
 		default:
 			continue;
 		}
@@ -277,6 +292,9 @@ void createNewSchoolYear(SchoolYear*& pHead)
 	else {
 		cout << "Failed to create new school year.\n";
 	}
+	cout << "Press any key to continue...\n";
+	stop();
+	clrscr();
 }
 
 //create new class menu
@@ -317,7 +335,6 @@ void createNewClass(Class*& pHead)
 		}
 		else
 		{
-			system("cls");
 			break;
 		}
 	}
@@ -337,7 +354,6 @@ void addSemesterMenu(SchoolYear* pHead_schoolYear)
 		{
 		case 0:
 		{
-			clrscr();
 			return;
 		}
 		case 1:

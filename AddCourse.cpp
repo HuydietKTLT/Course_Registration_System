@@ -39,11 +39,17 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 				<< setw(15)
 				<< "Session| " 
 				<< left
-				<< setw(30)
-				<< "Percentage of score: M, F, O|"
+				<< setw(5)
+				<< "M| "
+				<< left
+				<< setw(5)
+				<< "F| "
+				<< left
+				<< setw(5)
+				<< "O|"
 				<< endl;
 			Course* pHead3 = pHead2->course;
-			while (pHead3 != nullptr)
+			while (pHead3 != nullptr && pHead3->pNext != nullptr)
 			{
 				cout
 					<< left
@@ -71,9 +77,15 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 					<< setw(15)
 					<< pHead3->sessions
 					<< left
-					<< setw(30)
-					<< pHead3->midterm << ", " << pHead3->final << ", " << pHead3->other
-					<< endl;
+					<< setw(5)
+					<< pHead3->midterm
+					<< left
+					<< setw(5)
+					<< pHead3->final
+					<< left
+					<< setw(5)
+					<< pHead3->other
+					<< endl;	
 				pHead3 = pHead3->pNext;
 			}
 			cout << endl;
@@ -450,6 +462,7 @@ void update_Course(Course*& pCur)
 	cout << "Choose option which have to be updated " << endl;
 	while (true)
 	{
+		clrscr();
 		cout << "1. Course ID" << endl;
 		cout << "2. Course Name" << endl;
 		cout << "3. Class Name" << endl;
@@ -463,6 +476,7 @@ void update_Course(Course*& pCur)
 		cout << "0. Exit" << endl;
 		int option;
 		cin >> option;
+		clrscr();
 		switch (option)
 		{
 		case 1:
