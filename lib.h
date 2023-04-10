@@ -200,7 +200,7 @@ void add_semester(Semester*& pHead, string semester);
 Semester* currentSemester(Semester* pHead);
 
 //student's menu
-void menuStudent(SchoolYear* pHead_schoolYear, string student_ID);
+void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& headPass);
 
 void view_list_all_courses(SchoolYear* pHead_schoolYear, string student_ID);
 
@@ -220,7 +220,7 @@ string pass();
 
 void clear(passInfo*& readfile);
 
-void ReadPassword(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& readfile);
+void ReadPassword(passInfo*& readfile);
 
 void dialocatePass(passInfo* readfile);
 

@@ -1,6 +1,4 @@
 #include "lib.h"
-#include "addStudent.h"
-#include "menuScoreTemp.h"
 
 //Temp Menu for staff
 
@@ -10,6 +8,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 	SchoolYear* current_schoolyear = currentSchoolYear(pHead_schoolYear);
 	while (true)
 	{
+		stop();
 		clrscr();
 		deallocated(pHead_schoolYear, pHead_class);
 		cout << "-------------------------------------------\n";

@@ -11,7 +11,7 @@ int main()
 	char type;
 	string ID;
 	passInfo* headPass = nullptr;
-	ReadPassword(pHead_schoolYear, pHead_class, headPass);
+	ReadPassword(headPass);
 	string log_in_studentID;
 	login(type, ID, headPass);
 	log_in_studentID = ID;
@@ -30,7 +30,7 @@ int main()
 		{
 			cout << "Type: Student ";
 			cout << "ID: " << ID << endl;
-			menuStudent(pHead_schoolYear, ID);
+			menuStudent(pHead_schoolYear, ID, headPass);
 			break;
 		}
 	case 'm':

@@ -1,6 +1,5 @@
 #include "lib.h"
-#include "addStudent.h"
-#include "menuScoreTemp.h"
+
 
 //Set the max length of the password
 const int max_value = 20;
@@ -70,7 +69,7 @@ void edit(passInfo*& readfile)
 }
 
 //Read password file to linked list
-void ReadPassword(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& readfile)
+void ReadPassword(passInfo*& readfile)
 {
 
 	//Long's code 
@@ -105,6 +104,7 @@ void ReadPassword(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& r
 
 
 
+    //This can't change password of student
 
 	//Thai's code
 	/*temp = readfile;

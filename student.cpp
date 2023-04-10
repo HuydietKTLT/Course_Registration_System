@@ -1,6 +1,4 @@
 #include "lib.h"
-#include "menuScoreTemp.h"
-#include "addStudent.h"
 
 void view_list_all_courses(SchoolYear* pHead_schoolYear, string student_ID)
 {
@@ -163,13 +161,15 @@ void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID)
 	}
 }
 
-void menuStudent(SchoolYear* pHead_schoolYear, string student_ID)
+void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& headPass)
 {
 	int i;
 	while (true)
 	{
+		stop();
+		clrscr();
 		cout << "-------------------------------------------\n";
-		cout << "1. View the courses in semester.\n2. View scoreboard";
+		cout << "1. View the courses in semester.\n2. View scoreboard.\n3 .Change password.";
 		cout << "\n0. Log out";
 		cout << " \nEnter options:";
 		cin >> i;
@@ -187,6 +187,11 @@ void menuStudent(SchoolYear* pHead_schoolYear, string student_ID)
 		case 2:
 		{
 			view_list_all_scoreboard(pHead_schoolYear, student_ID);
+			break;
+		}
+		case 3:
+		{
+			edit(headPass);
 			break;
 		}
 		default:
