@@ -1,4 +1,6 @@
 #include "lib.h"
+#include "addStudent.h"
+#include "menuScoreTemp.h"
 
 //Set the max length of the password
 const int max_value = 20;
@@ -6,17 +8,17 @@ const int max_value = 20;
 //Check login infomation
 bool LoginCheck(string login, string password, char& type, string& ID, passInfo* readfile)
 {
-    while (readfile != nullptr)
-    {
-        if (password == readfile->password && login == readfile->login)
-        {
-            type = readfile->type;
-            ID = readfile->login;
-            return true;
-        }
-        readfile = readfile->next;
-    }
-    return false;
+	while (readfile != nullptr)
+	{
+		if (password == readfile->password && login == readfile->login)
+		{
+			type = readfile->type;
+			ID = readfile->login;
+			return true;
+		}
+		readfile = readfile->next;
+	}
+	return false;
 }
 
 //Login menu
@@ -41,6 +43,7 @@ void login(char& type, string& ID, passInfo* readfile)
     }
     clrscr();
 }
+
 //Edit password menu
 void edit(passInfo*& readfile)
 {
@@ -67,30 +70,91 @@ void edit(passInfo*& readfile)
 }
 
 //Read password file to linked list
-void ReadPassword(passInfo*& readfile)
+void ReadPassword(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& readfile)
 {
-    ifstream fi;
-    fi.open("password.txt");
-    if (fi.is_open() == false)
-    {
-        cout << "Error cannot open file.";
-        return;
-    }
-    passInfo* dummyNode = new passInfo;
-    passInfo* temp;
-    dummyNode->next = readfile;
-    passInfo* cur = dummyNode;
-    while (!fi.eof())
-    {
-        temp = new passInfo;
-        temp->next = nullptr;
-        fi >> temp->login >> temp->password >> temp->type;
-        cur->next = temp;
-        cur = cur->next;
-    }
-    readfile = dummyNode->next;
-    delete dummyNode;
-    fi.close();
+
+	//Long's code 
+	ifstream fi;
+	fi.open("password.txt");
+	if (fi.is_open() == false)
+	{
+		cout << "Error cannot open file.";
+		return;
+	}
+	passInfo* dummyNode = new passInfo;
+	passInfo* temp;
+	dummyNode->next = readfile;
+	passInfo* cur = dummyNode;
+	while (!fi.eof())
+	{
+		temp = new passInfo;
+		temp->next = nullptr;
+
+		fi >> temp->login;
+		fi >> temp->password;
+		
+
+		fi >> temp->type;
+
+		cur->next = temp;
+		cur = cur->next;
+	}
+	readfile = dummyNode->next;
+	delete dummyNode;
+	fi.close();
+
+
+
+
+	//Thai's code
+	/*temp = readfile;
+	while (temp->next != nullptr)
+		temp = temp->next;
+
+	while (pHead_schoolYear != nullptr)
+	{
+		Semester* pHead2 = pHead_schoolYear->semester;
+		while (pHead2 != nullptr)
+		{
+			Course* pHead3 = pHead2->course;
+			while (pHead3 != nullptr)
+			{
+				Student* pHead4 = pHead3->student;
+				while (pHead4 != nullptr)
+				{
+					temp->next = new passInfo;
+					temp = temp->next;
+					temp->login = pHead_schoolYear->semester->course->student->student_ID;
+					temp->password = "1234";
+					temp->type = 's';
+					temp->next = nullptr;
+
+					pHead4 = pHead4->pNext;
+				}
+				pHead3 = pHead3->pNext;
+			}
+			pHead2 = pHead2->pNext;
+		}
+		pHead_schoolYear = pHead_schoolYear->pNext;
+	}
+
+	while (pHead_class != nullptr)
+	{
+		Student* pHead5 = pHead_class->student;
+		while (pHead5 != nullptr)
+		{
+			temp->next = new passInfo;
+			temp = temp->next;
+			temp->login = pHead_class->student->student_ID;
+			temp->password = "1234";
+			temp->type = 's';
+			temp->next = nullptr;
+			pHead5 = pHead5->pNext;
+		}
+		pHead_class = pHead_class->pNext;
+	}*/
+
+
 }
 
 //Clear the linked list
@@ -109,21 +173,20 @@ void clear(passInfo*& readfile)
 //Edit password
 bool doTheEdit(string password, string ID, passInfo*& head)
 {
-    passInfo* readfile = head;
-    while (readfile != nullptr)
-    {
-        if (readfile->login == ID)
-        {
-            readfile->password = password;
-            cout << "Change password successfully.\n";
-            return false;
-        }
-        readfile = readfile->next;
-    }
-    cout << "Change password fail. Please try again;\n";
-    return true;
+	passInfo* readfile = head;
+	while (readfile != nullptr)
+	{
+		if (readfile->login == ID)
+		{
+			readfile->password = password;
+			cout << "Change password successfully.\n";
+			return false;
+		}
+		readfile = readfile->next;
+	}
+	cout << "Change password fail. Please try again;\n";
+	return true;
 }
-
 
 string pass()
 {

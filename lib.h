@@ -32,6 +32,13 @@ struct Score {
 	float bonus_mark = 0;
 };
 
+struct passInfo
+{
+	passInfo* next;
+	string login;
+	string password;
+	char type;
+};
 
 struct Student
 {
@@ -85,13 +92,6 @@ struct SchoolYear
 	SchoolYear* pNext;
 };
 
-struct passInfo
-{
-	passInfo* next;
-	string login;
-	string password;
-	char type;
-};
 bool isFileEmpty(string filename);
 
 //About loading data
@@ -177,7 +177,7 @@ void remove_Student_from_Course(Student*& pHead);
 
 void add_Student_to_Course_By_File(Student*& pHead);
 
-//staff menu
+//staff's menu
 
 void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &headPass);
 
@@ -199,11 +199,18 @@ void add_semester(Semester*& pHead, string semester);
 
 Semester* currentSemester(Semester* pHead);
 
+//student's menu
+void menuStudent(SchoolYear* pHead_schoolYear, string student_ID);
+
+void view_list_all_courses(SchoolYear* pHead_schoolYear, string student_ID);
+
+void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID);
+
 //password
 
 bool LoginCheck(string login, string password, char& type, string& ID, passInfo* readfile);
 
-void login(char& type, string& ID, passInfo* readfile);
+void login(char& type, string& ID, passInfo* readfile, string& login);
 
 void edit(passInfo*& readfile);
 
@@ -213,7 +220,7 @@ string pass();
 
 void clear(passInfo*& readfile);
 
-void ReadPassword(passInfo*& readfile);
+void ReadPassword(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& readfile);
 
 void dialocatePass(passInfo* readfile);
 

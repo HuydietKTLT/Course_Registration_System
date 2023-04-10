@@ -1,8 +1,10 @@
 #include "lib.h"
+#include "addStudent.h"
+#include "menuScoreTemp.h"
 
 //Temp Menu for staff
 
-void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &headPass)
+void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& headPass)
 {
 	int i;
 	SchoolYear* current_schoolyear = currentSchoolYear(pHead_schoolYear);
@@ -33,11 +35,15 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &head
 			return;
 		}
 		case 1:
+		{
 			createNewSchoolYear(pHead_schoolYear);
 			break;
+		}
 		case 2:
+		{
 			createNewClass(pHead_class);
 			break;
+		}
 		case 3:
 		{
 			Class* find_class = Find_Class(pHead_class);
@@ -386,6 +392,7 @@ void addSemesterMenu(SchoolYear* pHead_schoolYear)
 //	}
 //}
 //add new semester
+
 void addSemester(Semester*& pHead)
 {
 	int option;
@@ -416,7 +423,6 @@ void addSemester(Semester*& pHead)
 			break;
 		case 0:
 		{
-			clrscr();
 			return;
 		}
 		default:

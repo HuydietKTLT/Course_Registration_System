@@ -11,27 +11,39 @@ int main()
 	char type;
 	string ID;
 	passInfo* headPass = nullptr;
-	ReadPassword(headPass);
+	ReadPassword(pHead_schoolYear, pHead_class, headPass);
+	string log_in_studentID;
 	login(type, ID, headPass);
-
+	log_in_studentID = ID;
 	switch (type)
 	{
 	case '0':
 		break;
 	case 't':
-		menuStaff(pHead_schoolYear, pHead_class, headPass);
-		break;
+		{
+			cout << "Type: Teacher " << endl;
+			cout << "ID: " << ID << endl;
+			menuStaff(pHead_schoolYear, pHead_class, headPass);
+			break;
+		}
 	case 's':
-		//menuStudent(pHead_schoolYear, pHead_class, ID);
-		break;
+		{
+			cout << "Type: Student ";
+			cout << "ID: " << ID << endl;
+			menuStudent(pHead_schoolYear, ID);
+			break;
+		}
 	case 'm':
-		//menuManager(pHead_schoolYear, pHead_class, headPass);
-		break;
+		{
+			//menuManager(pHead_schoolYear, pHead_class, headPass);
+			break;
+		}
 	default:
-		cout << "Error! Pls report to the admin!";
-		break;
+		{
+			cout << "Error! Pls report to the admin!";
+			break;
+		}
 	}
-		
 	clrscr();
 	clear(headPass);
 	print_output(pHead_schoolYear, pHead_class);
