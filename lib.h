@@ -94,7 +94,7 @@ struct SchoolYear
 
 bool isFileEmpty(string filename);
 
-//About loading data
+//About loading data Wat
 void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name);
 
 void load_student_InClass(Student*& pHead, string class_name);
