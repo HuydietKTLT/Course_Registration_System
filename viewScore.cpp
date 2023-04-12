@@ -10,7 +10,7 @@
 
 void import_score_of_course (Course *&z)
 {
-    cout << "Course information: " << endl;
+    cout << "Course information: " << endl;s
     cout << z->id << "  " << z->course_name << endl;
     cout << z->class_name << endl;
     cout << "Now we import score for each students : " << endl << endl;
