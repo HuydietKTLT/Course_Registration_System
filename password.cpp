@@ -1,9 +1,5 @@
 #include "lib.h"
 
-
-//Set the max length of the password
-const int max_value = 20;
-
 //Check login infomation
 bool LoginCheck(string login, string password, char& type, string& ID, passInfo* readfile)
 {
@@ -107,7 +103,7 @@ void ReadPassword(passInfo*& readfile)
     //This can't change password of student
 
 	//Thai's code
-	/*temp = readfile;
+	/*passInfo *temp = readfile;
 	while (temp->next != nullptr)
 		temp = temp->next;
 
@@ -160,7 +156,6 @@ void ReadPassword(passInfo*& readfile)
 //Clear the linked list
 void clear(passInfo*& readfile)
 {
-    dialocatePass(readfile);
     passInfo* temp;
     while (readfile != nullptr)
     {

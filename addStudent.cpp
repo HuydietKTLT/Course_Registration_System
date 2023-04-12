@@ -30,7 +30,7 @@ void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass)
 	file.open("addStudentToClass.txt");
 	if (!file.is_open())
 	{
-		cout << "Khong mo duoc file addStudentToClass.txt" << endl;
+		cout << "Can't open addStudentToClass.txt" << endl;
 		file.close();
 		return;
 	}
@@ -79,14 +79,13 @@ void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass)
 		getline(file, pCur->date_of_birth, ',');
 		getline(file, pCur->social_ID);
 
+		//Create a new account for the student
 		pCurPass->login = pCur->student_ID;
-		pCurPass->password = "123";
+		pCurPass->password = default_password;
 		pCurPass->type = 's';
 		
 		pCurPass->next = nullptr;
 		pCur->pNext = nullptr;
 	}
 	file.close();
-
-
 }

@@ -374,28 +374,32 @@ void update_course_ID(Course*& pCur)
 	cout << "Enter new Course ID: ";
 	cin.ignore();
 	getline(cin, pCur->id);
-	cout << "Update successfully!" << endl;
+	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	stop();
 }
 
 void update_course_name(Course*& pCur)
 {
 	cout << "Enter new Course Name: ";
 	getline(cin, pCur->course_name);
-	cout << "Update successfully!" << endl;
+	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	stop();
 }
 
 void update_class_name(Course*& pCur)
 {
 	cout << "Enter new Class Name: ";
 	getline(cin, pCur->class_name);
-	cout << "Update successfully!" << endl;
+	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	stop();
 }
 
 void update_teacher_name(Course*& pCur)
 {
 	cout << "Enter new Teacher Name: ";
 	getline(cin, pCur->teacher_name);
-	cout << "Update successfully!" << endl;
+	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	stop();
 }
 
 void update_number_credits(Course*& pCur)
@@ -409,7 +413,8 @@ void update_number_credits(Course*& pCur)
 		cin >> get_number_credits;
 	}
 	pCur->number_credits = to_string(get_number_credits);
-	cout << "Update successfully!" << endl;
+	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	stop();
 }
 
 void update_number_students(Course*& pCur)
@@ -423,7 +428,8 @@ void update_number_students(Course*& pCur)
 		cin >> get_number_students;
 	}
 	pCur->number_students = to_string(get_number_students);
-	cout << "Update successfully!" << endl;
+	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	stop();
 }
 
 void update_day_week(Course*& pCur)
@@ -431,8 +437,8 @@ void update_day_week(Course*& pCur)
 	cout << "Enter new Day of week: ";
 	cin.ignore();
 	cin >> pCur->day_of_week;
-	cout << "Update successfully!" << endl;
-
+	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	stop();
 }
 
 void update_session(Course*& pCur)
@@ -440,7 +446,8 @@ void update_session(Course*& pCur)
 	cout << "Enter new session";
 	cin.ignore();
 	getline(cin, pCur->sessions);
-	cout << "Update successfully!" << endl;
+	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	stop();
 }
 
 void update_percentage(Course*& pCur)
@@ -454,7 +461,8 @@ void update_percentage(Course*& pCur)
 		if(pCur->other < 0)
 			cout << "The percentage of point form the other exam is not valid" << endl;
 	}
-	cout << "Update successfully!" << endl;
+	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	stop();
 }
 
 void update_Course(Course*& pCur)
@@ -519,7 +527,8 @@ void update_Course(Course*& pCur)
 			break;
 		case 0:
 		{
-			cout << "Finish updating!!!\nPlease press any key to continue...";
+			cout << "Finish updating!!!\nPlease enter any key to continue...";
+			stop();
 			return;
 		}
 		default:
@@ -626,7 +635,7 @@ void add_Student_to_Course_By_File(Student*& pHead)
 	file.open("addStudentToCourse.txt");
 	if (!file.is_open())
 	{
-		cout << "Khong mo duoc file addStudentToCourse.txt" << endl;
+		cout << "Can't open addStudentToCourse.txt" << endl;
 		return;
 	}
 	while (!file.eof())

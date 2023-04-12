@@ -26,6 +26,12 @@ typedef long int li;
 
 using namespace std;
 
+//Set the max length of the password
+const int max_value = 20;
+
+//Set default password
+const string default_password = "1234";
+
 struct Score {
 	float total_mark = 0;
 	float final_mark = 0;
