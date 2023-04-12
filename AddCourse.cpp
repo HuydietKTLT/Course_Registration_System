@@ -1,4 +1,5 @@
 #include "lib.h"
+#include "menuScoreTemp.h"
 
 void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 {
@@ -37,7 +38,7 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 				<< "Day of the week| "
 				<< left
 				<< setw(15)
-				<< "Session| " 
+				<< "Session| "
 				<< left
 				<< setw(5)
 				<< "M| "
@@ -85,7 +86,7 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 					<< left
 					<< setw(5)
 					<< pHead3->other
-					<< endl;	
+					<< endl;
 				pHead3 = pHead3->pNext;
 			}
 			cout << endl;
@@ -244,7 +245,6 @@ void Print_All_Student_In_A_Course(Student* pCur)
 			<< pCur->social_ID << " " << endl;
 		pCur = pCur->pNext;
 	}
-
 }
 
 void addCourse(Course*& pHead)
@@ -281,17 +281,16 @@ void addCourse(Course*& pHead)
 	cout << "S1(07:30) -- S2 (09:30) -- S3(13:30) -- S4(15:30): ";
 	cin >> pCur->sessions;
 	pCur->other = -1;
-	while(pCur->other < 0)
+	while (pCur->other < 0)
 	{
 		cout << "The percentage of point form the midterm exam and final exam:  ";
 		cin >> pCur->midterm >> pCur->final;
 		pCur->other = 100 - pCur->midterm - pCur->final;
-		if(pCur->other < 0)
+		if (pCur->other < 0)
 			cout << "The percentage of point form the other exam is not valid" << endl;
 	}
 
 	pCur->pNext = nullptr;
-
 	pCur->student = nullptr;
 }
 
@@ -342,10 +341,9 @@ void deleteCourse(Course*& pHead, Course*& pDelete, string year_name, string sem
 		remove(path.c_str());
 		delete pCur;
 		pCur = nullptr;
-
-			
 		return;
 	}
+
 	Course* pPrevCur = pHead;
 	while (pCur != nullptr && pCur != pDelete)
 	{
@@ -375,7 +373,6 @@ void update_course_ID(Course*& pCur)
 	cin.ignore();
 	getline(cin, pCur->id);
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
-	stop();
 }
 
 void update_course_name(Course*& pCur)
@@ -383,7 +380,6 @@ void update_course_name(Course*& pCur)
 	cout << "Enter new Course Name: ";
 	getline(cin, pCur->course_name);
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
-	stop();
 }
 
 void update_class_name(Course*& pCur)
@@ -391,7 +387,6 @@ void update_class_name(Course*& pCur)
 	cout << "Enter new Class Name: ";
 	getline(cin, pCur->class_name);
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
-	stop();
 }
 
 void update_teacher_name(Course*& pCur)
@@ -399,7 +394,6 @@ void update_teacher_name(Course*& pCur)
 	cout << "Enter new Teacher Name: ";
 	getline(cin, pCur->teacher_name);
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
-	stop();
 }
 
 void update_number_credits(Course*& pCur)
@@ -414,7 +408,6 @@ void update_number_credits(Course*& pCur)
 	}
 	pCur->number_credits = to_string(get_number_credits);
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
-	stop();
 }
 
 void update_number_students(Course*& pCur)
@@ -429,7 +422,6 @@ void update_number_students(Course*& pCur)
 	}
 	pCur->number_students = to_string(get_number_students);
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
-	stop();
 }
 
 void update_day_week(Course*& pCur)
@@ -438,7 +430,6 @@ void update_day_week(Course*& pCur)
 	cin.ignore();
 	cin >> pCur->day_of_week;
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
-	stop();
 }
 
 void update_session(Course*& pCur)
@@ -447,22 +438,20 @@ void update_session(Course*& pCur)
 	cin.ignore();
 	getline(cin, pCur->sessions);
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
-	stop();
 }
 
 void update_percentage(Course*& pCur)
 {
 	pCur->other = -1;
-	while(pCur->other < 0)
+	while (pCur->other < 0)
 	{
 		cout << "The percentage of point form the midterm exam and final exam:  ";
 		cin >> pCur->midterm >> pCur->final;
 		pCur->other = 100 - pCur->midterm - pCur->final;
-		if(pCur->other < 0)
+		if (pCur->other < 0)
 			cout << "The percentage of point form the other exam is not valid" << endl;
 	}
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
-	stop();
 }
 
 void update_Course(Course*& pCur)
@@ -470,7 +459,6 @@ void update_Course(Course*& pCur)
 	cout << "Choose option which have to be updated " << endl;
 	while (true)
 	{
-		clrscr();
 		cout << "1. Course ID" << endl;
 		cout << "2. Course Name" << endl;
 		cout << "3. Class Name" << endl;
@@ -484,7 +472,6 @@ void update_Course(Course*& pCur)
 		cout << "0. Exit" << endl;
 		int option;
 		cin >> option;
-		clrscr();
 		switch (option)
 		{
 		case 1:
@@ -515,6 +502,7 @@ void update_Course(Course*& pCur)
 			update_percentage(pCur);
 			break;
 		case 10:
+		{
 			update_course_ID(pCur);
 			update_course_name(pCur);
 			update_class_name(pCur);
@@ -525,10 +513,10 @@ void update_Course(Course*& pCur)
 			update_session(pCur);
 			update_percentage(pCur);
 			break;
+		}
 		case 0:
 		{
 			cout << "Finish updating!!!\nPlease enter any key to continue...";
-			stop();
 			return;
 		}
 		default:
@@ -680,60 +668,48 @@ void add_Student_to_Course_By_Console(Student*& pHead)
 {
 	Student* pCur = nullptr;
 	if (pHead != nullptr)
+	{
 		pCur = pHead;
+		while (pCur != nullptr && pCur->pNext != nullptr)
+		{
+			pCur = pCur->pNext;
+		}
+		pCur->pNext = new Student;
+		pCur = pCur->pNext;
+		pCur->pNext = nullptr;
+	}
 
 	if (pHead == nullptr)
 	{
 		pHead = new Student;
+		pCur = pHead;
 		pHead->pNext = nullptr;
 	}
-	while (pHead != nullptr && pHead->pNext != nullptr)
-		pHead = pHead->pNext;
 
 	cout << "Enter new student ID: ";
 	cin.ignore();
-	cin >> pHead->student_ID;
+	cin >> pCur->student_ID;
 
 	cout << "Enter new student first name: ";
 	cin.ignore();
-	cin >> pHead->first_name;
+	cin >> pCur->first_name;
 
 	cout << "Enter new student last name: ";
 	cin.ignore();
-	cin >> pHead->last_name;
+	cin >> pCur->last_name;
 
 	cout << "Enter new student gender: ";
 	cin.ignore();
-	cin >> pHead->gender;
+	cin >> pCur->gender;
 
 	cout << "Enter new student date of birth: ";
 	cin.ignore();
-	cin >> pHead->date_of_birth;
+	cin >> pCur->date_of_birth;
 
 	cout << "Enter new student social ID: ";
 	cin.ignore();
-	cin >> pHead->social_ID;
+	cin >> pCur->social_ID;
 
-	cout << "Enter new student total mark";
-	cin.ignore();
-	cin >> pHead->score.total_mark;
-
-	cout << "Enter new student final mark";
-	cin.ignore();
-	cin >> pHead->score.final_mark;
-
-	cout << "Enter new student mid mark";
-	cin.ignore();
-	cin >> pHead->score.mid_mark;
-
-	cout << "Enter new student other mark";
-	cin.ignore();
-	cin >> pHead->score.other_mark;
-
-	if (pCur != nullptr)
-		pHead = pCur;
-
-	pHead->pNext = nullptr;
 }
 
 void remove_Student_from_Course(Student*& pHead)

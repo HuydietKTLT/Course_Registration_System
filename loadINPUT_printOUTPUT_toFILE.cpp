@@ -1,4 +1,5 @@
 #include "lib.h"
+#include "menuScoreTemp.h"
 
 bool isFileEmpty(string filename)
 {
@@ -37,19 +38,16 @@ void load_student_InCourse(Student*& pHead, string schoolYear_name, string semes
 
 		string temp;
 		getline(file, temp, ',');
-		pCur->score.total_mark = float_one_point_round(stf(temp));
+		pCur->score.total_mark = stof(temp);
 
 		getline(file, temp, ',');
-		pCur->score.final_mark = float_one_point_round(stf(temp));
+		pCur->score.final_mark = stof(temp);
 
 		getline(file, temp, ',');
-		pCur->score.mid_mark = float_one_point_round(stf(temp));
+		pCur->score.mid_mark = stof(temp);
 
-		getline(file, temp, ',');
-		pCur->score.other_mark = float_one_point_round(stf(temp));
-
-		getline(file, temp, '\n');
-		pCur->score.bonus_mark = float_one_point_round(stf(temp));
+		getline(file, temp);
+		pCur->score.other_mark = stof(temp);
 
 		pCur->pNext = nullptr;
 	}
@@ -122,11 +120,14 @@ void load_course(Course*& pHead, string schoolYear_name, string semester_name)
 
 		string s;
 		getline(file, s, ',');
-		pCur->final = stf(s);
+		pCur->final = stof(s);
+
 		getline(file, s, ',');
-		pCur->midterm = stf(s);
-		getline(file, s, '\n');
-		pCur->other = stf(s);
+		pCur->midterm = stof(s);
+
+		getline(file, s);
+		pCur->other = stof(s);
+
 		pCur->student = nullptr;
 		pCur->pNext = nullptr;
 	}
@@ -371,8 +372,7 @@ void print_student_InCourse(Student* pHead, string schoolYear_name, string semes
 				<< pHead->score.total_mark << ","
 				<< pHead->score.final_mark << ","
 				<< pHead->score.mid_mark << ","
-				<< pHead->score.other_mark << ","
-				<< pHead->score.bonus_mark;
+				<< pHead->score.other_mark;
 			if (pHead->pNext != nullptr)
 				file << '\n';
 			pHead = pHead->pNext;

@@ -1,5 +1,5 @@
-
 #include "lib.h"
+#include "menuScoreTemp.h"
 
 
 int main()
@@ -44,7 +44,6 @@ int main()
 			break;
 		}
 	}
-	clrscr();
 	dialocatePass(headPass);
 	clear(headPass);
 	print_output(pHead_schoolYear, pHead_class);

@@ -1,4 +1,5 @@
 #include "lib.h"
+#include "menuScoreTemp.h"
 
 Class* Find_Class(Class* pHead)
 {
@@ -41,13 +42,14 @@ void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass)
 		while (pCur->pNext != nullptr)
 			pCur = pCur->pNext;
 	}
-	passInfo *pCurPass = nullptr;
+	passInfo* pCurPass = nullptr;
 	if (headPass != nullptr)
 	{
 		pCurPass = headPass;
 		while (pCurPass->next != nullptr)
 			pCurPass = pCurPass->next;
 	}
+
 	while (!file.eof())
 	{
 		if (pHead == nullptr)
@@ -55,7 +57,7 @@ void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass)
 			pHead = new Student;
 			pCur = pHead;
 		}
-		else
+		else if (pHead != nullptr)
 		{
 			pCur->pNext = new Student;
 			pCur = pCur->pNext;
@@ -66,7 +68,7 @@ void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass)
 			headPass = new passInfo;
 			pCurPass = headPass;
 		}
-		else
+		else if (headPass != nullptr)
 		{
 			pCurPass->next = new passInfo;
 			pCurPass = pCurPass->next;
@@ -83,7 +85,6 @@ void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass)
 		pCurPass->login = pCur->student_ID;
 		pCurPass->password = default_password;
 		pCurPass->type = 's';
-		
 		pCurPass->next = nullptr;
 		pCur->pNext = nullptr;
 	}

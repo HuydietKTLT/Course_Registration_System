@@ -1,4 +1,5 @@
 #include "lib.h"
+#include "menuScoreTemp.h"
 
 //Check login infomation
 bool LoginCheck(string login, string password, char& type, string& ID, passInfo* readfile)
@@ -36,7 +37,6 @@ void login(char& type, string& ID, passInfo* readfile)
             break;
         cout << "Fail successful! Please try again.\n";
     }
-    clrscr();
 }
 
 //Edit password menu
@@ -60,8 +60,6 @@ void edit(passInfo*& readfile)
         new_password = pass();
     } while (doTheEdit(new_password, ID, readfile));
     dialocatePass(readfile);
-    stop();
-    clrscr();
 }
 
 //Read password file to linked list
@@ -76,26 +74,33 @@ void ReadPassword(passInfo*& readfile)
 		cout << "Error cannot open file.";
 		return;
 	}
-	passInfo* dummyNode = new passInfo;
-	passInfo* temp;
-	dummyNode->next = readfile;
-	passInfo* cur = dummyNode;
-	while (!fi.eof())
-	{
-		temp = new passInfo;
-		temp->next = nullptr;
+    
+    passInfo* pCur = nullptr;
+    while (!fi.eof())
+    {
+        if (readfile == nullptr)
+        {
+            readfile = new passInfo;
+            pCur = readfile;
+        }
+        else
+        {
+            pCur->next = new passInfo;
+            pCur = pCur->next;
+        }
 
-		fi >> temp->login;
-		fi >> temp->password;
-		
+        getline(fi, pCur->login, ',');
+        getline(fi, pCur->password, ',');
+        string temp;
+        getline(fi, temp,'\n');
 
-		fi >> temp->type;
+        pCur->type = temp[0];
 
-		cur->next = temp;
-		cur = cur->next;
-	}
-	readfile = dummyNode->next;
-	delete dummyNode;
+
+        pCur->next = nullptr;
+    }
+    pCur = nullptr;
+	
 	fi.close();
 
 
@@ -156,7 +161,7 @@ void ReadPassword(passInfo*& readfile)
 //Clear the linked list
 void clear(passInfo*& readfile)
 {
-    passInfo* temp;
+	passInfo* temp = readfile;
     while (readfile != nullptr)
     {
         temp = readfile;
@@ -225,10 +230,10 @@ void dialocatePass(passInfo* readfile)
     passInfo* cur = readfile;
     while (cur != nullptr)
     {
-        fo << cur->login << ' ' << cur->password << ' ' << cur->type;
-        cur = cur->next;
+        fo << cur->login << ',' << cur->password << ',' << cur->type;
         if (cur->next != nullptr)
             fo << '\n';
+        cur = cur->next;
     }
     fo.close();
 }

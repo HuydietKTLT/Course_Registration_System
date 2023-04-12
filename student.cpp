@@ -1,4 +1,5 @@
 #include "lib.h"
+#include "menuScoreTemp.h"
 
 void view_list_all_courses(SchoolYear* pHead_schoolYear, string student_ID)
 {
@@ -166,8 +167,6 @@ void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& hea
 	int i;
 	while (true)
 	{
-		stop();
-		clrscr();
 		cout << "-------------------------------------------\n";
 		cout << "1. View the courses in semester.\n2. View scoreboard.\n3 .Change password.";
 		cout << "\n0. Log out";
@@ -199,4 +198,3 @@ void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& hea
 		}
 	}
 }
-

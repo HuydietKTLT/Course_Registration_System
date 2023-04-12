@@ -13,13 +13,8 @@
 #include <cstdio>
 #include <direct.h>
 #include <conio.h>
+#include <stdlib.h>
 
-//https://cplusplus.com/ 
-#ifdef __cplusplus__
-  #include <cstdlib>
-#else
-  #include <stdlib.h>
-#endif
 
 typedef long long ll;
 typedef long int li;
@@ -37,7 +32,6 @@ struct Score {
 	float final_mark = 0;
 	float mid_mark = 0;
 	float other_mark = 0;
-	float bonus_mark = 0;
 };
 
 struct passInfo
@@ -50,12 +44,12 @@ struct passInfo
 
 struct Student
 {
-	string student_ID;
-	string first_name;
-	string last_name;
-	string gender;
-	string date_of_birth;
-	string social_ID;
+	string student_ID = "x";
+	string first_name = "x";
+	string last_name = "x";
+	string gender = "x";
+	string date_of_birth = "x";
+	string social_ID = "x";
 
 	Score score;
 	Student* pNext;
@@ -63,17 +57,19 @@ struct Student
 
 struct Course
 {
-	string id;
-	string course_name;
-	string class_name;
-	string number_credits;
-	string number_students;
-	string teacher_name;
-	string day_of_week;
-	string sessions;
+	string id = "x";
+	string course_name = "x";
+	string class_name = "x";
+	string number_credits = "x";
+	string number_students = "x";
+	string teacher_name = "x";
+	string day_of_week = "x";
+	string sessions = "x";
+
 	float final = 0.5;
 	float midterm = 0.4;
 	float other = 0.1;
+
 	Student* student;
 	Course* pNext;
 };
@@ -81,21 +77,21 @@ struct Course
 
 struct Semester
 {
-	string semester_name;
+	string semester_name = "x";
 	Course* course;
 	Semester* pNext;
 };
 
 struct Class
 {
-	string class_name;
+	string class_name = "x";
 	Student* student;
 	Class* pNext;
 };
 
 struct SchoolYear
 {
-	string year_name;
+	string year_name = "x";
 	Semester* semester;
 	SchoolYear* pNext;
 };
