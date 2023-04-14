@@ -82,10 +82,25 @@ struct Semester
 	Semester* pNext;
 };
 
+struct scoreClass
+{
+	string course_ID = "x";
+	string course_name = "x";
+	float total_mark = 0;
+	scoreClass *next;
+};
+
+struct studentClass
+{
+	string student_ID = "x";
+	scoreClass* scoreClass;
+	studentClass* pNext;
+};
+
 struct Class
 {
 	string class_name = "x";
-	Student* student;
+	studentClass* student;
 	Class* pNext;
 };
 

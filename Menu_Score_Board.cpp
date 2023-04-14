@@ -119,7 +119,7 @@ void import_score_of_course(Course* z)
 		float f = z-> final / 100;
 		float m = z-> midterm / 100;
 		float o = z-> other / 100;
-		s->score.total_mark = (s->score.final_mark * f + s->score.mid_mark * m + s->score.other_mark *o);
+		s->score.total_mark = float_one_point_round(s->score.final_mark * f + s->score.mid_mark * m + s->score.other_mark *o);
 		cout << "Total mark is: " << s->score.total_mark;
 		s = s->pNext;
 	}
