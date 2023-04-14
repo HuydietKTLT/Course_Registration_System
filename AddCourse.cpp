@@ -594,17 +594,14 @@ Course* Find_Course(SchoolYear* pHead)
 	string get_course_ID;
 	cin >> get_course_ID;
 	while (pCur_Course != nullptr && pCur_Course->id != get_course_ID)
-	{
 		pCur_Course = pCur_Course->pNext;
-	}
 	if (pCur_Course == nullptr)
 	{
 		cout << "There is no course ID matching with your typing !!!" << endl;
 		return NULL;
 	}
 	//To make sure that the pCur_course is not a null pointer.
-	if (pCur_Course != nullptr)
-		return pCur_Course;
+	return pCur_Course;
 }
 
 void add_Student_to_Course_By_File(Student*& pHead)
