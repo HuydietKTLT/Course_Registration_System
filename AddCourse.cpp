@@ -114,7 +114,7 @@ void print_All_ClassToConsole(Class* pHead_class)
 	cout << endl;
 }
 
-void print_All_Student_In_A_class(Student* pCur)
+void print_All_Student_In_A_class(studentClass* pCur)
 {
 	if (pCur == nullptr)
 	{
@@ -732,4 +732,212 @@ void remove_Student_from_Course(Student*& pHead)
 		return;
 	}
 	cout << "There is no student ID matching with your typing !!!" << endl;
+}
+
+void Print_All_Student_In_A_Class_With_score_All(Class* pClass)
+{
+
+    Class* pCur_Class = pClass;
+    string get_class;
+    cout << "Enter Class: ";
+    cin >> get_class;
+
+        while (pCur_Class != nullptr && pCur_Class->class_name != get_class)
+			pCur_Class = pCur_Class->pNext;
+
+		if (pCur_Class == nullptr)
+		{
+			cout << "There is no semester matching with your typing !!!" << endl;
+			return;
+		}
+
+    studentClass* pCur = pCur_Class->student;
+    
+
+	while (pCur != nullptr)
+	{
+		cout
+			<< setw(13)
+			<< pCur->student_ID << " "
+			<< left
+			<< setw(13)
+			<< pCur->first_name << " "
+			<< left
+			<< setw(13)
+			<< pCur->last_name << " "
+			<< left
+			<< setw(13)
+			<< pCur->gender << " "
+			<< left
+			<< setw(13)
+			<< pCur->date_of_birth << " "
+			<< left
+			<< setw(13)
+			<< pCur->social_ID << endl;
+
+            scoreClass* pCurScore = pCur->score;
+
+            if (pCurScore == nullptr)
+            {
+                cout << "\tNo score for this student" << endl;
+            }
+                      
+            while(pCurScore != nullptr)
+            {
+                cout
+                << left
+                << setw(30)
+                << pCurScore->course_name << "|"
+                << left
+                << setw(15)
+                << pCurScore->course_ID << "|"
+                << left
+                << setw(5)
+                << pCurScore->score.final_mark << "|"
+                << left
+                << setw(5)
+                << pCurScore->score.final_mark << "|"
+                << left
+                << setw(5)
+                << pCurScore->score.mid_mark << "|"
+                << left
+                << setw(5)
+                << pCurScore->score.other_mark << endl;
+
+                pCurScore = pCurScore->next;
+            }        	
+		pCur = pCur->pNext;
+	}
+}
+
+bool checkForCourse(Course* pCur, string courseID)
+{
+    while (pCur != nullptr)
+    {
+        if (pCur->id == courseID)
+        {
+            return true;
+        }
+        pCur = pCur->pNext;
+    }
+    return false;
+}
+
+void Print_All_Student_In_A_Class_With_score_Semester(SchoolYear* pHead, Class* pClass)
+{
+    SchoolYear* pCurYear = pHead;
+    Course* pCurCourse = nullptr;
+
+    
+    string get_schoolyear;
+	cout << "Enter School Year: ";
+	cin >> get_schoolyear;
+		
+	while (pHead != nullptr && pHead->year_name != get_schoolyear)
+	{
+			pHead = pHead->pNext;
+	}
+		if (pHead == nullptr)
+		{
+			cout << "There is no schoolyear matching with your typing!!!" << endl;
+			return;
+		}
+
+	Semester* pCur_Semester = pHead->semester;
+	    string get_semester;
+		cout << "Enter Semester: ";
+		cin >> get_semester;
+
+		while (pCur_Semester != nullptr && pCur_Semester->semester_name != get_semester)
+			pCur_Semester = pCur_Semester->pNext;
+
+		if (pCur_Semester == nullptr)
+		{
+			cout << "There is no semester matching with your typing !!!" << endl;
+			return;
+		}
+
+    pCurCourse = pCur_Semester->course;
+
+    Class* pCur_Class = pClass;
+    string get_class;
+    cout << "Enter Class: ";
+    cin >> get_class;
+
+        while (pCur_Class != nullptr && pCur_Class->class_name != get_class)
+			pCur_Class = pCur_Class->pNext;
+
+		if (pCur_Class == nullptr)
+		{
+			cout << "There is no semester matching with your typing !!!" << endl;
+			return;
+		}
+
+    studentClass* pCur = pCur_Class->student;
+    
+
+	while (pCur != nullptr)
+	{
+		cout
+			<< setw(13)
+			<< pCur->student_ID << " "
+			<< left
+			<< setw(13)
+			<< pCur->first_name << " "
+			<< left
+			<< setw(13)
+			<< pCur->last_name << " "
+			<< left
+			<< setw(13)
+			<< pCur->gender << " "
+			<< left
+			<< setw(13)
+			<< pCur->date_of_birth << " "
+			<< left
+			<< setw(13)
+			<< pCur->social_ID << endl;
+            
+            scoreClass* pCurScore = pCur->score;
+
+            if (pCurScore == nullptr)
+            {
+                cout << "\tNo score for this student" << endl;
+            }
+            
+            while(pCurScore != nullptr)
+            {
+                if(pCurScore->score.final_mark == 0)
+                {
+                    pCurScore = pCurScore->next;
+                    continue;
+                }
+                if(checkForCourse(pCurCourse, pCurScore->course_ID) == false)
+                {
+                    pCurScore = pCurScore->next;
+                    continue;
+                }
+                cout
+                << left
+                << setw(30)
+                << pCurScore->course_name << "|"
+                << left
+                << setw(15)
+                << pCurScore->course_ID << "|"
+                << left
+                << setw(5)
+                << pCurScore->score.final_mark << "|"
+                << left
+                << setw(5)
+                << pCurScore->score.final_mark << "|"
+                << left
+                << setw(5)
+                << pCurScore->score.mid_mark << "|"
+                << left
+                << setw(5)
+                << pCurScore->score.other_mark << endl;
+
+                pCurScore = pCurScore->next;
+            }        	
+		pCur = pCur->pNext;
+	}
 }

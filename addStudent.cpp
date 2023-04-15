@@ -23,7 +23,7 @@ Class* Find_Class(Class* pHead)
 	return pHead;
 }
 
-void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass)
+void add_Student_To_Class_By_File(studentClass*& pHead, passInfo*& headPass)
 {
 	ifstream file;
 	//The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be addedd
@@ -35,7 +35,7 @@ void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass)
 		file.close();
 		return;
 	}
-	Student* pCur = nullptr;
+	studentClass* pCur = nullptr;
 	if (pHead != nullptr)
 	{
 		pCur = pHead;
@@ -54,12 +54,12 @@ void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass)
 	{
 		if (pHead == nullptr)
 		{
-			pHead = new Student;
+			pHead = new studentClass;
 			pCur = pHead;
 		}
 		else if (pHead != nullptr)
 		{
-			pCur->pNext = new Student;
+			pCur->pNext = new studentClass;
 			pCur = pCur->pNext;
 		}
 

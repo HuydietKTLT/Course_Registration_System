@@ -54,7 +54,7 @@ void load_student_InCourse(Student*& pHead, string schoolYear_name, string semes
 	file.close();
 }
 
-void load_student_InClass(Student*& pHead, string class_name)
+void load_student_InClass(studentClass*& pHead, string class_name)
 {
 	ifstream file;
 	file.open(class_name + ".txt");
@@ -62,17 +62,17 @@ void load_student_InClass(Student*& pHead, string class_name)
 		return;
 	if (isFileEmpty(class_name + ".txt"))
 		return;
-	Student* pCur = pHead;
+	studentClass* pCur = pHead;
 	while (!file.eof())
 	{
 		if (pHead == nullptr)
 		{
-			pHead = new Student;
+			pHead = new studentClass;
 			pCur = pHead;
 		}
 		else
 		{
-			pCur->pNext = new Student;
+			pCur->pNext = new studentClass;
 			pCur = pCur->pNext;
 		}
 		getline(file, pCur->student_ID, ',');
@@ -85,6 +85,57 @@ void load_student_InClass(Student*& pHead, string class_name)
 		pCur->pNext = nullptr;
 	}
 	file.close();
+}
+
+void load_Score_to_student_class(studentClass *&pCur, SchoolYear* pYear)
+{
+	scoreClass* pHeadScore;
+	pCur->score = pHeadScore;
+	scoreClass* pCurScore;
+	SchoolYear* pCurYear = pYear;
+	while (pCurYear != nullptr)
+	{
+		cout << pCurYear->year_name << endl;
+		Semester* pCurSemester = pCurYear->semester;
+		while (pCurSemester != nullptr)
+		{
+			cout << "\t\t" << pCurSemester->semester_name << endl;
+			Course* pCurCourse = pCurSemester->course;
+			while (pCurCourse != nullptr)
+			{
+				cout << "\t\t\t" << pCurCourse->course_name << endl;
+				Student* pCurStudent = pCurCourse->student;
+				while (pCurStudent != nullptr)
+				{
+					cout << "\t\t\t\t" <<pCurStudent->student_ID << endl;
+					if (pCurStudent->student_ID == pCur->student_ID)
+					{
+						if (pHeadScore == nullptr)
+						{
+							pHeadScore = new scoreClass;
+							pCurScore = pHeadScore;
+						}
+						else
+						{
+							pCurScore->next = new scoreClass;
+							pCurScore = pCurScore->next;
+						}
+						pCurScore->course_name = pCurCourse->course_name;
+						pCurScore->course_ID = pCurCourse->id;
+						pCurScore->score = pCurStudent->score;
+						cout << pCurScore->course_name << " " << pCurScore->course_ID << " "
+						     << pCurScore->score.final_mark << " " << pCurScore->score.mid_mark << " "  
+							 << pCurScore->score.total_mark << " " << pCurScore->score.other_mark << endl;
+						pCurScore->next = nullptr;
+					}
+					pCurStudent = pCurStudent->pNext;
+				}
+				pCurCourse = pCurCourse->pNext;
+			}
+			pCurSemester = pCurSemester->pNext;
+		}
+		pCurYear = pCurYear->pNext;
+	}
 }
 
 void load_course(Course*& pHead, string schoolYear_name, string semester_name)
@@ -264,11 +315,23 @@ void load_input(SchoolYear*& pHead_schoolYear, Class*& pHead_class)
 	Class* pCur_class = pHead_class;
 	while (pCur_class != nullptr)
 	{
-		Student* pCur_1 = nullptr;
+		studentClass* pCur_1 = nullptr;
 		load_student_InClass(pCur_1, pCur_class->class_name);
 		pCur_class->student = pCur_1;
 		pCur_class = pCur_class->pNext;
 	}
+	pCur_class = pHead_class;
+	while (pCur_class != nullptr)
+	{
+		studentClass* pCur_1 = pCur_class->student;
+		while(pCur_1 != nullptr)
+		{
+			load_Score_to_student_class(pCur_1, pHead_schoolYear);
+			pCur_1 = pCur_1->pNext;
+		}
+		pCur_class = pCur_class->pNext;
+	}
+	
 
 	//PRINT SOMETHING ON CONSOLE
 	/*SchoolYear* pTemp1 = pHead_schoolYear;
@@ -328,7 +391,7 @@ void load_input(SchoolYear*& pHead_schoolYear, Class*& pHead_class)
 	}*/
 }
 
-void print_student_InClass(Student* pHead, string class_name)
+void print_student_InClass(studentClass* pHead, string class_name)
 {
 	ofstream file;
 	file.open(class_name + ".txt");
@@ -585,8 +648,8 @@ void deallocated(SchoolYear*& pHead_schoolYear, Class*& pHead_class)
 	Class* pCur_class = pHead_class;
 	while (pHead_class != nullptr)
 	{
-		Student* pTemp = pCur_class->student;
-		Student* pPrevTemp = pCur_class->student;
+		studentClass* pTemp = pCur_class->student;
+		studentClass* pPrevTemp = pCur_class->student;
 		if (pTemp == nullptr) break;
 		while (pTemp != nullptr)
 		{

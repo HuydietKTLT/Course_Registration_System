@@ -64,4 +64,3 @@ void updateScoreForStudent (Course  *course)
     cout << "Final mark:"; cin >> s->score.final_mark;
     cout << "Other mark:"; cin >> s->score.other_mark;
 }
-

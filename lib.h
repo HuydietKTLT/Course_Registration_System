@@ -86,14 +86,19 @@ struct scoreClass
 {
 	string course_ID = "x";
 	string course_name = "x";
-	float total_mark = 0;
+	Score score;
 	scoreClass *next;
 };
 
 struct studentClass
 {
 	string student_ID = "x";
-	scoreClass* scoreClass;
+	string first_name = "x";
+	string last_name = "x";
+	string gender = "x";
+	string date_of_birth = "x";
+	string social_ID = "x";
+	scoreClass* score;
 	studentClass* pNext;
 };
 
@@ -113,10 +118,12 @@ struct SchoolYear
 
 bool isFileEmpty(string filename);
 
-//About loading data Wat
+//About loading data
 void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name);
 
-void load_student_InClass(Student*& pHead, string class_name);
+void load_student_InClass(studentClass*& pHead, string class_name);
+
+void load_Score_to_student_class(studentClass*& pCur, SchoolYear* pYear);
 
 void load_course(Course*& pHead, string schoolYear_name, string semester_name);
 
@@ -130,7 +137,7 @@ void load_input(SchoolYear*& pHead_schoolYear, Class*& pHead_class);
 
 void print_student_InCourse(Student* pHead, string schoolYear_name, string Semester_name, string Course_name);
 
-void print_student_InClass(Student* pHead, string class_name);
+void print_student_InClass(studentClass* pHead, string class_name);
 
 void print_course(Course* pHead, string schoolYear_name, string Semester_name);
 
@@ -145,7 +152,7 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear);
 
 void print_All_ClassToConsole(Class* pHead_class);
 
-void print_All_Student_In_A_class(Student* pCur);
+void print_All_Student_In_A_class(studentClass* pCur);
 
 void Print_All_Student_In_A_Course(Student* pCur);
 
@@ -175,6 +182,11 @@ void update_session(Course*& pCur);
 
 void update_Course(Course*& pCur);
 
+bool checkForCourse(Course* pCur, string courseID);
+
+void Print_All_Student_In_A_Class_With_score_All(Class* pClass);
+
+void Print_All_Student_In_A_Class_With_score_Semester(SchoolYear* pHead, Class* pClass);
 
 //Find any semester with specififc schoolyear;
 Semester* Find_Semester(SchoolYear* pHead);
@@ -184,7 +196,7 @@ Course* Find_Course(SchoolYear* pHead);
 
 Class* Find_Class(Class* pHead);
 
-void add_Student_To_Class_By_File(Student*& pHead, passInfo*& headPass);
+void add_Student_To_Class_By_File(studentClass*& pHead, passInfo*& headPass);
 
 void add_Student_to_Course_By_Console(Student*& pHead);
 
