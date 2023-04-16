@@ -123,7 +123,7 @@ void load_student_InCourse(Student*& pHead, string schoolYear_name, string semes
 
 void load_student_InClass(studentClass*& pHead, string class_name);
 
-void load_Score_to_student_class(studentClass*& pCur, SchoolYear* pYear);
+void load_Score_to_student_class(studentClass*& pCur, SchoolYear*& pYear);
 
 void load_course(Course*& pHead, string schoolYear_name, string semester_name);
 

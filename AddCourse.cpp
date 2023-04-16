@@ -781,6 +781,9 @@ void Print_All_Student_In_A_Class_With_score_All(Class* pClass)
             {
                 cout << "\tNo score for this student" << endl;
             }
+
+			int n = 0;
+			float sum = 0;
                       
             while(pCurScore != nullptr)
             {
@@ -804,8 +807,13 @@ void Print_All_Student_In_A_Class_With_score_All(Class* pClass)
                 << setw(5)
                 << pCurScore->score.other_mark << endl;
 
+				n++;
+				sum += pCurScore->score.total_mark;
+
                 pCurScore = pCurScore->next;
             }        	
+			if(n != 0)
+				cout << right << setw(50) << "GPA: " << (sum / n) / 10 * 4 << endl;
 		pCur = pCur->pNext;
 	}
 }
@@ -903,6 +911,9 @@ void Print_All_Student_In_A_Class_With_score_Semester(SchoolYear* pHead, Class* 
             {
                 cout << "\tNo score for this student" << endl;
             }
+
+			int n = 0;
+			float sum = 0;
             
             while(pCurScore != nullptr)
             {
@@ -916,6 +927,7 @@ void Print_All_Student_In_A_Class_With_score_Semester(SchoolYear* pHead, Class* 
                     pCurScore = pCurScore->next;
                     continue;
                 }
+				
                 cout
                 << left
                 << setw(30)
@@ -935,9 +947,13 @@ void Print_All_Student_In_A_Class_With_score_Semester(SchoolYear* pHead, Class* 
                 << left
                 << setw(5)
                 << pCurScore->score.other_mark << endl;
+				n++;
+				sum += pCurScore->score.final_mark;
 
                 pCurScore = pCurScore->next;
             }        	
+			if(n != 0)
+				cout << right << setw(50) << "GPA: " << (sum / n) / 10 * 4 << endl;
 		pCur = pCur->pNext;
 	}
 }

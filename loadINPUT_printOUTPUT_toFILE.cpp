@@ -87,30 +87,26 @@ void load_student_InClass(studentClass*& pHead, string class_name)
 	file.close();
 }
 
-void load_Score_to_student_class(studentClass *&pCur, SchoolYear* pYear)
+void load_Score_to_student_class(studentClass *&pCur, SchoolYear*& pYear)
 {
-	scoreClass* pHeadScore;
-	pCur->score = pHeadScore;
-	scoreClass* pCurScore;
+	scoreClass* pHeadScore = nullptr;
+	scoreClass* pCurScore = nullptr;
+	
 	SchoolYear* pCurYear = pYear;
 	while (pCurYear != nullptr)
 	{
-		cout << pCurYear->year_name << endl;
 		Semester* pCurSemester = pCurYear->semester;
 		while (pCurSemester != nullptr)
 		{
-			cout << "\t\t" << pCurSemester->semester_name << endl;
 			Course* pCurCourse = pCurSemester->course;
 			while (pCurCourse != nullptr)
 			{
-				cout << "\t\t\t" << pCurCourse->course_name << endl;
 				Student* pCurStudent = pCurCourse->student;
 				while (pCurStudent != nullptr)
 				{
-					cout << "\t\t\t\t" <<pCurStudent->student_ID << endl;
 					if (pCurStudent->student_ID == pCur->student_ID)
 					{
-						if (pHeadScore == nullptr)
+						if(pHeadScore == nullptr)
 						{
 							pHeadScore = new scoreClass;
 							pCurScore = pHeadScore;
@@ -120,12 +116,10 @@ void load_Score_to_student_class(studentClass *&pCur, SchoolYear* pYear)
 							pCurScore->next = new scoreClass;
 							pCurScore = pCurScore->next;
 						}
+
 						pCurScore->course_name = pCurCourse->course_name;
 						pCurScore->course_ID = pCurCourse->id;
 						pCurScore->score = pCurStudent->score;
-						cout << pCurScore->course_name << " " << pCurScore->course_ID << " "
-						     << pCurScore->score.final_mark << " " << pCurScore->score.mid_mark << " "  
-							 << pCurScore->score.total_mark << " " << pCurScore->score.other_mark << endl;
 						pCurScore->next = nullptr;
 					}
 					pCurStudent = pCurStudent->pNext;
@@ -136,6 +130,7 @@ void load_Score_to_student_class(studentClass *&pCur, SchoolYear* pYear)
 		}
 		pCurYear = pCurYear->pNext;
 	}
+	pCur->score = pHeadScore;
 }
 
 void load_course(Course*& pHead, string schoolYear_name, string semester_name)
