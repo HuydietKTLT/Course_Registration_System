@@ -1,5 +1,4 @@
 #include "lib.h"
-#include "menuScoreTemp.h"
 
 void view_scoreboard_toCourse(SchoolYear* list_year) {
 	SchoolYear* pCur = list_year;

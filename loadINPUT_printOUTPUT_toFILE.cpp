@@ -1,5 +1,4 @@
 #include "lib.h"
-#include "menuScoreTemp.h"
 
 bool isFileEmpty(string filename)
 {

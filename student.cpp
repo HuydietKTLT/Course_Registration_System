@@ -1,5 +1,4 @@
 #include "lib.h"
-#include "menuScoreTemp.h"
 
 void view_list_all_courses(SchoolYear* pHead_schoolYear, string student_ID)
 {

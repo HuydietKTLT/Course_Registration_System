@@ -1,5 +1,4 @@
 #include "lib.h"
-#include "menuScoreTemp.h"
 
 //Check login infomation
 bool LoginCheck(string login, string password, char& type, string& ID, passInfo* readfile)

@@ -1,5 +1,4 @@
 #include "lib.h"
-#include "menuScoreTemp.h"
 
 Class* Find_Class(Class* pHead)
 {

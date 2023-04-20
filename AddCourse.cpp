@@ -1,5 +1,4 @@
 #include "lib.h"
-#include "menuScoreTemp.h"
 
 void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 {
