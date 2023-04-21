@@ -211,10 +211,10 @@ void Menu_Score_Board(SchoolYear* list_year)
 
 						if (score->score.mid_mark <= 10 && score->score.final_mark <= 10 && score->score.other_mark <= 10)
 						{
-							float f = z-> final / 100;
-							float m = z-> midterm / 100;
-							float o = z-> other / 100;
-							s->score.total_mark = float_one_point_round(s->score.final_mark * f + s->score.mid_mark * m + s->score.other_mark *o);
+							float f = score->score.final_mark / 100;
+							float m = score->score.mid_mark / 100;
+							float o = score->score.other_mark / 100;
+							score->score.total_mark = float_one_point_round(score->score.final_mark * f + score->score.mid_mark * m + score->score.other_mark * o);
 							score = score->pNext;
 						}
 						else {
