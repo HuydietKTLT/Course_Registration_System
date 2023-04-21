@@ -9,21 +9,26 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 	while (true)
 	{
 		cout 	<< "-------------------------------------------\n"
-				<< "1. New school year.\n2. New classes\n"
-				<< "3. Add new 1st year students to 1st-year classes\n4. New semester.\n5. Add students to course by file.\n6. Add a student to course by console.\n7. View the list of courses."
-				<< "\n8. View the list of class: "
+				<< "1. New school year.\n"
+				<< "2. New classes.\n"
+				<< "3. Add new 1st year students to 1st-year classes.\n"
+				<< "4. New semester.\n"
+				<< "5. Add students to course by file.\n"
+				<< "6. Add a student to course by console.\n"
+				<< "7. View the list of courses."
+				<< "\n8. View the list of class."
 				<< "\n9. Update course information."
 				<< "\n10. Remove a student from the course."
-				<< "\n11. Delete a course "
+				<< "\n11. Delete a course."
 				<< "\n12. Add scores for the current school year."
-				<< "\n13. View a list of students in a class"
-				<< "\n14. View a list of students in a course"
-				<< "\n15. View GPA of a class in a semester"
-				<< "\n16. View total GPA of a class"
-				<< "\n17. Export list of students in course to CSV file!"
+				<< "\n13. View a list of students in a class."
+				<< "\n14. View a list of students in a course."
+				<< "\n15. View GPA of a class in a semester."
+				<< "\n16. View total GPA of a class."
+				<< "\n17. Export list of students in course to CSV file."
 				<< "\n18. Edit password."
-				<< "\n0. Log out"
-				<< " \nEnter options :";
+				<< "\n0. Log out."
+				<< "\nEnter options:";
 		cin >> i;
 		clrscr();
 		switch (i)
@@ -230,7 +235,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 			edit(headPass);
 			break;
 		}
-		
+
 		default:
 			continue;
 		}
