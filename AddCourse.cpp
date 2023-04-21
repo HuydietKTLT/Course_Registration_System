@@ -471,6 +471,7 @@ void update_Course(Course*& pCur)
 		cout << "0. Exit" << endl;
 		int option;
 		cin >> option;
+		clrscr();
 		switch (option)
 		{
 		case 1:

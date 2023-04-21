@@ -129,6 +129,7 @@ void Menu_Score_Board(SchoolYear* list_year)
 	int option;
 	cout << "Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other. Quit=\n";
 	cin >> option;
+	clrscr();
 	while (option == 0 || option == 1 || option == 2) {
 		SchoolYear* pCur = list_year;
 		string yes;

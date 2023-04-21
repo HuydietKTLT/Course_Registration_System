@@ -25,6 +25,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 				<< "\n0. Log out"
 				<< " \nEnter options :";
 		cin >> i;
+		clrscr();
 		switch (i)
 		{
 		case 0:

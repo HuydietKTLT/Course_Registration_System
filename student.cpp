@@ -105,6 +105,7 @@ void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID)
 		<< left
 		<< setw(15)
 		<< "Other mark| ";
+	cout << endl;
 
 	while (pHead_schoolYear != nullptr)
 	{
@@ -117,6 +118,7 @@ void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID)
 				Student* pHead4 = pHead3->student;
 				while (pHead4 != nullptr)
 				{
+					int s = 0;
 					if (pHead4->student_ID == student_ID)
 					{
 						cout
@@ -150,6 +152,7 @@ void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID)
 							<< left
 							<< setw(15)
 							<< pHead4->score.other_mark;
+							cout << endl;
 					}
 					pHead4 = pHead4->pNext;
 				}
@@ -171,6 +174,7 @@ void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& hea
 		cout << "\n0. Log out";
 		cout << " \nEnter options:";
 		cin >> i;
+		clrscr();
 		switch (i)
 		{
 		case 0:
