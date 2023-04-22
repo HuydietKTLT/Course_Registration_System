@@ -1,8 +1,5 @@
 // The work below use for task 20-21-22-23
-
-
 #include "lib.h"
-
 
 // This function use to import score for ONE COURSE
 // This function use parameter as A Linked List Course 

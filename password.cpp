@@ -99,11 +99,7 @@ void ReadPassword(passInfo*& readfile)
         pCur->next = nullptr;
     }
     pCur = nullptr;
-	
 	fi.close();
-
-
-
     //This can't change password of student
 
 	//Thai's code

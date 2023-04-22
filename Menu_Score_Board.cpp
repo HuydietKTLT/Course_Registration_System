@@ -1,12 +1,15 @@
 #include "lib.h"
 
-void view_scoreboard_toCourse(SchoolYear* list_year) {
-	SchoolYear* pCur = list_year;
-	Semester* Cur_Semester = nullptr;
+void view_scoreboard_toCourse(SchoolYear *list_year)
+{
+	SchoolYear *pCur = list_year;
+	Semester *Cur_Semester = nullptr;
 	string Semester;
-	cout << "Enter Semester: "; cin >> Semester;
+	cout << "Enter Semester: ";
+	cin >> Semester;
 	Cur_Semester = pCur->semester;
-	while (Cur_Semester->semester_name != Semester) {
+	while (Cur_Semester->semester_name != Semester)
+	{
 		Cur_Semester = Cur_Semester->pNext;
 		if (Cur_Semester == nullptr)
 		{
@@ -14,58 +17,63 @@ void view_scoreboard_toCourse(SchoolYear* list_year) {
 			return;
 		}
 	}
-	if (Cur_Semester->semester_name != Semester) {
+	if (Cur_Semester->semester_name != Semester)
+	{
 		cout << Semester << " is not over yet\n";
 		return;
 	}
-	Course* Cur_course = nullptr;
+	Course *Cur_course = nullptr;
 	string Course;
-	cout << "Enter Course: "; cin >> Course;
+	cout << "Enter Course: ";
+	cin >> Course;
 	Cur_course = Cur_Semester->course;
-	while (Cur_course->id != Course) {
+	while (Cur_course->id != Course)
+	{
 		Cur_course = Cur_course->pNext;
-		if (Cur_course == nullptr) {
+		if (Cur_course == nullptr)
+		{
 			cout << Course << " is not over yet\n";
 			return;
 		}
 	}
-	Student* studentF = nullptr;
+	Student *studentF = nullptr;
 	studentF = Cur_course->student;
 	cout << left
-		<< setw(13)
-		<< "Student ID| "
-		<< left
-		<< setw(13)
-		<< "First Name| "
-		<< left
-		<< setw(13)
-		<< "Last Name|"
-		<< left
-		<< setw(13)
-		<< "Gender| "
-		<< left
-		<< setw(13)
-		<< "Date of birth| "
-		<< left
-		<< setw(13)
-		<< "Social ID| "
-		<< left
-		<< setw(9)
-		<< "Total mark| "
-		<< left
-		<< setw(9)
-		<< "Final mark|"
-		<< left
-		<< setw(13)
-		<< "Midterm mark|"
-		<< left
-		<< setw(13)
-		<< "Other mark|" 
-		<< endl;
+		 << setw(13)
+		 << "Student ID| "
+		 << left
+		 << setw(13)
+		 << "First Name| "
+		 << left
+		 << setw(13)
+		 << "Last Name|"
+		 << left
+		 << setw(13)
+		 << "Gender| "
+		 << left
+		 << setw(13)
+		 << "Date of birth| "
+		 << left
+		 << setw(13)
+		 << "Social ID| "
+		 << left
+		 << setw(9)
+		 << "Total mark| "
+		 << left
+		 << setw(9)
+		 << "Final mark|"
+		 << left
+		 << setw(13)
+		 << "Midterm mark|"
+		 << left
+		 << setw(13)
+		 << "Other mark|"
+		 << endl;
 	cout << setfill('-');
 	cout << setw(80) << '-' << endl;
 	cout << setfill(' ');
-	while (studentF != nullptr) {
+	while (studentF != nullptr)
+	{
 		cout
 			<< left
 			<< setw(13)
@@ -101,81 +109,99 @@ void view_scoreboard_toCourse(SchoolYear* list_year) {
 	}
 }
 
-void import_score_of_course(Course* z)
+void import_score_of_course(Course *z)
 {
 	cout << "Course information: " << endl;
 	cout << z->id << "  " << z->course_name << endl;
 	cout << z->class_name << endl;
-	cout << "Now we import score for each students : " << endl << endl;
-	Student* s = z->student; // from now just use branch Student of this Course
-	while (s != nullptr) {
+	cout << "Now we import score for each students : " << endl
+		 << endl;
+	Student *s = z->student; // from now just use branch Student of this Course
+	while (s != nullptr)
+	{
 		cout << "Student id: " << s->student_ID << " " << s->first_name << " " << s->last_name << " " << s->gender << " " << s->date_of_birth << " " << s->social_ID << endl;
-		cout << "Midterm mark:"; cin >> s->score.mid_mark;
-		cout << "Final mark:"; cin >> s->score.final_mark;
-		cout << "Other mark:"; cin >> s->score.other_mark;
+		cout << "Midterm mark:";
+		cin >> s->score.mid_mark;
+		cout << "Final mark:";
+		cin >> s->score.final_mark;
+		cout << "Other mark:";
+		cin >> s->score.other_mark;
 
-		// just assume the logic math calculate, staff can fix it 
-		float f = z-> final / 100;
-		float m = z-> midterm / 100;
-		float o = z-> other / 100;
-		s->score.total_mark = float_one_point_round(s->score.final_mark * f + s->score.mid_mark * m + s->score.other_mark *o);
+		// just assume the logic math calculate, staff can fix it
+		float f = z->final / 100;
+		float m = z->midterm / 100;
+		float o = z->other / 100;
+		s->score.total_mark = float_one_point_round(s->score.final_mark * f + s->score.mid_mark * m + s->score.other_mark * o);
 		cout << "Total mark is: " << s->score.total_mark;
 		s = s->pNext;
 	}
 }
 
-void Menu_Score_Board(SchoolYear* list_year)
+void Menu_Score_Board(SchoolYear *list_year)
 {
 	int option;
 	cout << "Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other. Quit=\n";
 	cin >> option;
 	clrscr();
-	while (option == 0 || option == 1 || option == 2) {
-		SchoolYear* pCur = list_year;
+	while (option == 0 || option == 1 || option == 2)
+	{
+		SchoolYear *pCur = list_year;
 		string yes;
-		if (option == 0) {
-			do {
-				Semester* Cur_Semester = nullptr;
+		if (option == 0)
+		{
+			do
+			{
+				Semester *Cur_Semester = nullptr;
 				string Semester;
-				cout << "Enter Semester: "; cin >> Semester;
+				cout << "Enter Semester: ";
+				cin >> Semester;
 				Cur_Semester = pCur->semester;
 				bool flag = false;
-				while (Cur_Semester->semester_name.compare(Semester) != 0) {
+				while (Cur_Semester->semester_name.compare(Semester) != 0)
+				{
 					Cur_Semester = Cur_Semester->pNext;
-					if (Cur_Semester == nullptr) {
+					if (Cur_Semester == nullptr)
+					{
 						flag = true;
 						break;
 					}
 				}
-				if (flag) {
+				if (flag)
+				{
 					break;
 				}
-				if (Cur_Semester->semester_name.compare(Semester) != 0) {
+				if (Cur_Semester->semester_name.compare(Semester) != 0)
+				{
 					cout << Cur_Semester->semester_name << " is not over yet\n";
 					option = 0;
 					continue;
 				}
-				Course* Cur_course = nullptr;
+				Course *Cur_course = nullptr;
 				string Course;
-				cout << "Enter Course: "; cin >> Course;
+				cout << "Enter Course: ";
+				cin >> Course;
 				Cur_course = Cur_Semester->course;
-				while (Cur_course->id.compare(Course) != 0) {
+				while (Cur_course->id.compare(Course) != 0)
+				{
 					Cur_course = Cur_course->pNext;
-					if (Cur_course == nullptr) {
+					if (Cur_course == nullptr)
+					{
 						flag = true;
 						break;
 					}
 				}
-				if (flag) {
+				if (flag)
+				{
 					break;
 				}
 				fstream F;
 				F.open("import_scoreboard.txt", ios::app);
-				Student* studentF = nullptr;
+				Student *studentF = nullptr;
 				studentF = Cur_course->student;
-				while (studentF != nullptr) {
+				while (studentF != nullptr)
+				{
 					F << studentF->student_ID << "," << studentF->first_name << "," << studentF->last_name << "," << studentF->gender << "," << studentF->date_of_birth << "," << studentF->social_ID << ","
-						<< studentF->score.total_mark << "," << studentF->score.final_mark << "," << studentF->score.mid_mark << "," << studentF->score.other_mark;
+					  << studentF->score.total_mark << "," << studentF->score.final_mark << "," << studentF->score.mid_mark << "," << studentF->score.other_mark;
 					if (studentF->pNext != nullptr)
 						F << "\n";
 					studentF = studentF->pNext;
@@ -183,13 +209,19 @@ void Menu_Score_Board(SchoolYear* list_year)
 				F.close();
 				cout << "Created a file containing the information of the course: " << Cur_course->id << " , Please enter your score into the file (enter 0 = agree): ";
 				cin >> yes;
-				if (yes != "0") remove("import_scoreboard.txt");
-				else {
+				if (yes != "0")
+				{
+					remove("import_scoreboard.txt");
+					continue;
+				}
+				else
+				{
 					fstream outF;
 					outF.open("import_scoreboard.txt", ios::in);
 					string tmp;
-					Student* score = Cur_course->student;
-					while (!outF.eof()) {
+					Student *score = Cur_course->student;
+					while (!outF.eof())
+					{
 						getline(outF, tmp, ',');
 						getline(outF, tmp, ',');
 						getline(outF, tmp, ',');
@@ -218,7 +250,8 @@ void Menu_Score_Board(SchoolYear* list_year)
 							score->score.total_mark = float_one_point_round(score->score.final_mark * f + score->score.mid_mark * m + score->score.other_mark * o);
 							score = score->pNext;
 						}
-						else {
+						else
+						{
 							cout << "Course score entry failed!\n";
 							yes = "0";
 							remove("import_scoreboard.txt");
@@ -226,42 +259,51 @@ void Menu_Score_Board(SchoolYear* list_year)
 						}
 					}
 					outF.close();
-					remove("import_scoreboard.txt");
+					// remove("import_scoreboard.txt");
 				}
 			} while (yes != "0");
 		}
-		else if (option == 1) {
-			Semester* Cur_Semester = nullptr;
+		else if (option == 1)
+		{
+			Semester *Cur_Semester = nullptr;
 			string Semester;
-			cout << "Enter Semester: "; cin >> Semester;
+			cout << "Enter Semester: ";
+			cin >> Semester;
 			Cur_Semester = pCur->semester;
-			while (Cur_Semester->semester_name.compare(Semester) != 0) {
+			while (Cur_Semester->semester_name.compare(Semester) != 0)
+			{
 				Cur_Semester = Cur_Semester->pNext;
 			}
-			if (Cur_Semester->semester_name.compare(Semester) != 0) {
+			if (Cur_Semester->semester_name.compare(Semester) != 0)
+			{
 				cout << Cur_Semester->semester_name << " is not over yet\n";
 				option = 1;
 				continue;
 			}
-			if (Cur_Semester == nullptr) {
+			if (Cur_Semester == nullptr)
+			{
 				option = 1;
 				continue;
 			}
-			Course* Cur_course = nullptr;
+			Course *Cur_course = nullptr;
 			string Course;
-			cout << "Enter Course: "; cin >> Course;
+			cout << "Enter Course: ";
+			cin >> Course;
 			Cur_course = Cur_Semester->course;
-			while (Cur_course->id.compare(Course) != 0) {
+			while (Cur_course->id.compare(Course) != 0)
+			{
 				Cur_course = Cur_course->pNext;
 			}
-			if (Cur_course == nullptr) {
+			if (Cur_course == nullptr)
+			{
 				option = 1;
 				continue;
 			}
 			import_score_of_course(Cur_course);
 		}
-		else if (option == 2) {
-			SchoolYear* current_schoolYear_print_score = currentSchoolYear(list_year);
+		else if (option == 2)
+		{
+			SchoolYear *current_schoolYear_print_score = currentSchoolYear(list_year);
 			if (current_schoolYear_print_score != nullptr)
 				view_scoreboard_toCourse(current_schoolYear_print_score);
 		}
