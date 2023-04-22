@@ -1,34 +1,34 @@
 #include "lib.h"
 
-//Temp Menu for staff
+// Temp Menu for staff
 
-void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& headPass)
+void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&headPass)
 {
 	int i;
-	SchoolYear* current_schoolyear = currentSchoolYear(pHead_schoolYear);
+	SchoolYear *current_schoolyear = currentSchoolYear(pHead_schoolYear);
 	while (true)
 	{
-		cout 	<< "-------------------------------------------\n"
-				<< "1. New school year.\n"
-				<< "2. New classes.\n"
-				<< "3. Add new 1st year students to 1st-year classes.\n"
-				<< "4. New semester.\n"
-				<< "5. Add students to course by file.\n"
-				<< "6. Add a student to course by console.\n"
-				<< "7. View the list of courses."
-				<< "\n8. View the list of class."
-				<< "\n9. Update course information."
-				<< "\n10. Remove a student from the course."
-				<< "\n11. Delete a course."
-				<< "\n12. Add scores for the current school year."
-				<< "\n13. View a list of students in a class."
-				<< "\n14. View a list of students in a course."
-				<< "\n15. View GPA of a class in a semester."
-				<< "\n16. View total GPA of a class."
-				<< "\n17. Export list of students in course to CSV file."
-				<< "\n18. Edit password."
-				<< "\n0. Log out."
-				<< "\nEnter options:";
+		cout << "-------------------------------------------\n"
+			 << "1. New school year.\n"
+			 << "2. New classes.\n"
+			 << "3. Add new 1st year students to 1st-year classes.\n"
+			 << "4. New semester.\n"
+			 << "5. Add students to course by file.\n"
+			 << "6. Add a student to course by console.\n"
+			 << "7. View the list of courses."
+			 << "\n8. View the list of class."
+			 << "\n9. Update course information."
+			 << "\n10. Remove a student from the course."
+			 << "\n11. Delete a course."
+			 << "\n12. Add scores for the current school year."
+			 << "\n13. View a list of students in a class."
+			 << "\n14. View a list of students in a course."
+			 << "\n15. View GPA of a class in a semester."
+			 << "\n16. View total GPA of a class."
+			 << "\n17. Export list of students in course to CSV file."
+			 << "\n18. Edit password."
+			 << "\n0. Log out."
+			 << "\nEnter options:";
 		cin >> i;
 		clrscr();
 		switch (i)
@@ -49,7 +49,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 		}
 		case 3:
 		{
-			Class* find_class = Find_Class(pHead_class);
+			Class *find_class = Find_Class(pHead_class);
 			if (find_class != nullptr)
 			{
 				string s;
@@ -67,7 +67,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 		}
 		case 5:
 		{
-			Course* course_addStudent_file = Find_Course(pHead_schoolYear);
+			Course *course_addStudent_file = Find_Course(pHead_schoolYear);
 			if (course_addStudent_file != nullptr)
 			{
 				string s;
@@ -79,7 +79,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 		}
 		case 6:
 		{
-			Course* course_addStudent_console = Find_Course(pHead_schoolYear);
+			Course *course_addStudent_console = Find_Course(pHead_schoolYear);
 			if (add_Student_to_Course_By_Console != nullptr)
 				add_Student_to_Course_By_Console(course_addStudent_console->student);
 			break;
@@ -94,14 +94,14 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 			break;
 		case 9:
 		{
-			Course* course_update = Find_Course(pHead_schoolYear);
+			Course *course_update = Find_Course(pHead_schoolYear);
 			if (course_update != nullptr)
 				update_Course(course_update);
 			break;
 		}
 		case 10:
 		{
-			Course* course_remove_student = Find_Course(pHead_schoolYear);
+			Course *course_remove_student = Find_Course(pHead_schoolYear);
 			if (course_remove_student != nullptr)
 				remove_Student_from_Course(course_remove_student->student);
 			break;
@@ -111,7 +111,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 			string get_schoolyear;
 			cout << "Enter School Year: ";
 			cin >> get_schoolyear;
-			SchoolYear* pHead = pHead_schoolYear;
+			SchoolYear *pHead = pHead_schoolYear;
 			while (pHead != nullptr && pHead->year_name != get_schoolyear)
 			{
 				pHead = pHead->pNext;
@@ -122,8 +122,8 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 				break;
 			}
 
-			Semester* pCur_Semester = pHead->semester;
-			//These code is used for traversing the linked list of Semester, to found the specific Semester.
+			Semester *pCur_Semester = pHead->semester;
+			// These code is used for traversing the linked list of Semester, to found the specific Semester.
 			string get_semester;
 			cout << "Enter Semester: ";
 			cin >> get_semester;
@@ -137,7 +137,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 				break;
 			}
 
-			Course* pCur_Course = pCur_Semester->course;
+			Course *pCur_Course = pCur_Semester->course;
 			cout << "Enter Course ID: ";
 			string get_course_ID;
 			cin >> get_course_ID;
@@ -161,25 +161,25 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 		}
 		case 13:
 		{
-			Class* class_print_student = Find_Class(pHead_class);
+			Class *class_print_student = Find_Class(pHead_class);
 			if (class_print_student != nullptr)
 				print_All_Student_In_A_class(class_print_student->student);
 			break;
 		}
 		case 14:
 		{
-			Course* course_print_student = Find_Course(pHead_schoolYear);
+			Course *course_print_student = Find_Course(pHead_schoolYear);
 			if (course_print_student != nullptr)
 				Print_All_Student_In_A_Course(course_print_student->student);
 			break;
 		}
 		case 15:
-		{	
+		{
 			Print_All_Student_In_A_Class_With_score_Semester(pHead_schoolYear, pHead_class);
 			break;
 		}
 		case 16:
-		{	
+		{
 			Print_All_Student_In_A_Class_With_score_All(pHead_class);
 			break;
 		}
@@ -188,7 +188,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 			string get_schoolyear;
 			cout << "Enter School Year: ";
 			cin >> get_schoolyear;
-			SchoolYear* pHead = pHead_schoolYear;
+			SchoolYear *pHead = pHead_schoolYear;
 			while (pHead != nullptr && pHead->year_name != get_schoolyear)
 			{
 				pHead = pHead->pNext;
@@ -199,8 +199,8 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 				break;
 			}
 
-			Semester* pCur_Semester = pHead->semester;
-			//These code is used for traversing the linked list of Semester, to found the specific Semester.
+			Semester *pCur_Semester = pHead->semester;
+			// These code is used for traversing the linked list of Semester, to found the specific Semester.
 			string get_semester;
 			cout << "Enter Semester: ";
 			cin >> get_semester;
@@ -214,7 +214,7 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 				break;
 			}
 
-			Course* pCur_Course = pCur_Semester->course;
+			Course *pCur_Course = pCur_Semester->course;
 			cout << "Enter Course ID: ";
 			string get_course_ID;
 			cin >> get_course_ID;
@@ -243,19 +243,20 @@ void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo*& head
 }
 
 // check if current school year exists
-SchoolYear* currentSchoolYear(SchoolYear* pHead)
+SchoolYear *currentSchoolYear(SchoolYear *pHead)
 {
-	if (pHead == nullptr) return NULL;
+	if (pHead == nullptr)
+		return NULL;
 	cout << "-------------------------------------------\n";
-	SchoolYear* currentshoolyear = pHead;
+	SchoolYear *currentshoolyear = pHead;
 	while (currentshoolyear->pNext != nullptr)
 		currentshoolyear = currentshoolyear->pNext;
 	cout << currentshoolyear->year_name << endl;
 	return currentshoolyear;
 }
 
-//print current semester to screen
-Semester* currentSemester(Semester* pHead)
+// print current semester to screen
+Semester *currentSemester(Semester *pHead)
 {
 	if (pHead == nullptr)
 	{
@@ -271,7 +272,7 @@ Semester* currentSemester(Semester* pHead)
 	return pHead;
 }
 
-//Revese string
+// Revese string
 string revString(string a)
 {
 	string b = "";
@@ -281,15 +282,21 @@ string revString(string a)
 	return b;
 }
 
-//create new school year
-void createNewSchoolYear(SchoolYear*& pHead)
+// create new school year
+void createNewSchoolYear(SchoolYear *&pHead)
 {
 	string year;
 	cout << "-------------------------------------------\n";
 	cout << "Enter new school year: ";
 	cin >> year;
-	if (_mkdir(year.c_str()) == 0) {
-		SchoolYear* pCur = nullptr;
+	if (year.size() != 9 || year[4] != '-')
+	{
+		cout << "Wrong syntax to create new school year.\n";
+		return;
+	}
+	if (_mkdir(year.c_str()) == 0)
+	{
+		SchoolYear *pCur = nullptr;
 		if (pHead == nullptr)
 		{
 			pHead = new SchoolYear();
@@ -306,18 +313,18 @@ void createNewSchoolYear(SchoolYear*& pHead)
 		pCur->pNext = nullptr;
 		cout << "New school year created successfully.\n";
 	}
-	else {
+	else
+	{
 		cout << "Failed to create new school year.\n";
 	}
 	cout << "Press any key to continue...\n";
 }
 
-//create new class menu
-void createNewClass(Class*& pHead)
+// create new class menu
+void createNewClass(Class *&pHead)
 {
-	string get_class;
 	int i;
-	Class* pCur = nullptr;
+	Class *pCur = nullptr;
 	if (pHead == nullptr)
 	{
 		pHead = new Class;
@@ -341,22 +348,36 @@ void createNewClass(Class*& pHead)
 		cin >> i;
 		if (i != 0)
 		{
+			string get_class;
 			cout << "Enter class: ";
 			cin >> get_class;
-			pCur->class_name = get_class;
+			while (stoi(get_class) <= 0 || stoi(get_class) >= 100)
+			{
+				cout << "Wrong syntax of class, enter the academic class which begin from 1-99 " << endl;
+				cin >> get_class;
+			}
+			cout << "Enter type of the class: ";
+			string type_class;
+			cin >> type_class;
 
+			while (type_class != "CLC" && type_class != "VP" && type_class != "APCS")
+			{
+				cout << "Wrong syntax of class, enter the type of class among CLC, VP or APCS ";
+				cin >> type_class;
+			}
+			pCur->class_name = get_class;
 			pCur->student = nullptr;
 			pCur->pNext = nullptr;
 		}
-		else
-		{
+		else if (i == 0)
 			break;
-		}
+		else
+			continue;
 	}
 }
 
-//add new course menu
-void addSemesterMenu(SchoolYear* pHead_schoolYear)
+// add new course menu
+void addSemesterMenu(SchoolYear *pHead_schoolYear)
 {
 	int i;
 	while (true)
@@ -380,7 +401,7 @@ void addSemesterMenu(SchoolYear* pHead_schoolYear)
 	}
 }
 
-//void add_semester(Semester*& pHead, string semester)
+// void add_semester(Semester*& pHead, string semester)
 //{
 //	if (pHead == nullptr) {
 //		pHead = new Semester();
@@ -399,10 +420,10 @@ void addSemesterMenu(SchoolYear* pHead_schoolYear)
 //		pTail->semester_name = semester;
 //		pTail->pNext = nullptr;
 //	}
-//}
-//add new semester
+// }
+// add new semester
 
-void addSemester(Semester*& pHead)
+void addSemester(Semester *&pHead)
 {
 	int option;
 	while (true)
@@ -438,12 +459,12 @@ void addSemester(Semester*& pHead)
 			continue;
 		}
 	}
-
 }
 
-bool check_semester(Semester* pHead, string semester)
+bool check_semester(Semester *pHead, string semester)
 {
-	if (pHead == nullptr) return false;
+	if (pHead == nullptr)
+		return false;
 	while (pHead != nullptr && pHead->semester_name != semester)
 	{
 		pHead = pHead->pNext;
@@ -453,9 +474,9 @@ bool check_semester(Semester* pHead, string semester)
 	return true;
 }
 
-void add_semester(Semester*& pHead, string semester)
+void add_semester(Semester *&pHead, string semester)
 {
-	Semester* pTail = nullptr;
+	Semester *pTail = nullptr;
 	if (pHead == nullptr)
 	{
 		pHead = new Semester;
