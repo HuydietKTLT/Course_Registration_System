@@ -285,16 +285,44 @@ string revString(string a)
 // create new school year
 void createNewSchoolYear(SchoolYear *&pHead)
 {
-	string year;
 	cout << "-------------------------------------------\n";
 	cout << "Enter new school year: ";
+	string year;
 	cin >> year;
-	if (year.size() != 9 || year[4] != '-')
+	string year1 = year.substr(0, 4);
+	string year2 = year.substr(5, year.size() - 1);
+
+	while (year.size() != 9 || year[4] != '-' || stoi(year2) - stoi(year1) != 1)
 	{
+		clrscr();
 		cout << "Wrong syntax to create new school year.\n";
-		return;
+		if (year.size() != 9 || year[4] != '-')
+		{
+			cout << "The syntax must be xxxx-xxxx." << endl;
+		}
+		if (stoi(year2) - stoi(year1) > 1)
+			cout << "The distance of the academic year is 1 year." << endl;
+		if (stoi(year2) - stoi(year1) < 1)
+			cout << "The more later year must be bigger than the sooner year " << endl;
+		cout << "Please try again..." << endl;
+		cout << "Enter new school year (press '0' to exit): ";
+		cin >> year;
+		if (year == "0")
+			return;
+		year1 = year.substr(0, 4);
+		year2 = year.substr(5, year.size() - 1);
+		clrscr();
 	}
-	if (_mkdir(year.c_str()) == 0)
+
+	SchoolYear *pCur = pHead;
+	bool is_created = false;
+	while (pCur != nullptr && pCur->year_name != year)
+	{
+		pCur = pCur->pNext;
+	}
+	if (pCur->year_name == year)
+		is_created = true;
+	if (is_created == false)
 	{
 		SchoolYear *pCur = nullptr;
 		if (pHead == nullptr)
@@ -315,9 +343,11 @@ void createNewSchoolYear(SchoolYear *&pHead)
 	}
 	else
 	{
-		cout << "Failed to create new school year.\n";
+		cout << "Failed to create new school year. The school year has been created!\n";
 	}
 	cout << "Press any key to continue...\n";
+	string s;
+	cin >> s;
 }
 
 // create new class menu

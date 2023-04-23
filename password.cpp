@@ -1,23 +1,23 @@
 #include "lib.h"
 
-//Check login infomation
-bool LoginCheck(string login, string password, char& type, string& ID, passInfo* readfile)
+// Check login infomation
+bool LoginCheck(string login, string password, char &type, string &ID, passInfo *readfile)
 {
-	while (readfile != nullptr)
-	{
-		if (password == readfile->password && login == readfile->login)
-		{
-			type = readfile->type;
-			ID = readfile->login;
-			return true;
-		}
-		readfile = readfile->next;
-	}
-	return false;
+    while (readfile != nullptr)
+    {
+        if (password == readfile->password && login == readfile->login)
+        {
+            type = readfile->type;
+            ID = readfile->login;
+            return true;
+        }
+        readfile = readfile->next;
+    }
+    return false;
 }
 
-//Login menu
-void login(char& type, string& ID, passInfo* readfile)
+// Login menu
+void login(char &type, string &ID, passInfo *readfile)
 {
     string login, password;
     while (true)
@@ -28,7 +28,7 @@ void login(char& type, string& ID, passInfo* readfile)
         cout << "Enter your password: ";
         password = pass();
         if (login == "0")
-        {   
+        {
             type = '0';
             return;
         }
@@ -38,8 +38,8 @@ void login(char& type, string& ID, passInfo* readfile)
     }
 }
 
-//Edit password menu
-void edit(passInfo*& readfile)
+// Edit password menu
+void edit(passInfo *&readfile)
 {
     char type;
     int i;
@@ -48,33 +48,55 @@ void edit(passInfo*& readfile)
     login(type, ID, readfile);
     if (ID == "0")
         return;
-    do
+    while (true)
     {
         cout << "Do you want to change your password:\n";
-        cout << "1. Yes. 0. No. Enter options:\n";
-        cin >> i;
-        if (i == 0)
+        cout << "1. Yes.\n";
+        cout << "0. No.\n";
+        cout << "Enter your option:\n";
+        int option;
+        cin >> option;
+        switch (option)
+        {
+        case 1:
+        {
+            cout << "Enter your new password: ";
+            new_password = pass();
+            doTheEdit(new_password, ID, readfile);
             break;
-        cout << "Enter your new password: ";
-        new_password = pass();
-    } while (doTheEdit(new_password, ID, readfile));
-    dialocatePass(readfile);
+        }
+        case 0:
+            return;
+        default:
+            continue;
+        }
+    }
+    // do
+    // {
+    //     cout << "Do you want to change your password:\n";
+    //     cout << "1. Yes. 0. No. Enter options:\n";
+    //     cin >> i;
+    //     if (i != 1)
+    //         break;
+    //     cout << "Enter your new password: ";
+    //     new_password = pass();
+    // } while (doTheEdit(new_password, ID, readfile));
 }
 
-//Read password file to linked list
-void ReadPassword(passInfo*& readfile)
+// Read password file to linked list
+void ReadPassword(passInfo *&readfile)
 {
 
-	//Long's code 
-	ifstream fi;
-	fi.open("password.txt");
-	if (fi.is_open() == false)
-	{
-		cout << "Error cannot open file.";
-		return;
-	}
-    
-    passInfo* pCur = nullptr;
+    // Long's code
+    ifstream fi;
+    fi.open("password.txt");
+    if (fi.is_open() == false)
+    {
+        cout << "Error cannot open file.";
+        return;
+    }
+
+    passInfo *pCur = nullptr;
     while (!fi.eof())
     {
         if (readfile == nullptr)
@@ -91,72 +113,69 @@ void ReadPassword(passInfo*& readfile)
         getline(fi, pCur->login, ',');
         getline(fi, pCur->password, ',');
         string temp;
-        getline(fi, temp,'\n');
+        getline(fi, temp, '\n');
 
         pCur->type = temp[0];
-
 
         pCur->next = nullptr;
     }
     pCur = nullptr;
-	fi.close();
-    //This can't change password of student
+    fi.close();
+    // This can't change password of student
 
-	//Thai's code
-	/*passInfo *temp = readfile;
-	while (temp->next != nullptr)
-		temp = temp->next;
+    // Thai's code
+    /*passInfo *temp = readfile;
+    while (temp->next != nullptr)
+        temp = temp->next;
 
-	while (pHead_schoolYear != nullptr)
-	{
-		Semester* pHead2 = pHead_schoolYear->semester;
-		while (pHead2 != nullptr)
-		{
-			Course* pHead3 = pHead2->course;
-			while (pHead3 != nullptr)
-			{
-				Student* pHead4 = pHead3->student;
-				while (pHead4 != nullptr)
-				{
-					temp->next = new passInfo;
-					temp = temp->next;
-					temp->login = pHead_schoolYear->semester->course->student->student_ID;
-					temp->password = "1234";
-					temp->type = 's';
-					temp->next = nullptr;
+    while (pHead_schoolYear != nullptr)
+    {
+        Semester* pHead2 = pHead_schoolYear->semester;
+        while (pHead2 != nullptr)
+        {
+            Course* pHead3 = pHead2->course;
+            while (pHead3 != nullptr)
+            {
+                Student* pHead4 = pHead3->student;
+                while (pHead4 != nullptr)
+                {
+                    temp->next = new passInfo;
+                    temp = temp->next;
+                    temp->login = pHead_schoolYear->semester->course->student->student_ID;
+                    temp->password = "1234";
+                    temp->type = 's';
+                    temp->next = nullptr;
 
-					pHead4 = pHead4->pNext;
-				}
-				pHead3 = pHead3->pNext;
-			}
-			pHead2 = pHead2->pNext;
-		}
-		pHead_schoolYear = pHead_schoolYear->pNext;
-	}
+                    pHead4 = pHead4->pNext;
+                }
+                pHead3 = pHead3->pNext;
+            }
+            pHead2 = pHead2->pNext;
+        }
+        pHead_schoolYear = pHead_schoolYear->pNext;
+    }
 
-	while (pHead_class != nullptr)
-	{
-		Student* pHead5 = pHead_class->student;
-		while (pHead5 != nullptr)
-		{
-			temp->next = new passInfo;
-			temp = temp->next;
-			temp->login = pHead_class->student->student_ID;
-			temp->password = "1234";
-			temp->type = 's';
-			temp->next = nullptr;
-			pHead5 = pHead5->pNext;
-		}
-		pHead_class = pHead_class->pNext;
-	}*/
-
-
+    while (pHead_class != nullptr)
+    {
+        Student* pHead5 = pHead_class->student;
+        while (pHead5 != nullptr)
+        {
+            temp->next = new passInfo;
+            temp = temp->next;
+            temp->login = pHead_class->student->student_ID;
+            temp->password = "1234";
+            temp->type = 's';
+            temp->next = nullptr;
+            pHead5 = pHead5->pNext;
+        }
+        pHead_class = pHead_class->pNext;
+    }*/
 }
 
-//Clear the linked list
-void clear(passInfo*& readfile)
+// Clear the linked list
+void clear(passInfo *&readfile)
 {
-	passInfo* temp = readfile;
+    passInfo *temp = readfile;
     while (readfile != nullptr)
     {
         temp = readfile;
@@ -165,27 +184,27 @@ void clear(passInfo*& readfile)
     }
 }
 
-//Edit password
-bool doTheEdit(string password, string ID, passInfo*& head)
+// Edit password
+bool doTheEdit(string password, string ID, passInfo *&head)
 {
-	passInfo* readfile = head;
-	while (readfile != nullptr)
-	{
-		if (readfile->login == ID)
-		{
-			readfile->password = password;
-			cout << "Change password successfully.\n";
-			return false;
-		}
-		readfile = readfile->next;
-	}
-	cout << "Change password fail. Please try again;\n";
-	return true;
+    passInfo *readfile = head;
+    while (readfile != nullptr)
+    {
+        if (readfile->login == ID)
+        {
+            readfile->password = password;
+            cout << "Change password successfully.\n";
+            return false;
+        }
+        readfile = readfile->next;
+    }
+    cout << "Change password fail. Please try again;\n";
+    return true;
 }
 
 string pass()
 {
-    char* password = new char[max_value];
+    char *password = new char[max_value];
     int i = 0;
     while ((password[i] = _getch()) != '\n' && password[i] != '\r' && i < (max_value - 1))
     {
@@ -194,14 +213,13 @@ string pass()
             putchar('*');
             i++;
         }
-        else
-            if (i != 0)
-            {
-                putchar('\b');
-                putchar(' ');
-                putchar('\b');
-                i--;
-            }
+        else if (i != 0)
+        {
+            putchar('\b');
+            putchar(' ');
+            putchar('\b');
+            i--;
+        }
     }
     if (i < (max_value - 1))
     {
@@ -218,11 +236,11 @@ string pass()
     }
 }
 
-void dialocatePass(passInfo* readfile)
+void dialocatePass(passInfo *readfile)
 {
     ofstream fo;
     fo.open("password.txt");
-    passInfo* cur = readfile;
+    passInfo *cur = readfile;
     while (cur != nullptr)
     {
         fo << cur->login << ',' << cur->password << ',' << cur->type;
