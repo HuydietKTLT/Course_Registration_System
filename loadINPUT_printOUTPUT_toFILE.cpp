@@ -388,7 +388,7 @@ void load_input(SchoolYear*& pHead_schoolYear, Class*& pHead_class)
 void print_student_InClass(studentClass* pHead, string class_name)
 {
 	ofstream file;
-	file.open(class_name + ".txt");
+	file.open(class_name + ".txt", ios::trunc);
 	while (pHead != nullptr)
 	{
 		file
@@ -409,7 +409,7 @@ void print_student_InClass(studentClass* pHead, string class_name)
 void print_student_InCourse(Student* pHead, string schoolYear_name, string semester_name, string course_id)
 {
 	ifstream check_file_exist;
-	check_file_exist.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt");
+	check_file_exist.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt", ios::trunc);
 	bool check = 0;
 	if (check_file_exist.is_open())
 		check = 1;
@@ -442,7 +442,7 @@ void print_course(Course* pHead, string schoolYear_name, string semester_name)
 {
 
 	ofstream file;
-	file.open(schoolYear_name + "\\" + semester_name + "\\" + "courseList.txt");
+	file.open(schoolYear_name + "\\" + semester_name + "\\" + "courseList.txt", ios::trunc);
 	while (pHead != nullptr && pHead->id != "")
 	{
 		file
@@ -470,7 +470,7 @@ void print_Semester(Semester* pHead_Semester, string schoolYear_name)
 {
 	string path;
 	ofstream file;
-	file.open(schoolYear_name + "\\" + "semesterList.txt");
+	file.open(schoolYear_name + "\\" + "semesterList.txt", ios::trunc);
 	while (pHead_Semester != nullptr)
 	{
 		path = schoolYear_name + BACKSLASH + pHead_Semester->semester_name;
@@ -489,7 +489,7 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 	//Print schoolYear to schoolYearList.txt
 
 	ofstream file;
-	file.open("schoolYearlist.txt");
+	file.open("schoolYearlist.txt", ios::trunc);
 	SchoolYear* pTemp1 = pHead_schoolYear;
 	while (pHead_schoolYear != nullptr)
 	{
@@ -524,7 +524,7 @@ void print_output(SchoolYear* pHead_schoolYear, Class* pHead_class)
 
 
 	////NO BUG IN THESE LINES OF CODE.
-	file.open("classList.txt");
+	file.open("classList.txt", ios::trunc);
 	Class* pTemp9 = pHead_class;
 	while (pHead_class != nullptr)
 	{

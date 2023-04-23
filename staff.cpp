@@ -195,7 +195,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			}
 			if (pHead == nullptr)
 			{
-				cout << "There is no schoolyear matching with your typing!!!" << endl;
+				cout << "There is no school year matching with your typing!!!" << endl;
 				break;
 			}
 
@@ -314,17 +314,19 @@ void createNewSchoolYear(SchoolYear *&pHead)
 		clrscr();
 	}
 
-	SchoolYear *pCur = pHead;
-	bool is_created = false;
+	SchoolYear *pCur = nullptr;
+	if (pHead != nullptr)
+		pCur = pHead;
+	bool is_created = true;
 	while (pCur != nullptr && pCur->year_name != year)
 	{
 		pCur = pCur->pNext;
 	}
-	if (pCur->year_name == year)
-		is_created = true;
+	if (pCur == nullptr)
+		is_created = false;
 	if (is_created == false)
 	{
-		SchoolYear *pCur = nullptr;
+		pCur = nullptr;
 		if (pHead == nullptr)
 		{
 			pHead = new SchoolYear();
