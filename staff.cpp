@@ -19,18 +19,19 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			 << "5. New semester for current school year.\n"
 			 << "6. Add students to course by file.\n"
 			 << "7. Add a student to course by console.\n"
-			 << "8. View the list of courses.\n"
-			 << "9. View the list of class.\n"
-			 << "10. Update course information.\n"
-			 << "11. Remove a student from the course.\n"
-			 << "12. Delete a course.\n"
-			 << "13. Add scores for the current school year.\n"
-			 << "14. View a list of students in a class.\n"
-			 << "15. View a list of students in a course.\n"
-			 << "16. View GPA of a class in a semester.\n"
-			 << "17. View total GPA of a class.\n"
-			 << "18. Export list of students in course to CSV file.\n"
-			 << "19. Edit password.\n"
+			 << "8. Add a course to this semester. \n"
+			 << "9. View the list of courses.\n"
+			 << "10. View the list of class.\n"
+			 << "11. Update course information.\n"
+			 << "12. Remove a student from the course.\n"
+			 << "13. Delete a course.\n"
+			 << "14. Add scores for the current school year.\n"
+			 << "15. View a list of students in a class.\n"
+			 << "16. View a list of students in a course.\n"
+			 << "17. View GPA of a class in a semester.\n"
+			 << "18. View total GPA of a class.\n"
+			 << "19. Export list of students in course to CSV file.\n"
+			 << "20. Edit password.\n"
 			 << "0. Log out.\n"
 			 << "\n\nEnter options: ";
 		cin >> i;
@@ -126,13 +127,28 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		}
 		case 8:
 		{
-			print_All_CourseToConsole(pHead_schoolYear);
+			SchoolYear *pHead_schoolYear = current_schoolyear;
+			Semester *pCur = pHead_schoolYear->semester;
+			while (pCur->pNext != nullptr)
+				pCur = pCur->pNext;
+			addCourse(pCur->course);
+			cout << "Updated succefully!" << endl;
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
 		}
 		case 9:
+		{
+			print_All_CourseToConsole(pHead_schoolYear);
+			break;
+		}
+		case 10:
+		{
 			print_All_ClassToConsole(pHead_class);
 			break;
-		case 10:
+		}
+		case 11:
 		{
 			Course *course_update = Find_Course(pHead_schoolYear);
 			if (course_update != nullptr)
@@ -145,7 +161,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			}
 			break;
 		}
-		case 11:
+		case 12:
 		{
 			Course *course_remove_student = Find_Course(pHead_schoolYear);
 			if (course_remove_student != nullptr)
@@ -158,7 +174,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			}
 			break;
 		}
-		case 12:
+		case 13:
 		{
 			string get_schoolyear;
 			cout << "Enter School Year: ";
@@ -210,36 +226,36 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			cin >> s;
 			break;
 		}
-		case 13:
+		case 14:
 		{
 			Menu_Score_Board(pHead_schoolYear);
 			break;
 		}
-		case 14:
+		case 15:
 		{
 			Class *class_print_student = Find_Class(pHead_class);
 			if (class_print_student != nullptr)
 				print_All_Student_In_A_class(class_print_student->student);
 			break;
 		}
-		case 15:
+		case 16:
 		{
 			Course *course_print_student = Find_Course(pHead_schoolYear);
 			if (course_print_student != nullptr)
 				Print_All_Student_In_A_Course(course_print_student->student);
 			break;
 		}
-		case 16:
+		case 17:
 		{
 			Print_All_Student_In_A_Class_With_score_Semester(pHead_schoolYear, pHead_class);
 			break;
 		}
-		case 17:
+		case 18:
 		{
 			Print_All_Student_In_A_Class_With_score_All(pHead_class);
 			break;
 		}
-		case 18:
+		case 19:
 		{
 			string get_schoolyear;
 			cout << "Enter School Year: ";
@@ -286,7 +302,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			export_list_of_student_ToCSVFile(pCur_Course->student, pHead->year_name, pCur_Semester->semester_name, pCur_Course->id);
 			break;
 		}
-		case 19:
+		case 20:
 		{
 			edit(headPass);
 			cout << "Updated successfully!" << endl;
