@@ -41,13 +41,13 @@ void add_Student_To_Class_By_File(studentClass *&pHead, passInfo *&headPass)
 		while (pCur->pNext != nullptr)
 			pCur = pCur->pNext;
 	}
-	passInfo *pCurPass = nullptr;
-	if (headPass != nullptr)
-	{
-		pCurPass = headPass;
-		while (pCurPass->next != nullptr)
-			pCurPass = pCurPass->next;
-	}
+	// passInfo *pCurPass = nullptr;
+	// if (headPass != nullptr)
+	// {
+	// 	pCurPass = headPass;
+	// 	while (pCurPass->next != nullptr)
+	// 		pCurPass = pCurPass->next;
+	// }
 
 	while (!file.eof())
 	{
@@ -62,16 +62,16 @@ void add_Student_To_Class_By_File(studentClass *&pHead, passInfo *&headPass)
 			pCur = pCur->pNext;
 		}
 
-		if (headPass == nullptr)
-		{
-			headPass = new passInfo;
-			pCurPass = headPass;
-		}
-		else if (headPass != nullptr)
-		{
-			pCurPass->next = new passInfo;
-			pCurPass = pCurPass->next;
-		}
+		// if (headPass == nullptr)
+		// {
+		// 	headPass = new passInfo;
+		// 	pCurPass = headPass;
+		// }
+		// else if (headPass != nullptr)
+		// {
+		// 	pCurPass->next = new passInfo;
+		// 	pCurPass = pCurPass->next;
+		// }
 
 		getline(file, pCur->student_ID, ',');
 		getline(file, pCur->first_name, ',');
@@ -81,10 +81,10 @@ void add_Student_To_Class_By_File(studentClass *&pHead, passInfo *&headPass)
 		getline(file, pCur->social_ID);
 
 		// Create a new account for the student
-		pCurPass->login = pCur->student_ID;
-		pCurPass->password = default_password;
-		pCurPass->type = 's';
-		pCurPass->next = nullptr;
+		// pCurPass->login = pCur->student_ID;
+		// pCurPass->password = default_password;
+		// pCurPass->type = 's';
+		// pCurPass->next = nullptr;
 		pCur->pNext = nullptr;
 	}
 	file.close();
