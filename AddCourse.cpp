@@ -979,22 +979,11 @@ void Print_All_Student_In_A_Class_With_score_All(Class *pClass)
 	while (pCur != nullptr)
 	{
 		cout
-			<< setw(13)
-			<< pCur->student_ID << " "
-			<< left
-			<< setw(13)
-			<< pCur->first_name << " "
-			<< left
-			<< setw(13)
-			<< pCur->last_name << " "
-			<< left
-			<< setw(13)
-			<< pCur->gender << " "
-			<< left
-			<< setw(13)
-			<< pCur->date_of_birth << " "
-			<< left
-			<< setw(13)
+			<< pCur->student_ID << "   "
+			<< pCur->first_name << "   "
+			<< pCur->last_name << "   "
+			<< pCur->gender << "   "
+			<< pCur->date_of_birth << "   "
 			<< pCur->social_ID << endl;
 
 		scoreClass *pCurScore = pCur->score;
@@ -1002,6 +991,8 @@ void Print_All_Student_In_A_Class_With_score_All(Class *pClass)
 		if (pCurScore == nullptr)
 		{
 			cout << "\tNo score for this student" << endl;
+			pCur = pCur->pNext;
+			continue;
 		}
 
 		int n = 0;
@@ -1011,22 +1002,22 @@ void Print_All_Student_In_A_Class_With_score_All(Class *pClass)
 		{
 			cout
 				<< left
-				<< setw(30)
-				<< pCurScore->course_name << "|"
-				<< left
-				<< setw(15)
+				<< setw(7)
 				<< pCurScore->course_ID << "|"
 				<< left
-				<< setw(5)
+				<< setw(15)
+				<< pCurScore->course_name << "|"
+				<< left
+				<< setw(7)
+				<< pCurScore->score.total_mark << "|"
+				<< left
+				<< setw(7)
 				<< pCurScore->score.final_mark << "|"
 				<< left
-				<< setw(5)
-				<< pCurScore->score.final_mark << "|"
-				<< left
-				<< setw(5)
+				<< setw(7)
 				<< pCurScore->score.mid_mark << "|"
 				<< left
-				<< setw(5)
+				<< setw(7)
 				<< pCurScore->score.other_mark << endl;
 
 			n++;
@@ -1035,7 +1026,7 @@ void Print_All_Student_In_A_Class_With_score_All(Class *pClass)
 			pCurScore = pCurScore->next;
 		}
 		if (n != 0)
-			cout << right << setw(50) << "GPA: " << (sum / n) / 10 * 4 << endl;
+			cout << right << setw(30) << "GPA: " << (sum / n) / 10 * 4 << endl;
 		pCur = pCur->pNext;
 	}
 	cout << "Press any key to continue...\n";
