@@ -164,7 +164,7 @@ void addCourse(Course*& pHead);
 
 void deleteCourse(Course*& pHead, Course*& pDelete, string year_name, string semester_name);
 
-void update_course_ID(Course*& pCur);
+void update_course_ID(Course *&pCur, SchoolYear* pHead);
 
 void update_course_name(Course*& pCur);
 
@@ -180,7 +180,7 @@ void update_day_week(Course*& pCur);
 
 void update_session(Course*& pCur);
 
-void update_Course(Course*& pCur);
+void update_Course(Course *&pCur, SchoolYear* pHead);
 
 bool checkForCourse(Course* pCur, string courseID);
 

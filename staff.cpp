@@ -153,7 +153,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			Course *course_update = Find_Course(pHead_schoolYear);
 			if (course_update != nullptr)
 			{
-				update_Course(course_update);
+				update_Course(course_update, pHead_schoolYear);
 				cout << "Updated successfully!" << endl;
 				cout << "Press any key to continue..." << endl;
 				string s;
@@ -228,10 +228,10 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		}
 		case 14:
 		{
-			
+
 			SchoolYear *current_schoolYear_print_score = currentSchoolYear(pHead_schoolYear);
 			if (current_schoolYear_print_score != nullptr)
-			Menu_Score_Board(current_schoolYear_print_score);
+				Menu_Score_Board(current_schoolYear_print_score);
 			break;
 		}
 		case 15:
@@ -338,7 +338,7 @@ Semester *currentSemester(Semester *pHead)
 {
 	if (pHead == nullptr)
 	{
-		cout << "Chua tao ky nao!" << endl;
+		cout << "No semester has been created yet!!" << endl;
 		return NULL;
 	}
 	cout << "-------------------------------------------\n";

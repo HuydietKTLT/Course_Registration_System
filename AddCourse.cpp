@@ -254,12 +254,7 @@ void Print_All_Student_In_A_Course(Student *pCur)
 			<< pCur->date_of_birth << " "
 			<< left
 			<< setw(13)
-			<< pCur->social_ID << " "
-			<< pCur->score.total_mark << " "
-			<< pCur->score.final_mark << " "
-			 << pCur->score.mid_mark << " "
-			  << pCur->score.other_mark << " "
-			   << endl;
+			<< pCur->social_ID << " " << endl;
 		pCur = pCur->pNext;
 	}
 	string s;
@@ -270,49 +265,125 @@ void Print_All_Student_In_A_Course(Student *pCur)
 
 void addCourse(Course *&pHead)
 {
-	Course *pCur = pHead;
-	while (pCur->pNext != nullptr)
-		pCur = pCur->pNext;
-	pCur->pNext = new Course;
-	pCur = pCur->pNext;
 
 	cout << "Enter Course ID: ";
-	cin >> pCur->id;
+	string course_id;
+	cin >> course_id;
 
 	cout << "Enter Course Name: ";
-	cin >> pCur->course_name;
+	string course_name;
+	cin >> course_name;
 
 	cout << "Enter Class Name: ";
-	cin >> pCur->class_name;
+	string class_name;
+	cin >> class_name;
+	while (class_name.size() > 8)
+	{
+		cout << "The class name is invalid!" << endl;
+		cout << "The form of the class name must be XXCLCXX, XXAPCSXX or XXVPXX " << endl;
+		cout << "Enter Class Name: ";
+		cin >> class_name;
+	}
 
 	cout << "Enter Teacher Name: ";
-	cin >> pCur->teacher_name;
+	string teacher_name;
+	cin.ignore();
+	getline(cin, teacher_name);
 
 	cout << "Enter Number of credits: ";
-	cin >> pCur->number_credits;
+	string number_credits;
+	cin >> number_credits;
+	while (stoi(number_credits) < 0)
+	{
+		cout << "The number of students must be a positive value....";
+		cout << "Enter Number of credits: ";
+		cin >> number_credits;
+	}
 
 	cout << "Enter Number of students: ";
-	cin >> pCur->number_students;
+	string number_students;
+	cin >> number_students;
+	while (stoi(number_students) < 0)
+	{
+		cout << "The number of students must be a positive value...";
+		cout << "Enter Number of students: ";
+		cin >> number_students;
+	}
 
 	cout << "Enter day of week: " << endl;
 	cout << "MON / TUE / WED / THU / FRI / SAT:  ";
-	cin >> pCur->day_of_week;
-
-	cout << "Enter session" << endl;
-	cout << "S1(07:30) -- S2 (09:30) -- S3(13:30) -- S4(15:30): ";
-	cin >> pCur->sessions;
-	pCur->other = -1;
-	while (pCur->other < 0)
+	string day_week;
+	cin >> day_week;
+	while (day_week != "MON" && day_week != "TUE" && day_week != "WED" && day_week != "THU" && day_week != "FRI" && day_week != "SAT")
 	{
-		cout << "The percentage of point form the midterm exam and final exam:  ";
-		cin >> pCur->midterm >> pCur->final;
-		pCur->other = 100 - pCur->midterm - pCur->final;
-		if (pCur->other < 0)
-			cout << "The percentage of point form the other exam is not valid" << endl;
+		cout << "Wrong type of day of week!" << endl;
+		cout << "Enter day of week: ";
+		cout << "MON / TUE / WED / THU / FRI / SAT:  ";
+		cin >> day_week;
 	}
 
-	pCur->pNext = nullptr;
-	pCur->student = nullptr;
+	cout << "Enter session" << endl;
+	cout << "S1(07:30) -- S2(09:30) -- S3(13:30) -- S4(15:30): ";
+	string session;
+	cin >> session;
+	while (session != "S1(07:30)" && session != "S2(09:30)" && session != "S3(13:30)" && session != "S4(15:30)")
+	{
+		cout << "Wrong type of session!" << endl;
+		cout << "S1(07:30) -- S2(09:30) -- S3(13:30) -- S4(15:30): ";
+		cin >> session;
+	}
+
+	int other_mark = -1;
+	int mid_mark, final_mark;
+	while (other_mark < 0)
+	{
+		cout << "The percentage of mark for the midterm exam: ";
+		cin >> mid_mark;
+		cout << "The percentage of mark for the final exam: ";
+		cin >> final_mark;
+		other_mark = 100 - mid_mark - final_mark;
+		if (other_mark < 0)
+		{
+			cout << "The percentage of mark for the other exam is not valid" << endl;
+			cout << "Please try again..." << endl;
+		}
+	}
+	Course *pCur = nullptr, *pPrevCur = nullptr;
+	if (pHead == nullptr)
+	{
+		pHead = new Course;
+		pCur = pHead;
+		pPrevCur = pHead;
+	}
+	while (pCur != nullptr && pCur->id != course_id)
+	{
+		pPrevCur = pCur;
+		pCur = pCur->pNext;
+	}
+	if (pCur == nullptr)
+	{
+		pPrevCur->pNext = new Course;
+		pPrevCur = pPrevCur->pNext;
+	}
+	if (pCur->id == course_id)
+	{
+		pPrevCur = pCur;
+	}
+
+	pPrevCur->id = course_id;
+	pPrevCur->course_name = course_name;
+	pPrevCur->class_name = class_name;
+	pPrevCur->teacher_name = teacher_name;
+	pPrevCur->day_of_week = day_week;
+	pPrevCur->sessions = session;
+	pPrevCur->final = final_mark;
+	pPrevCur->other = other_mark;
+	pPrevCur->midterm = mid_mark;
+	pPrevCur->number_credits = number_credits;
+	pPrevCur->number_students = number_students;
+
+	pPrevCur->pNext = nullptr;
+	pPrevCur->student = nullptr;
 }
 
 void export_list_of_student_ToCSVFile(Student *pCur, string year_name, string semester_name, string course_id)
@@ -343,7 +414,7 @@ void deleteCourse(Course *&pHead, Course *&pDelete, string year_name, string sem
 {
 	if (pHead == nullptr)
 	{
-		cout << "pHead is a nullptr";
+		cout << "There is no course to delete!" << endl;
 		return;
 	}
 
@@ -388,33 +459,64 @@ void deleteCourse(Course *&pHead, Course *&pDelete, string year_name, string sem
 	pCur = nullptr;
 }
 
-void update_course_ID(Course *&pCur)
+void update_course_ID(Course *&pCur, SchoolYear *pHead)
 {
+	string old_file_name = pCur->id;
 	cout << "Enter new Course ID: ";
 	cin.ignore();
-	getline(cin, pCur->id);
-	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	string new_file_name;
+	getline(cin, new_file_name);
+
+	Semester *pCur_semester = nullptr;
+	Course *pCur_course = nullptr;
+	while (pHead != nullptr)
+	{
+		pCur_semester = pHead->semester;
+		while (pCur_semester != nullptr)
+		{
+			pCur_course = pCur_semester->course;
+			while (pCur_course != pCur)
+			{
+				pCur_course = pCur_course->pNext;
+			}
+			pCur_semester = pCur_semester->pNext;
+		}
+		pHead = pHead->pNext;
+	}
+	string path = pHead->year_name + BACKSLASH + pCur_semester->semester_name + BACKSLASH;
+	string old_path = path + old_file_name + ".txt";
+	string new_path = path + new_file_name + ".txt";
+	int result;
+	result = rename(old_path.c_str(), new_path.c_str());
+
+	if (result != 0)
+	{
+		cout << "The course ID has been created yet!" << endl;
+		return;
+	}
+	pCur->id = new_file_name;
+	cout << "Update successfully!\n";
 }
 
 void update_course_name(Course *&pCur)
 {
 	cout << "Enter new Course Name: ";
 	getline(cin, pCur->course_name);
-	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	cout << "Update successfully!\n";
 }
 
 void update_class_name(Course *&pCur)
 {
 	cout << "Enter new Class Name: ";
 	getline(cin, pCur->class_name);
-	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	cout << "Update successfully!\n";
 }
 
 void update_teacher_name(Course *&pCur)
 {
 	cout << "Enter new Teacher Name: ";
 	getline(cin, pCur->teacher_name);
-	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	cout << "Update successfully!\n";
 }
 
 void update_number_credits(Course *&pCur)
@@ -428,7 +530,7 @@ void update_number_credits(Course *&pCur)
 		cin >> get_number_credits;
 	}
 	pCur->number_credits = to_string(get_number_credits);
-	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	cout << "Update successfully!\n";
 }
 
 void update_number_students(Course *&pCur)
@@ -442,28 +544,46 @@ void update_number_students(Course *&pCur)
 		cin >> get_number_students;
 	}
 	pCur->number_students = to_string(get_number_students);
-	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	cout << "Update successfully!\n";
 }
 
 void update_day_week(Course *&pCur)
 {
-	cout << "Enter new Day of week: ";
-	cin.ignore();
-	cin >> pCur->day_of_week;
-	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	cout << "Enter day of week: " << endl;
+	cout << "MON / TUE / WED / THU / FRI / SAT:  ";
+	string day_week;
+	cin >> day_week;
+	while (day_week != "MON" && day_week != "TUE" && day_week != "WED" && day_week != "THU" && day_week != "FRI" && day_week != "SAT")
+	{
+		cout << "Wrong type of day of week!" << endl;
+		cout << "Enter day of week: ";
+		cout << "MON / TUE / WED / THU / FRI / SAT:  ";
+		cin >> day_week;
+	}
+	pCur->day_of_week = day_week;
+	cout << "Update successfully!\n";
 }
 
 void update_session(Course *&pCur)
 {
-	cout << "Enter new session";
-	cin.ignore();
-	getline(cin, pCur->sessions);
-	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	cout << "Enter session" << endl;
+	cout << "S1(07:30) -- S2(09:30) -- S3(13:30) -- S4(15:30): ";
+	string session;
+	cin >> session;
+	while (session != "S1(07:30)" && session != "S2(09:30)" && session != "S3(13:30)" && session != "S4(15:30)")
+	{
+		cout << "Wrong type of session!" << endl;
+		cout << "S1(07:30) -- S2(09:30) -- S3(13:30) -- S4(15:30): ";
+		cin >> session;
+	}
+	pCur->sessions = session;
+	cout << "Update successfully!\n";
 }
 
 void update_percentage(Course *&pCur)
 {
 	pCur->other = -1;
+	cin.ignore();
 	while (pCur->other < 0)
 	{
 		cout << "The percentage of point form the midterm exam and final exam:  ";
@@ -472,10 +592,10 @@ void update_percentage(Course *&pCur)
 		if (pCur->other < 0)
 			cout << "The percentage of point form the other exam is not valid" << endl;
 	}
-	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
+	cout << "Update successfully!\n";
 }
 
-void update_Course(Course *&pCur)
+void update_Course(Course *&pCur, SchoolYear *pHead)
 {
 	cout << "Choose option which have to be updated " << endl;
 	while (true)
@@ -497,35 +617,80 @@ void update_Course(Course *&pCur)
 		switch (option)
 		{
 		case 1:
-			update_course_ID(pCur);
+		{
+			update_course_ID(pCur, pHead);
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
+		}
 		case 2:
+		{
 			update_course_name(pCur);
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
+		}
 		case 3:
+		{
 			update_class_name(pCur);
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
+		}
 		case 4:
+		{
 			update_teacher_name(pCur);
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
+		}
 		case 5:
+		{
 			update_number_credits(pCur);
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
+		}
 		case 6:
+		{
 			update_number_students(pCur);
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
+		}
 		case 7:
+		{
 			update_day_week(pCur);
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
+		}
 		case 8:
+		{
 			update_session(pCur);
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
+		}
 		case 9:
+		{
 			update_percentage(pCur);
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
+		}
 		case 10:
 		{
-			update_course_ID(pCur);
+			update_course_ID(pCur, pHead);
 			update_course_name(pCur);
 			update_class_name(pCur);
 			update_teacher_name(pCur);

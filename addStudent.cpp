@@ -4,7 +4,7 @@ Class* Find_Class(Class* pHead)
 {
 	if (pHead == nullptr)
 	{
-		cout << "There is no class has been created yet!!" << endl << endl;
+		cout << "There is no class has been created yet!!" << endl;
 		return NULL;
 	}
 	string get_class;
@@ -22,11 +22,11 @@ Class* Find_Class(Class* pHead)
 	return pHead;
 }
 
-void add_Student_To_Class_By_File(studentClass*& pHead, passInfo*& headPass)
+void add_Student_To_Class_By_File(studentClass *&pHead, passInfo *&headPass)
 {
 	ifstream file;
-	//The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be addedd
-	//The following next lines are the students information.
+	// The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be addedd
+	// The following next lines are the students information.
 	file.open("addStudentToClass.txt");
 	if (!file.is_open())
 	{
@@ -34,14 +34,14 @@ void add_Student_To_Class_By_File(studentClass*& pHead, passInfo*& headPass)
 		file.close();
 		return;
 	}
-	studentClass* pCur = nullptr;
+	studentClass *pCur = nullptr;
 	if (pHead != nullptr)
 	{
 		pCur = pHead;
 		while (pCur->pNext != nullptr)
 			pCur = pCur->pNext;
 	}
-	passInfo* pCurPass = nullptr;
+	passInfo *pCurPass = nullptr;
 	if (headPass != nullptr)
 	{
 		pCurPass = headPass;
@@ -80,7 +80,7 @@ void add_Student_To_Class_By_File(studentClass*& pHead, passInfo*& headPass)
 		getline(file, pCur->date_of_birth, ',');
 		getline(file, pCur->social_ID);
 
-		//Create a new account for the student
+		// Create a new account for the student
 		pCurPass->login = pCur->student_ID;
 		pCurPass->password = default_password;
 		pCurPass->type = 's';
