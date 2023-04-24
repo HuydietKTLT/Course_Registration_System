@@ -13,13 +13,15 @@ void view_scoreboard_toCourse(SchoolYear *list_year)
 		Cur_Semester = Cur_Semester->pNext;
 		if (Cur_Semester == nullptr)
 		{
+			clrscr();
 			cout << Semester << " is not over yet\n";
 			return;
 		}
 	}
 	if (Cur_Semester->semester_name != Semester)
 	{
-		cout << Semester << " is not over yet\n";
+		clrscr();
+		cout << "Semester: " << Semester << " is not over yet\n";
 		return;
 	}
 	Course *Cur_course = nullptr;
@@ -27,14 +29,15 @@ void view_scoreboard_toCourse(SchoolYear *list_year)
 	cout << "Enter Course: ";
 	cin >> Course;
 	Cur_course = Cur_Semester->course;
-	while (Cur_course->id != Course)
+	while (Cur_course->id.compare(Course)!= 0 )
 	{
-		Cur_course = Cur_course->pNext;
-		if (Cur_course == nullptr)
+		if (Cur_course->pNext == nullptr)
 		{
-			cout << Course << " is not over yet\n";
+			clrscr();
+			cout << "Course: " << Course << " is not over yet\n";
 			return;
 		}
+		Cur_course = Cur_course->pNext;
 	}
 	Student *studentF = nullptr;
 	studentF = Cur_course->student;
@@ -132,7 +135,7 @@ void import_score_of_course(Course *z)
 		float m = z->midterm / 100;
 		float o = z->other / 100;
 		s->score.total_mark = float_one_point_round(s->score.final_mark * f + s->score.mid_mark * m + s->score.other_mark * o);
-		cout << "Total mark is: " << s->score.total_mark;
+		cout << "Total mark is: " << s->score.total_mark<<endl;
 		s = s->pNext;
 	}
 }
@@ -140,7 +143,7 @@ void import_score_of_course(Course *z)
 void Menu_Score_Board(SchoolYear *list_year)
 {
 	string option;
-	cout << "Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other. Quit=\n";
+	cout << "Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other: Quit=\n";
 	cin >> option;
 	clrscr();
 	while (option == "0" || option == "1" || option == "2")
@@ -159,23 +162,20 @@ void Menu_Score_Board(SchoolYear *list_year)
 				bool flag = false;
 				while (Cur_Semester->semester_name.compare(Semester) != 0)
 				{
-					Cur_Semester = Cur_Semester->pNext;
-					if (Cur_Semester == nullptr)
+					if (Cur_Semester->pNext == nullptr)
 					{
 						flag = true;
 						break;
 					}
+					Cur_Semester = Cur_Semester->pNext;
 				}
 				if (flag)
 				{
+					clrscr();
+					cout << "Semester: " << Semester << " is not over yet\n";
 					break;
 				}
-				if (Cur_Semester->semester_name.compare(Semester) != 0)
-				{
-					cout << Cur_Semester->semester_name << " is not over yet\n";
-					option = "0";
-					continue;
-				}
+				cout<<Cur_Semester->course->course_name;
 				Course *Cur_course = nullptr;
 				string Course;
 				cout << "Enter Course: ";
@@ -183,15 +183,17 @@ void Menu_Score_Board(SchoolYear *list_year)
 				Cur_course = Cur_Semester->course;
 				while (Cur_course->id.compare(Course) != 0)
 				{
-					Cur_course = Cur_course->pNext;
-					if (Cur_course == nullptr)
+					if (Cur_course->pNext == nullptr)
 					{
 						flag = true;
 						break;
 					}
+					Cur_course = Cur_course->pNext;
 				}
 				if (flag)
 				{
+					clrscr();
+					cout << "Course: " << Course << " is not over yet\n";
 					break;
 				}
 				fstream F;
@@ -265,6 +267,8 @@ void Menu_Score_Board(SchoolYear *list_year)
 		}
 		else if (option == "1")
 		{
+			bool flag=false;
+			while(!flag){
 			Semester *Cur_Semester = nullptr;
 			string Semester;
 			cout << "Enter Semester: ";
@@ -272,19 +276,19 @@ void Menu_Score_Board(SchoolYear *list_year)
 			Cur_Semester = pCur->semester;
 			while (Cur_Semester->semester_name.compare(Semester) != 0)
 			{
+			if (Cur_Semester->pNext == nullptr)
+				{
+					flag = true;
+					break;
+				}
 				Cur_Semester = Cur_Semester->pNext;
 			}
-			if (Cur_Semester->semester_name.compare(Semester) != 0)
-			{
-				cout << Cur_Semester->semester_name << " is not over yet\n";
-				option = 1;
-				continue;
+			if(flag){
+				clrscr();
+				cout << "Semester: " << Semester << " is not over yet\n";
+				break;
 			}
-			if (Cur_Semester == nullptr)
-			{
-				option = 1;
-				continue;
-			}
+			cout<<Cur_Semester->course->course_name;
 			Course *Cur_course = nullptr;
 			string Course;
 			cout << "Enter Course: ";
@@ -292,22 +296,27 @@ void Menu_Score_Board(SchoolYear *list_year)
 			Cur_course = Cur_Semester->course;
 			while (Cur_course->id.compare(Course) != 0)
 			{
+				if (Cur_course->pNext  == nullptr)
+				{
+				flag=true;
+				break;
+				}
 				Cur_course = Cur_course->pNext;
-			}
-			if (Cur_course == nullptr)
-			{
-				option = 1;
-				continue;
+			}	
+			if(flag){
+				clrscr();
+				cout << "Course: " << Course << " is not over yet\n";
+				break;
 			}
 			import_score_of_course(Cur_course);
-		}
+			}	
+			}
 		else if (option == "2")
 		{
-			SchoolYear *current_schoolYear_print_score = currentSchoolYear(list_year);
-			if (current_schoolYear_print_score != nullptr)
-				view_scoreboard_toCourse(current_schoolYear_print_score);
+				view_scoreboard_toCourse(list_year);
 		}
-		cout << "Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other. Quit=\n";
+		cout << "Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other: Quit=\n";
 		cin >> option;
+		clrscr();
 	}
 }
