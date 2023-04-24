@@ -5,14 +5,15 @@
 void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&headPass)
 {
 	int i;
-	SchoolYear *current_schoolyear = currentSchoolYear(pHead_schoolYear);
 	while (true)
 	{
+		clrscr();
+		SchoolYear *current_schoolyear = currentSchoolYear(pHead_schoolYear);
 		cout << "-------------------------------------------\n"
 			 << "1. New school year.\n"
 			 << "2. New classes.\n"
 			 << "3. Add new 1st year students to 1st-year classes.\n"
-			 << "4. New semester.\n"
+			 << "4. New semester for current school year.\n"
 			 << "5. Add students to course by file.\n"
 			 << "6. Add a student to course by console.\n"
 			 << "7. View the list of courses."
@@ -55,7 +56,17 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 				string s;
 				cout << "Enter when you finish entering student in file addStudentToClass.txt[Yes] : ";
 				cin >> s;
+				if (s != "Yes")
+				{
+					cout << "Cancel the action!" << endl;
+					cout << "Press any key to continue..." << endl;
+					cin >> s;
+					break;
+				}
 				add_Student_To_Class_By_File(find_class->student, headPass);
+				cout << "Updated successfully!" << endl;
+				cout << "Press any key to continue..." << endl;
+				cin >> s;
 			}
 			break;
 		}
@@ -73,7 +84,17 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 				string s;
 				cout << "Enter when you finish entering student in file addStudentToCourse.txt[Yes] : ";
 				cin >> s;
+				if (s != "Yes")
+				{
+					cout << "Cancel the action!" << endl;
+					cout << "Press any key to continue..." << endl;
+					cin >> s;
+					break;
+				}
 				add_Student_to_Course_By_File(course_addStudent_file->student);
+				cout << "Updated successfully!" << endl;
+				cout << "Press any key to continue..." << endl;
+				cin >> s;
 			}
 			break;
 		}
@@ -81,7 +102,13 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		{
 			Course *course_addStudent_console = Find_Course(pHead_schoolYear);
 			if (add_Student_to_Course_By_Console != nullptr)
+			{
 				add_Student_to_Course_By_Console(course_addStudent_console->student);
+				cout << "Updated successfully!" << endl;
+				cout << "Press any key to continue..." << endl;
+				string s;
+				cin >> s;
+			}
 			break;
 		}
 		case 7:
@@ -96,14 +123,26 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		{
 			Course *course_update = Find_Course(pHead_schoolYear);
 			if (course_update != nullptr)
+			{
 				update_Course(course_update);
+				cout << "Updated successfully!" << endl;
+				cout << "Press any key to continue..." << endl;
+				string s;
+				cin >> s;
+			}
 			break;
 		}
 		case 10:
 		{
 			Course *course_remove_student = Find_Course(pHead_schoolYear);
 			if (course_remove_student != nullptr)
+			{
 				remove_Student_from_Course(course_remove_student->student);
+				cout << "Updated successfully!" << endl;
+				cout << "Press any key to continue..." << endl;
+				string s;
+				cin >> s;
+			}
 			break;
 		}
 		case 11:
@@ -152,6 +191,10 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			}
 
 			deleteCourse(pCur_Semester->course, pCur_Course, pHead->year_name, pCur_Semester->semester_name);
+			cout << "Updated successfully!" << endl;
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
 		}
 		case 12:
@@ -233,9 +276,12 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		case 18:
 		{
 			edit(headPass);
+			cout << "Updated successfully!" << endl;
+			cout << "Press any key to continue..." << endl;
+			string s;
+			cin >> s;
 			break;
 		}
-
 		default:
 			continue;
 		}
@@ -356,32 +402,16 @@ void createNewSchoolYear(SchoolYear *&pHead)
 void createNewClass(Class *&pHead)
 {
 	int i;
-	Class *pCur = nullptr;
-	if (pHead == nullptr)
-	{
-		pHead = new Class;
-		pCur = pHead;
-	}
-	else
-	{
-		pCur = pHead;
-		while (pCur != nullptr && pCur->pNext != nullptr)
-			pCur = pCur->pNext;
-		if (pHead != nullptr)
-		{
-			pCur->pNext = new Class;
-			pCur = pCur->pNext;
-		}
-	}
 	while (true)
 	{
+		clrscr();
 		cout << "-------------------------------------------\n";
 		cout << "1. New classes\n0. Exit\nEnter options: ";
 		cin >> i;
-		if (i != 0)
+		if (i == 1)
 		{
 			string get_class;
-			cout << "Enter class: ";
+			cout << "Enter class (from 1-99): ";
 			cin >> get_class;
 			while (stoi(get_class) <= 0 || stoi(get_class) >= 100)
 			{
@@ -394,30 +424,85 @@ void createNewClass(Class *&pHead)
 
 			while (type_class != "CLC" && type_class != "VP" && type_class != "APCS")
 			{
-				cout << "Wrong syntax of class, enter the type of class among CLC, VP or APCS ";
+				cout << "Wrong syntax of class, enter the type of class among CLC, VP or APCS: ";
 				cin >> type_class;
 			}
-			pCur->class_name = get_class;
-			pCur->student = nullptr;
-			pCur->pNext = nullptr;
+
+			cout << "Enter the ordered of the class (1-99): ";
+			int ordered_class;
+			cin >> ordered_class;
+			while (ordered_class < 1 || ordered_class > 99)
+			{
+				cout << "Invalid input. The ordereded of the class must in range 1-99: ";
+				cin >> ordered_class;
+			}
+			if (ordered_class < 10)
+				get_class = get_class + type_class + "0" + to_string(ordered_class);
+			else
+				get_class = get_class = get_class + type_class + to_string(ordered_class);
+
+			Class *pCur = nullptr, *pPrevCur = nullptr;
+			if (pHead == nullptr)
+			{
+				pHead = new Class;
+				pCur = pHead;
+				pPrevCur = pHead;
+			}
+			else
+			{
+				pCur = pHead;
+				while (pCur != nullptr && pCur->class_name != get_class)
+				{
+					pPrevCur = pCur;
+					pCur = pCur->pNext;
+				}
+				if (pCur != nullptr)
+				{
+					cout << "The class has been already created !!" << endl;
+					cout << "Press any key to continue...\n";
+					string s;
+					cin >> s;
+					continue;
+				}
+				else
+				{
+					pPrevCur->pNext = new Class;
+					pPrevCur = pPrevCur->pNext;
+				}
+			}
+
+			pPrevCur->class_name = get_class;
+			pPrevCur->student = nullptr;
+			pPrevCur->pNext = nullptr;
+			cout << "Create the class successfully!" << endl;
+			cout << "Press any key to continue...\n";
+			string s;
+			cin >> s;
+			continue;
 		}
 		else if (i == 0)
 			break;
 		else
+		{
+			cout << "Invalid option!" << endl;
+			cout << "Press any key to continue...\n";
+			string s;
+			cin >> s;
 			continue;
+		}
 	}
 }
 
 // add new course menu
 void addSemesterMenu(SchoolYear *pHead_schoolYear)
 {
-	int i;
+	clrscr();
 	while (true)
 	{
 		cout << "-------------------------------------------\n";
 		cout << "1. Choose a semester\n0. Exit\nEnter options: ";
+		int i;
 		cin >> i;
-		string a;
 		switch (i)
 		{
 		case 0:
@@ -425,8 +510,10 @@ void addSemesterMenu(SchoolYear *pHead_schoolYear)
 			return;
 		}
 		case 1:
+		{
 			addSemester(pHead_schoolYear->semester);
 			break;
+		}
 		default:
 			continue;
 		}
@@ -457,11 +544,11 @@ void addSemesterMenu(SchoolYear *pHead_schoolYear)
 
 void addSemester(Semester *&pHead)
 {
-	int option;
 	while (true)
 	{
 		cout << "-------------------------------------------\n";
 		cout << "1. Semester 1\n2. Semester 2\n3. Semester 3\n0. Exit\nEnter options: ";
+		int option;
 		cin >> option;
 		switch (option)
 		{

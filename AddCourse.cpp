@@ -1,15 +1,15 @@
 #include "lib.h"
 
-void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
+void print_All_CourseToConsole(SchoolYear *pHead_schoolYear)
 {
-	//print to Console the Courses which have the format:
-	//Course_ID---Course_name---Class_name---Teacher_name---Number_of_Credits---Number_of_maximum_students---Day_of_week---Sessions
+	// print to Console the Courses which have the format:
+	// Course_ID---Course_name---Class_name---Teacher_name---Number_of_Credits---Number_of_maximum_students---Day_of_week---Sessions
 
-	SchoolYear* pHead1 = pHead_schoolYear;
+	SchoolYear *pHead1 = pHead_schoolYear;
 	while (pHead1 != nullptr)
 	{
 		cout << pHead1->year_name << endl;
-		Semester* pHead2 = pHead1->semester;
+		Semester *pHead2 = pHead1->semester;
 		while (pHead2 != nullptr)
 		{
 			cout << pHead2->semester_name << " " << endl;
@@ -39,17 +39,17 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 				<< setw(15)
 				<< "Session| "
 				<< left
-				<< setw(5)
+				<< setw(3)
 				<< "M| "
 				<< left
-				<< setw(5)
+				<< setw(3)
 				<< "F| "
 				<< left
-				<< setw(5)
+				<< setw(3)
 				<< "O|"
 				<< endl;
-			Course* pHead3 = pHead2->course;
-			while (pHead3 != nullptr && pHead3->pNext != nullptr)
+			Course *pHead3 = pHead2->course;
+			while (pHead3 != nullptr)
 			{
 				cout
 					<< left
@@ -77,13 +77,13 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 					<< setw(15)
 					<< pHead3->sessions
 					<< left
-					<< setw(5)
+					<< setw(3)
 					<< pHead3->midterm
 					<< left
-					<< setw(5)
+					<< setw(3)
 					<< pHead3->final
 					<< left
-					<< setw(5)
+					<< setw(3)
 					<< pHead3->other
 					<< endl;
 				pHead3 = pHead3->pNext;
@@ -94,26 +94,32 @@ void print_All_CourseToConsole(SchoolYear* pHead_schoolYear)
 		cout << endl;
 		pHead1 = pHead1->pNext;
 	}
-
+	string s;
+	cout << "Press any key to continue...\n";
+	cin >> s;
+	clrscr();
 }
 
-void print_All_ClassToConsole(Class* pHead_class)
+void print_All_ClassToConsole(Class *pHead_class)
 {
 	/*if (pHead_class == nullptr)
 	{
 		cout "There is no class has been created yet" << endl;
 		return;
 	}*/
-	Class* pHead2 = pHead_class;
+	Class *pHead2 = pHead_class;
 	while (pHead2 != nullptr)
 	{
 		cout << pHead2->class_name << endl;
 		pHead2 = pHead2->pNext;
 	}
-	cout << endl;
+	string s;
+	cout << "Press any key to continue...\n";
+	cin >> s;
+	clrscr();
 }
 
-void print_All_Student_In_A_class(studentClass* pCur)
+void print_All_Student_In_A_class(studentClass *pCur)
 {
 	if (pCur == nullptr)
 	{
@@ -121,49 +127,52 @@ void print_All_Student_In_A_class(studentClass* pCur)
 		return;
 	}
 	cout << left
-		<< setw(15)
-		<< "Student ID| "
-		<< left
-		<< setw(15)
-		<< "First Name| "
-		<< left
-		<< setw(15)
-		<< "Last Name|"
-		<< left
-		<< setw(15)
-		<< "Gender| "
-		<< left
-		<< setw(17)
-		<< "Date of birth| "
-		<< left
-		<< setw(15)
-		<< "Social ID| " << endl;
+		 << setw(15)
+		 << "Student ID| "
+		 << left
+		 << setw(15)
+		 << "First Name| "
+		 << left
+		 << setw(15)
+		 << "Last Name|"
+		 << left
+		 << setw(15)
+		 << "Gender| "
+		 << left
+		 << setw(17)
+		 << "Date of birth| "
+		 << left
+		 << setw(15)
+		 << "Social ID| " << endl;
 	while (pCur != nullptr)
 	{
 		cout << left
-			<< setw(15)
-			<< pCur->student_ID << " "
-			<< left
-			<< setw(15)
-			<< pCur->first_name << " "
-			<< left
-			<< setw(15)
-			<< pCur->last_name << " "
-			<< left
-			<< setw(15)
-			<< pCur->gender << " "
-			<< left
-			<< setw(15)
-			<< pCur->date_of_birth << " "
-			<< left
-			<< setw(15)
-			<< pCur->social_ID << endl;
+			 << setw(15)
+			 << pCur->student_ID << " "
+			 << left
+			 << setw(15)
+			 << pCur->first_name << " "
+			 << left
+			 << setw(15)
+			 << pCur->last_name << " "
+			 << left
+			 << setw(15)
+			 << pCur->gender << " "
+			 << left
+			 << setw(15)
+			 << pCur->date_of_birth << " "
+			 << left
+			 << setw(15)
+			 << pCur->social_ID << endl;
 		pCur = pCur->pNext;
 	}
-	cout << endl;
+	string s;
+	cout << "Press any key to continue...\n";
+	cin >> s;
+	clrscr();
 }
 
-void Print_All_Student_In_A_Course_With_score(Student* pCur)
+void Print_All_Student_In_A_Course_With_score(Student *pCur)
 {
 	while (pCur != nullptr)
 	{
@@ -200,28 +209,32 @@ void Print_All_Student_In_A_Course_With_score(Student* pCur)
 
 		pCur = pCur->pNext;
 	}
+	string s;
+	cout << "Press any key to continue...\n";
+	cin >> s;
+	clrscr();
 }
 
-void Print_All_Student_In_A_Course(Student* pCur)
+void Print_All_Student_In_A_Course(Student *pCur)
 {
 	cout << left
-		<< setw(13)
-		<< "Student ID| "
-		<< left
-		<< setw(13)
-		<< "First Name| "
-		<< left
-		<< setw(13)
-		<< "Last Name|"
-		<< left
-		<< setw(13)
-		<< "Gender| "
-		<< left
-		<< setw(13)
-		<< "Date of birth| "
-		<< left
-		<< setw(13)
-		<< "Social ID| " << endl;
+		 << setw(13)
+		 << "Student ID| "
+		 << left
+		 << setw(13)
+		 << "First Name| "
+		 << left
+		 << setw(13)
+		 << "Last Name|"
+		 << left
+		 << setw(13)
+		 << "Gender| "
+		 << left
+		 << setw(13)
+		 << "Date of birth| "
+		 << left
+		 << setw(13)
+		 << "Social ID| " << endl;
 	while (pCur != nullptr)
 	{
 		cout
@@ -244,11 +257,15 @@ void Print_All_Student_In_A_Course(Student* pCur)
 			<< pCur->social_ID << " " << endl;
 		pCur = pCur->pNext;
 	}
+	string s;
+	cout << "Press any key to continue...\n";
+	cin >> s;
+	clrscr();
 }
 
-void addCourse(Course*& pHead)
+void addCourse(Course *&pHead)
 {
-	Course* pCur = pHead;
+	Course *pCur = pHead;
 	while (pCur->pNext != nullptr)
 		pCur = pCur->pNext;
 	pCur->pNext = new Course;
@@ -293,7 +310,7 @@ void addCourse(Course*& pHead)
 	pCur->student = nullptr;
 }
 
-void export_list_of_student_ToCSVFile(Student* pCur, string year_name, string semester_name, string course_id)
+void export_list_of_student_ToCSVFile(Student *pCur, string year_name, string semester_name, string course_id)
 {
 	ofstream file;
 	file.open("student_In_A_Course.txt");
@@ -303,11 +320,11 @@ void export_list_of_student_ToCSVFile(Student* pCur, string year_name, string se
 	while (pCur != nullptr)
 	{
 		file << pCur->student_ID << ","
-			<< pCur->first_name << ","
-			<< pCur->last_name << ","
-			<< pCur->gender << ","
-			<< pCur->date_of_birth << ","
-			<< pCur->social_ID;
+			 << pCur->first_name << ","
+			 << pCur->last_name << ","
+			 << pCur->gender << ","
+			 << pCur->date_of_birth << ","
+			 << pCur->social_ID;
 		if (pCur->pNext != nullptr)
 			file << endl;
 
@@ -316,8 +333,8 @@ void export_list_of_student_ToCSVFile(Student* pCur, string year_name, string se
 	file.close();
 }
 
-//The pDelete is surely found.
-void deleteCourse(Course*& pHead, Course*& pDelete, string year_name, string semester_name)
+// The pDelete is surely found.
+void deleteCourse(Course *&pHead, Course *&pDelete, string year_name, string semester_name)
 {
 	if (pHead == nullptr)
 	{
@@ -325,13 +342,13 @@ void deleteCourse(Course*& pHead, Course*& pDelete, string year_name, string sem
 		return;
 	}
 
-	Course* pCur = pHead;
+	Course *pCur = pHead;
 	if (pHead == pDelete)
 	{
 		pHead = pHead->pNext;
 		while (pCur->student != nullptr)
 		{
-			Student* pTemp1 = pCur->student;
+			Student *pTemp1 = pCur->student;
 			pCur->student = pCur->student->pNext;
 			delete pTemp1;
 		}
@@ -343,21 +360,21 @@ void deleteCourse(Course*& pHead, Course*& pDelete, string year_name, string sem
 		return;
 	}
 
-	Course* pPrevCur = pHead;
+	Course *pPrevCur = pHead;
 	while (pCur != nullptr && pCur != pDelete)
 	{
 		pPrevCur = pCur;
 		pCur = pCur->pNext;
 	}
-	//If found, delete the Node of course in the linked list
+	// If found, delete the Node of course in the linked list
 	pPrevCur->pNext = pCur->pNext;
 	string path;
 	path = year_name + BACKSLASH + semester_name + BACKSLASH + pCur->id + ".txt";
 	remove(path.c_str());
-	//Delete the pointer student of a course
+	// Delete the pointer student of a course
 	while (pCur->student != nullptr)
 	{
-		Student* pTemp1 = pCur->student;
+		Student *pTemp1 = pCur->student;
 		pCur->student = pCur->student->pNext;
 		delete pTemp1;
 	}
@@ -366,7 +383,7 @@ void deleteCourse(Course*& pHead, Course*& pDelete, string year_name, string sem
 	pCur = nullptr;
 }
 
-void update_course_ID(Course*& pCur)
+void update_course_ID(Course *&pCur)
 {
 	cout << "Enter new Course ID: ";
 	cin.ignore();
@@ -374,28 +391,28 @@ void update_course_ID(Course*& pCur)
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
 }
 
-void update_course_name(Course*& pCur)
+void update_course_name(Course *&pCur)
 {
 	cout << "Enter new Course Name: ";
 	getline(cin, pCur->course_name);
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
 }
 
-void update_class_name(Course*& pCur)
+void update_class_name(Course *&pCur)
 {
 	cout << "Enter new Class Name: ";
 	getline(cin, pCur->class_name);
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
 }
 
-void update_teacher_name(Course*& pCur)
+void update_teacher_name(Course *&pCur)
 {
 	cout << "Enter new Teacher Name: ";
 	getline(cin, pCur->teacher_name);
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
 }
 
-void update_number_credits(Course*& pCur)
+void update_number_credits(Course *&pCur)
 {
 	cout << "Enter new Number of Credits: ";
 	int get_number_credits;
@@ -409,7 +426,7 @@ void update_number_credits(Course*& pCur)
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
 }
 
-void update_number_students(Course*& pCur)
+void update_number_students(Course *&pCur)
 {
 	cout << "Enter new number of Students: ";
 	int get_number_students;
@@ -423,7 +440,7 @@ void update_number_students(Course*& pCur)
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
 }
 
-void update_day_week(Course*& pCur)
+void update_day_week(Course *&pCur)
 {
 	cout << "Enter new Day of week: ";
 	cin.ignore();
@@ -431,7 +448,7 @@ void update_day_week(Course*& pCur)
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
 }
 
-void update_session(Course*& pCur)
+void update_session(Course *&pCur)
 {
 	cout << "Enter new session";
 	cin.ignore();
@@ -439,7 +456,7 @@ void update_session(Course*& pCur)
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
 }
 
-void update_percentage(Course*& pCur)
+void update_percentage(Course *&pCur)
 {
 	pCur->other = -1;
 	while (pCur->other < 0)
@@ -453,7 +470,7 @@ void update_percentage(Course*& pCur)
 	cout << "Update successfully!\nPlease enter any key to continue..." << endl;
 }
 
-void update_Course(Course*& pCur)
+void update_Course(Course *&pCur)
 {
 	cout << "Choose option which have to be updated " << endl;
 	while (true)
@@ -525,7 +542,7 @@ void update_Course(Course*& pCur)
 	}
 }
 
-Semester* Find_Semester(SchoolYear* pHead)
+Semester *Find_Semester(SchoolYear *pHead)
 {
 	string get_schoolyear;
 	cout << "Enter shool Year: ";
@@ -537,10 +554,14 @@ Semester* Find_Semester(SchoolYear* pHead)
 	if (pHead == nullptr)
 	{
 		cout << "There is no schoolyear matching with your typing!!!" << endl;
+		cout << "Press any key to continue...\n";
+		string s;
+		cin >> s;
+		clrscr();
 		return NULL;
 	}
 
-	Semester* pCur_semester = pHead->semester;
+	Semester *pCur_semester = pHead->semester;
 	string get_semester;
 	cout << "Enter semester: ";
 	cin >> get_semester;
@@ -552,15 +573,19 @@ Semester* Find_Semester(SchoolYear* pHead)
 	if (pCur_semester == nullptr)
 	{
 		cout << "There is no semester matching with your typing!!!" << endl;
+		cout << "Press any key to continue...\n";
+		string s;
+		cin >> s;
+		clrscr();
 		return NULL;
 	}
 	else
 		return pCur_semester;
 }
 
-Course* Find_Course(SchoolYear* pHead)
+Course *Find_Course(SchoolYear *pHead)
 {
-	//These code is used for traversing the linked list of Schoolyear, to found the specific Schoolyear.
+	// These code is used for traversing the linked list of Schoolyear, to found the specific Schoolyear.
 	string get_schoolyear;
 	cout << "Enter School Year: ";
 	cin >> get_schoolyear;
@@ -571,11 +596,15 @@ Course* Find_Course(SchoolYear* pHead)
 	if (pHead == nullptr)
 	{
 		cout << "There is no schoolyear matching with your typing!!!" << endl;
+		cout << "Press any key to continue...\n";
+		string s;
+		cin >> s;
+		clrscr();
 		return NULL;
 	}
 
-	Semester* pCur_Semester = pHead->semester;
-	//These code is used for traversing the linked list of Semester, to found the specific Semester.
+	Semester *pCur_Semester = pHead->semester;
+	// These code is used for traversing the linked list of Semester, to found the specific Semester.
 	string get_semester;
 	cout << "Enter Semester: ";
 	cin >> get_semester;
@@ -586,10 +615,14 @@ Course* Find_Course(SchoolYear* pHead)
 	if (pCur_Semester == nullptr)
 	{
 		cout << "There is no semester matching with your typing !!!" << endl;
+		cout << "Press any key to continue...\n";
+		string s;
+		cin >> s;
+		clrscr();
 		return NULL;
 	}
 
-	Course* pCur_Course = pCur_Semester->course;
+	Course *pCur_Course = pCur_Semester->course;
 	cout << "Enter Course ID: ";
 	string get_course_ID;
 	cin >> get_course_ID;
@@ -598,15 +631,19 @@ Course* Find_Course(SchoolYear* pHead)
 	if (pCur_Course == nullptr)
 	{
 		cout << "There is no course ID matching with your typing !!!" << endl;
+		cout << "Press any key to continue...\n";
+		string s;
+		cin >> s;
+		clrscr();
 		return NULL;
 	}
-	//To make sure that the pCur_course is not a null pointer.
+	// To make sure that the pCur_course is not a null pointer.
 	return pCur_Course;
 }
 
-void add_Student_to_Course_By_File(Student*& pHead)
+void add_Student_to_Course_By_File(Student *&pHead)
 {
-	Student* pCur = nullptr;
+	Student *pCur = nullptr;
 	if (pHead != nullptr)
 	{
 		pCur = pHead;
@@ -615,12 +652,16 @@ void add_Student_to_Course_By_File(Student*& pHead)
 	}
 
 	ifstream file;
-	//The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be addedd
-	//The following next lines are the students information.
+	// The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be addedd
+	// The following next lines are the students information.
 	file.open("addStudentToCourse.txt");
 	if (!file.is_open())
 	{
 		cout << "Can't open addStudentToCourse.txt" << endl;
+		cout << "Press any key to continue...\n";
+		string s;
+		cin >> s;
+		clrscr();
 		return;
 	}
 	while (!file.eof())
@@ -661,9 +702,9 @@ void add_Student_to_Course_By_File(Student*& pHead)
 	file.close();
 }
 
-void add_Student_to_Course_By_Console(Student*& pHead)
+void add_Student_to_Course_By_Console(Student *&pHead)
 {
-	Student* pCur = nullptr;
+	Student *pCur = nullptr;
 	if (pHead != nullptr)
 	{
 		pCur = pHead;
@@ -706,13 +747,13 @@ void add_Student_to_Course_By_Console(Student*& pHead)
 	cout << "Enter new student social ID: ";
 	cin.ignore();
 	cin >> pCur->social_ID;
-
 }
 
-void remove_Student_from_Course(Student*& pHead)
+void remove_Student_from_Course(Student *&pHead)
 {
-	Student* pCur = pHead;;
-	Student* pPrevCur = pHead;
+	Student *pCur = pHead;
+	;
+	Student *pPrevCur = pHead;
 	string get_student_ID;
 	cout << "Enter student ID: ";
 	cin >> get_student_ID;
@@ -727,32 +768,43 @@ void remove_Student_from_Course(Student*& pHead)
 		pPrevCur->pNext = pCur->pNext;
 		delete pCur;
 		cout << "Delete Student from Course successfully!!!" << endl;
+		cout << "Press any key to continue...\n";
+		string s;
+		cin >> s;
+		clrscr();
 		pCur = nullptr;
 		pPrevCur = nullptr;
 		return;
 	}
 	cout << "There is no student ID matching with your typing !!!" << endl;
+	cout << "Press any key to continue...\n";
+	string s;
+	cin >> s;
+	clrscr();
 }
 
-void Print_All_Student_In_A_Class_With_score_All(Class* pClass)
+void Print_All_Student_In_A_Class_With_score_All(Class *pClass)
 {
 
-    Class* pCur_Class = pClass;
-    string get_class;
-    cout << "Enter Class: ";
-    cin >> get_class;
+	Class *pCur_Class = pClass;
+	string get_class;
+	cout << "Enter Class: ";
+	cin >> get_class;
 
-        while (pCur_Class != nullptr && pCur_Class->class_name != get_class)
-			pCur_Class = pCur_Class->pNext;
+	while (pCur_Class != nullptr && pCur_Class->class_name != get_class)
+		pCur_Class = pCur_Class->pNext;
 
-		if (pCur_Class == nullptr)
-		{
-			cout << "There is no semester matching with your typing !!!" << endl;
-			return;
-		}
+	if (pCur_Class == nullptr)
+	{
+		cout << "There is no semester matching with your typing !!!" << endl;
+		cout << "Press any key to continue...\n";
+		string s;
+		cin >> s;
+		clrscr();
+		return;
+	}
 
-    studentClass* pCur = pCur_Class->student;
-    
+	studentClass *pCur = pCur_Class->student;
 
 	while (pCur != nullptr)
 	{
@@ -775,185 +827,200 @@ void Print_All_Student_In_A_Class_With_score_All(Class* pClass)
 			<< setw(13)
 			<< pCur->social_ID << endl;
 
-            scoreClass* pCurScore = pCur->score;
+		scoreClass *pCurScore = pCur->score;
 
-            if (pCurScore == nullptr)
-            {
-                cout << "\tNo score for this student" << endl;
-            }
+		if (pCurScore == nullptr)
+		{
+			cout << "\tNo score for this student" << endl;
+			cout << "Press any key to continue...\n";
+			string s;
+			cin >> s;
+			clrscr();
+		}
 
-			int n = 0;
-			float sum = 0;
-                      
-            while(pCurScore != nullptr)
-            {
-                cout
-                << left
-                << setw(30)
-                << pCurScore->course_name << "|"
-                << left
-                << setw(15)
-                << pCurScore->course_ID << "|"
-                << left
-                << setw(5)
-                << pCurScore->score.final_mark << "|"
-                << left
-                << setw(5)
-                << pCurScore->score.final_mark << "|"
-                << left
-                << setw(5)
-                << pCurScore->score.mid_mark << "|"
-                << left
-                << setw(5)
-                << pCurScore->score.other_mark << endl;
+		int n = 0;
+		float sum = 0;
 
-				n++;
-				sum += pCurScore->score.total_mark;
+		while (pCurScore != nullptr)
+		{
+			cout
+				<< left
+				<< setw(30)
+				<< pCurScore->course_name << "|"
+				<< left
+				<< setw(15)
+				<< pCurScore->course_ID << "|"
+				<< left
+				<< setw(5)
+				<< pCurScore->score.final_mark << "|"
+				<< left
+				<< setw(5)
+				<< pCurScore->score.final_mark << "|"
+				<< left
+				<< setw(5)
+				<< pCurScore->score.mid_mark << "|"
+				<< left
+				<< setw(5)
+				<< pCurScore->score.other_mark << endl;
 
-                pCurScore = pCurScore->next;
-            }        	
-			if(n != 0)
-				cout << right << setw(50) << "GPA: " << (sum / n) / 10 * 4 << endl;
+			n++;
+			sum += pCurScore->score.total_mark;
+
+			pCurScore = pCurScore->next;
+		}
+		if (n != 0)
+			cout << right << setw(50) << "GPA: " << (sum / n) / 10 * 4 << endl;
 		pCur = pCur->pNext;
 	}
 }
 
-bool checkForCourse(Course* pCur, string courseID)
+bool checkForCourse(Course *pCur, string courseID)
 {
-    while (pCur != nullptr)
-    {
-        if (pCur->id == courseID)
-        {
-            return true;
-        }
-        pCur = pCur->pNext;
-    }
-    return false;
+	while (pCur != nullptr)
+	{
+		if (pCur->id == courseID)
+		{
+			return true;
+		}
+		pCur = pCur->pNext;
+	}
+	return false;
 }
 
-void Print_All_Student_In_A_Class_With_score_Semester(SchoolYear* pHead, Class* pClass)
+void Print_All_Student_In_A_Class_With_score_Semester(SchoolYear *pHead, Class *pClass)
 {
-    SchoolYear* pCurYear = pHead;
-    Course* pCurCourse = nullptr;
+	SchoolYear *pCurYear = pHead;
+	Course *pCurCourse = nullptr;
 
-    
-    string get_schoolyear;
+	string get_schoolyear;
 	cout << "Enter School Year: ";
 	cin >> get_schoolyear;
-		
+
 	while (pHead != nullptr && pHead->year_name != get_schoolyear)
 	{
-			pHead = pHead->pNext;
+		pHead = pHead->pNext;
 	}
-		if (pHead == nullptr)
-		{
-			cout << "There is no schoolyear matching with your typing!!!" << endl;
-			return;
-		}
+	if (pHead == nullptr)
+	{
+		cout << "There is no schoolyear matching with your typing!!!" << endl;
+		cout << "Press any key to continue...\n";
+		string s;
+		cin >> s;
+		clrscr();
+		return;
+	}
 
-	Semester* pCur_Semester = pHead->semester;
-	    string get_semester;
-		cout << "Enter Semester: ";
-		cin >> get_semester;
+	Semester *pCur_Semester = pHead->semester;
+	string get_semester;
+	cout << "Enter Semester: ";
+	cin >> get_semester;
 
-		while (pCur_Semester != nullptr && pCur_Semester->semester_name != get_semester)
-			pCur_Semester = pCur_Semester->pNext;
+	while (pCur_Semester != nullptr && pCur_Semester->semester_name != get_semester)
+	{
+		pCur_Semester = pCur_Semester->pNext;
+	}
 
-		if (pCur_Semester == nullptr)
-		{
-			cout << "There is no semester matching with your typing !!!" << endl;
-			return;
-		}
+	if (pCur_Semester == nullptr)
+	{
+		cout << "There is no semester matching with your typing !!!" << endl;
+		cout << "Press any key to continue...\n";
+		string s;
+		cin >> s;
+		clrscr();
+		return;
+	}
 
-    pCurCourse = pCur_Semester->course;
+	pCurCourse = pCur_Semester->course;
 
-    Class* pCur_Class = pClass;
-    string get_class;
-    cout << "Enter Class: ";
-    cin >> get_class;
+	Class *pCur_Class = pClass;
+	string get_class;
+	cout << "Enter Class: ";
+	cin >> get_class;
 
-        while (pCur_Class != nullptr && pCur_Class->class_name != get_class)
-			pCur_Class = pCur_Class->pNext;
+	while (pCur_Class != nullptr && pCur_Class->class_name != get_class)
+		pCur_Class = pCur_Class->pNext;
 
-		if (pCur_Class == nullptr)
-		{
-			cout << "There is no semester matching with your typing !!!" << endl;
-			return;
-		}
+	if (pCur_Class == nullptr)
+	{
+		cout << "There is no academic class matching with your typing !!!" << endl;
+		cout << "Press any key to continue...\n";
+		string s;
+		cin >> s;
+		clrscr();
+		return;
+	}
 
-    studentClass* pCur = pCur_Class->student;
-    
+	studentClass *pCur = pCur_Class->student;
 
 	while (pCur != nullptr)
 	{
 		cout
-			<< setw(13)
+			<< " "
 			<< pCur->student_ID << " "
-			<< left
-			<< setw(13)
+			<< " "
 			<< pCur->first_name << " "
-			<< left
-			<< setw(13)
+			<< " "
 			<< pCur->last_name << " "
-			<< left
-			<< setw(13)
+			<< " "
 			<< pCur->gender << " "
-			<< left
-			<< setw(13)
+			<< " "
 			<< pCur->date_of_birth << " "
-			<< left
-			<< setw(13)
+			<< " "
 			<< pCur->social_ID << endl;
-            
-            scoreClass* pCurScore = pCur->score;
 
-            if (pCurScore == nullptr)
-            {
-                cout << "\tNo score for this student" << endl;
-            }
+		scoreClass *pCurScore = pCur->score;
 
-			int n = 0;
-			float sum = 0;
-            
-            while(pCurScore != nullptr)
-            {
-                if(pCurScore->score.final_mark == 0)
-                {
-                    pCurScore = pCurScore->next;
-                    continue;
-                }
-                if(checkForCourse(pCurCourse, pCurScore->course_ID) == false)
-                {
-                    pCurScore = pCurScore->next;
-                    continue;
-                }
-				
-                cout
-                << left
-                << setw(30)
-                << pCurScore->course_name << "|"
-                << left
-                << setw(15)
-                << pCurScore->course_ID << "|"
-                << left
-                << setw(5)
-                << pCurScore->score.final_mark << "|"
-                << left
-                << setw(5)
-                << pCurScore->score.final_mark << "|"
-                << left
-                << setw(5)
-                << pCurScore->score.mid_mark << "|"
-                << left
-                << setw(5)
-                << pCurScore->score.other_mark << endl;
-				n++;
-				sum += pCurScore->score.final_mark;
+		if (pCurScore == nullptr)
+		{
+			cout << "\tNo score for this student" << endl;
+		}
 
-                pCurScore = pCurScore->next;
-            }        	
-			if(n != 0)
-				cout << right << setw(50) << "GPA: " << (sum / n) / 10 * 4 << endl;
+		int n = 0;
+		float sum = 0;
+
+		while (pCurScore != nullptr)
+		{
+			if (pCurScore->score.final_mark == 0)
+			{
+				pCurScore = pCurScore->next;
+				continue;
+			}
+			if (checkForCourse(pCurCourse, pCurScore->course_ID) == false)
+			{
+				pCurScore = pCurScore->next;
+				continue;
+			}
+
+			cout
+				<< left
+				<< setw(30)
+				<< pCurScore->course_name << "|"
+				<< left
+				<< setw(15)
+				<< pCurScore->course_ID << "|"
+				<< left
+				<< setw(5)
+				<< pCurScore->score.final_mark << "|"
+				<< left
+				<< setw(5)
+				<< pCurScore->score.final_mark << "|"
+				<< left
+				<< setw(5)
+				<< pCurScore->score.mid_mark << "|"
+				<< left
+				<< setw(5)
+				<< pCurScore->score.other_mark << endl;
+			n++;
+			sum += pCurScore->score.final_mark;
+
+			pCurScore = pCurScore->next;
+		}
+		if (n != 0)
+			cout << right << setw(50) << "GPA: " << (sum / n) / 10 * 4 << endl;
 		pCur = pCur->pNext;
 	}
+	cout << "Press any key to continue...\n";
+	string s;
+	cin >> s;
+	clrscr();
 }

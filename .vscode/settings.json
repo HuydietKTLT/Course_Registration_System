@@ -8,6 +8,8 @@
         "iomanip": "cpp",
         "fstream": "cpp",
         "new": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "xstring": "cpp",
+        "ios": "cpp"
     }
 }
