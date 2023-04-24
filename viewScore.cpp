@@ -4,6 +4,38 @@
 // This function use to import score for ONE COURSE
 // This function use parameter as A Linked List Course 
 // pls read comment inside function.
+Semester* Find_Semester(SchoolYear* pHead)
+{
+	string get_schoolyear;
+	cout << "Enter shool Year: ";
+	cin >> get_schoolyear;
+	while (pHead != nullptr && pHead->year_name != get_schoolyear)
+	{
+		pHead = pHead->pNext;
+	}
+	if (pHead == nullptr)
+	{
+		cout << "There is no schoolyear matching with your typing!!!" << endl;
+		return NULL;
+	}
+
+	Semester* pCur_semester = pHead->semester;
+	string get_semester;
+	cout << "Enter semester: ";
+	cin >> get_semester;
+
+	while (pCur_semester != nullptr && pCur_semester->semester_name != get_semester)
+	{
+		pCur_semester = pCur_semester->pNext;
+	}
+	if (pCur_semester == nullptr)
+	{
+		cout << "There is no semester matching with your typing!!!" << endl;
+		return NULL;
+	}
+	else
+		return pCur_semester;
+}
 
 void import_score_of_course (Course *&z)
 {
