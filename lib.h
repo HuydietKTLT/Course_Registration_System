@@ -230,6 +230,9 @@ void add_semester(Semester*& pHead, string semester);
 
 Semester* currentSemester(Semester* pHead);
 
+bool checkSchoolYearSemIsFull (SchoolYear *pCur); // SchoolYearFeature .cpp
+
+void changeCurrentSchoolYear (SchoolYear *&currentSchoolYear, SchoolYear *pHead); // SchoolYearFeature .cpp
 //student's menu
 void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& headPass);
 
