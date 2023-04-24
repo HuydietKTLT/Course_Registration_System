@@ -82,7 +82,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		case 5:
 		{
 			if (current_schoolyear != nullptr) {
-				if (checkSchoolYearSemIsFull) {
+				if (checkSchoolYearSemIsFull(current_schoolyear)) {
 					cout << "This school year is full of semester ! (3 semesters) \n";
 					break;
 				}
@@ -115,7 +115,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		case 7:
 		{
 			Course *course_addStudent_console = Find_Course(pHead_schoolYear);
-			if (add_Student_to_Course_By_Console != nullptr)
+			if (course_addStudent_console != nullptr)
 			{
 				add_Student_to_Course_By_Console(course_addStudent_console->student);
 				cout << "Updated successfully!" << endl;

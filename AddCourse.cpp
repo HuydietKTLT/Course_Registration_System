@@ -254,7 +254,12 @@ void Print_All_Student_In_A_Course(Student *pCur)
 			<< pCur->date_of_birth << " "
 			<< left
 			<< setw(13)
-			<< pCur->social_ID << " " << endl;
+			<< pCur->social_ID << " "
+			<< pCur->score.total_mark << " "
+			<< pCur->score.final_mark << " "
+			 << pCur->score.mid_mark << " "
+			  << pCur->score.other_mark << " "
+			   << endl;
 		pCur = pCur->pNext;
 	}
 	string s;

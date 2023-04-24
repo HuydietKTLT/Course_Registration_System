@@ -1,15 +1,14 @@
 #include "lib.h"
 
-
 int main()
 {
-	SchoolYear* pHead_schoolYear = nullptr;
-	Class* pHead_class = nullptr;
+	SchoolYear *pHead_schoolYear = nullptr;
+	Class *pHead_class = nullptr;
 
 	load_input(pHead_schoolYear, pHead_class);
 	char type;
 	string ID;
-	passInfo* headPass = nullptr;
+	passInfo *headPass = nullptr;
 	ReadPassword(headPass);
 	string log_in_studentID;
 	login(type, ID, headPass);
@@ -19,29 +18,31 @@ int main()
 	case '0':
 		break;
 	case 't':
-		{
-			cout << "Type: Teacher " << endl;
-			cout << "ID: " << ID << endl;
-			menuStaff(pHead_schoolYear, pHead_class, headPass);
-			break;
-		}
+	{
+		cout << "Type: Teacher " << endl;
+		cout << "ID: " << ID << endl;
+		menuStaff(pHead_schoolYear, pHead_class, headPass);
+		print_output(pHead_schoolYear, pHead_class);
+
+		break;
+	}
 	case 's':
-		{
-			cout << "Type: Student ";
-			cout << "ID: " << ID << endl;
-			menuStudent(pHead_schoolYear, ID, headPass);
-			break;
-		}
+	{
+		cout << "Type: Student ";
+		cout << "ID: " << ID << endl;
+		menuStudent(pHead_schoolYear, ID, headPass);
+		break;
+	}
 	case 'm':
-		{
-			//menuManager(pHead_schoolYear, pHead_class, headPass);
-			break;
-		}
+	{
+		// menuManager(pHead_schoolYear, pHead_class, headPass);
+		break;
+	}
 	default:
-		{
-			cout << "Error! Pls report to the admin!";
-			break;
-		}
+	{
+		cout << "Error! Pls report to the admin!";
+		break;
+	}
 	}
 	dialocatePass(headPass);
 	clear(headPass);
