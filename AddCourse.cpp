@@ -1002,10 +1002,6 @@ void Print_All_Student_In_A_Class_With_score_All(Class *pClass)
 		if (pCurScore == nullptr)
 		{
 			cout << "\tNo score for this student" << endl;
-			cout << "Press any key to continue...\n";
-			string s;
-			cin >> s;
-			clrscr();
 		}
 
 		int n = 0;
@@ -1042,6 +1038,10 @@ void Print_All_Student_In_A_Class_With_score_All(Class *pClass)
 			cout << right << setw(50) << "GPA: " << (sum / n) / 10 * 4 << endl;
 		pCur = pCur->pNext;
 	}
+	cout << "Press any key to continue...\n";
+	string s;
+	cin >> s;
+	clrscr();
 }
 
 bool checkForCourse(Course *pCur, string courseID)
