@@ -40,7 +40,7 @@ int main()
 	}
 	default:
 	{
-		cout << "Error! Pls report to the admin!";
+		cout << "Error! Please report to the admin!";
 		break;
 	}
 	}
