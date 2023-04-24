@@ -33,7 +33,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			 << "19. Export list of students in course to CSV file.\n"
 			 << "20. Edit password.\n"
 			 << "0. Log out.\n"
-			 << "\n\nEnter options: ";
+			 << "Enter options: ";
 		cin >> i;
 		clrscr();
 		switch (i)
