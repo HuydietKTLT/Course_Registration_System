@@ -228,7 +228,10 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		}
 		case 14:
 		{
-			Menu_Score_Board(pHead_schoolYear);
+			
+			SchoolYear *current_schoolYear_print_score = currentSchoolYear(pHead_schoolYear);
+			if (current_schoolYear_print_score != nullptr)
+			Menu_Score_Board(current_schoolYear_print_score);
 			break;
 		}
 		case 15:
