@@ -170,7 +170,7 @@ void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& hea
 	while (true)
 	{
 		cout << "-------------------------------------------\n";
-		cout << "1. View the courses in semester.\n2. View scoreboard.\n3 .Change password.";
+		cout << "1. View the courses in semester.\n2. View scoreboard.\n3. Change password.";
 		cout << "\n0. Log out";
 		cout << " \nEnter options:";
 		cin >> i;
