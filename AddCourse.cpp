@@ -509,7 +509,6 @@ void update_course_ID(Course *&pCur, SchoolYear *pHead)
 	{
 		cout << "The course ID has been created before! Please try another course ID" << endl;
 		cout << "Enter new Course ID: ";
-		cin.ignore();
 		getline(cin, new_file_name);
 		new_path = path + new_file_name + ".txt";
 		result = rename(old_path.c_str(), new_path.c_str());
