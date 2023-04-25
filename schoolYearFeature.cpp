@@ -16,6 +16,26 @@ bool checkSchoolYearSemIsFull(SchoolYear *currentSchoolYear)
         return false;
 }
 
+void updateScoreForStudent (Course  *course)
+{
+    Student *s = course->student;
+    string temp;
+    cout << "Enter student id need to update the result: " ;
+    cin >> temp;
+    while (s != nullptr) {
+        if (s->student_ID == temp) break;
+        else s = s->pNext;
+    }
+    if (s == nullptr) {
+        cout << "There are no student got this ID !!!";
+        return;
+    }
+    cout << "Now enter the updated result of the student ID " << temp << " : " << endl;
+    cout << "Midterm mark:"; cin >> s->score.mid_mark;
+    cout << "Final mark:"; cin >> s->score.final_mark;
+    cout << "Other mark:"; cin >> s->score.other_mark;
+}
+
 void changeCurrentSchoolYear(SchoolYear *&currentSchoolYear, SchoolYear *pHead)
 {
     string s;
