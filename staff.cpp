@@ -286,6 +286,9 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			if (pCur_Semester == nullptr)
 			{
 				cout << "There is no semester matching with your typing !!!" << endl;
+				string s;
+				cout << "Press any key to continue...";
+				cin >> s;
 				break;
 			}
 
@@ -300,6 +303,9 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			if (pCur_Course == nullptr)
 			{
 				cout << "There is no course ID matching with your typing !!!" << endl;
+				string s;
+				cout << "Press any key to continue...";
+				cin >> s;
 				break;
 			}
 			export_list_of_student_ToCSVFile(pCur_Course->student, pHead->year_name, pCur_Semester->semester_name, pCur_Course->id);
@@ -309,7 +315,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		{
 			edit(headPass);
 			cout << "Updated successfully!" << endl;
-			cout << "Press any key to continue..." << endl;
+			cout << "Press any key to continue...";
 			string s;
 			cin >> s;
 			break;

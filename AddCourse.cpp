@@ -390,8 +390,11 @@ void export_list_of_student_ToCSVFile(Student *pCur, string year_name, string se
 {
 	ofstream file;
 	file.open("student_In_A_Course.txt");
+	file << "Academic year: ";
 	file << year_name << endl;
+	file << "Semester: ";
 	file << semester_name << endl;
+	file << "Course ID: ";
 	file << course_id << endl;
 	while (pCur != nullptr)
 	{
@@ -415,6 +418,9 @@ void deleteCourse(Course *&pHead, Course *&pDelete, string year_name, string sem
 	if (pHead == nullptr)
 	{
 		cout << "There is no course to delete!" << endl;
+		string s;
+		cout << "Press any key to continue...";
+		cin >> s;
 		return;
 	}
 
@@ -462,37 +468,51 @@ void deleteCourse(Course *&pHead, Course *&pDelete, string year_name, string sem
 void update_course_ID(Course *&pCur, SchoolYear *pHead)
 {
 	string old_file_name = pCur->id;
-	cout << "Enter new Course ID: ";
-	cin.ignore();
-	string new_file_name;
-	getline(cin, new_file_name);
-
 	Semester *pCur_semester = nullptr;
 	Course *pCur_course = nullptr;
+	bool flag = false;
 	while (pHead != nullptr)
 	{
 		pCur_semester = pHead->semester;
 		while (pCur_semester != nullptr)
 		{
 			pCur_course = pCur_semester->course;
-			while (pCur_course != pCur)
+			while (pCur_course != nullptr)
 			{
+				if (pCur_course->id == pCur->id)
+				{
+					flag = true;
+					break;
+				}
 				pCur_course = pCur_course->pNext;
 			}
+			if (flag == true)
+				break;
 			pCur_semester = pCur_semester->pNext;
 		}
+		if (flag == true)
+			break;
 		pHead = pHead->pNext;
 	}
 	string path = pHead->year_name + BACKSLASH + pCur_semester->semester_name + BACKSLASH;
 	string old_path = path + old_file_name + ".txt";
+
+	cout << "Enter new Course ID: ";
+	string new_file_name;
+	cin.ignore();
+	getline(cin, new_file_name);
 	string new_path = path + new_file_name + ".txt";
 	int result;
 	result = rename(old_path.c_str(), new_path.c_str());
 
-	if (result != 0)
+	while (result != 0)
 	{
-		cout << "The course ID has been created yet!" << endl;
-		return;
+		cout << "The course ID has been created before! Please try another course ID" << endl;
+		cout << "Enter new Course ID: ";
+		cin.ignore();
+		getline(cin, new_file_name);
+		new_path = path + new_file_name + ".txt";
+		result = rename(old_path.c_str(), new_path.c_str());
 	}
 	pCur->id = new_file_name;
 	cout << "Update successfully!\n";
@@ -532,7 +552,6 @@ void update_number_credits(Course *&pCur)
 	pCur->number_credits = to_string(get_number_credits);
 	cout << "Update successfully!\n";
 }
-
 void update_number_students(Course *&pCur)
 {
 	cout << "Enter new number of Students: ";
@@ -619,7 +638,7 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 		case 1:
 		{
 			update_course_ID(pCur, pHead);
-			cout << "Press any key to continue..." << endl;
+			cout << "Press any key to continue...";
 			string s;
 			cin >> s;
 			break;
@@ -627,7 +646,7 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 		case 2:
 		{
 			update_course_name(pCur);
-			cout << "Press any key to continue..." << endl;
+			cout << "Press any key to continue...";
 			string s;
 			cin >> s;
 			break;
@@ -635,7 +654,7 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 		case 3:
 		{
 			update_class_name(pCur);
-			cout << "Press any key to continue..." << endl;
+			cout << "Press any key to continue...";
 			string s;
 			cin >> s;
 			break;
@@ -643,7 +662,7 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 		case 4:
 		{
 			update_teacher_name(pCur);
-			cout << "Press any key to continue..." << endl;
+			cout << "Press any key to continue...";
 			string s;
 			cin >> s;
 			break;
@@ -651,7 +670,7 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 		case 5:
 		{
 			update_number_credits(pCur);
-			cout << "Press any key to continue..." << endl;
+			cout << "Press any key to continue...";
 			string s;
 			cin >> s;
 			break;
@@ -659,7 +678,7 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 		case 6:
 		{
 			update_number_students(pCur);
-			cout << "Press any key to continue..." << endl;
+			cout << "Press any key to continue...";
 			string s;
 			cin >> s;
 			break;
@@ -667,7 +686,7 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 		case 7:
 		{
 			update_day_week(pCur);
-			cout << "Press any key to continue..." << endl;
+			cout << "Press any key to continue...";
 			string s;
 			cin >> s;
 			break;
@@ -675,7 +694,7 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 		case 8:
 		{
 			update_session(pCur);
-			cout << "Press any key to continue..." << endl;
+			cout << "Press any key to continue...";
 			string s;
 			cin >> s;
 			break;
@@ -683,7 +702,7 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 		case 9:
 		{
 			update_percentage(pCur);
-			cout << "Press any key to continue..." << endl;
+			cout << "Press any key to continue...";
 			string s;
 			cin >> s;
 			break;
@@ -703,7 +722,10 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 		}
 		case 0:
 		{
-			cout << "Finish updating!!!\nPlease enter any key to continue...";
+			cout << "Finish updating!!!" << endl;
+			cout << "Please enter any key to continue...";
+			string s;
+			cin >> s;
 			return;
 		}
 		default:
