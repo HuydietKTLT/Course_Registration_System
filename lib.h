@@ -268,6 +268,22 @@ void import_score_of_course(Course* z);
 
 void Menu_Score_Board(SchoolYear* list_year);
 
+//Manager
+
+void menuManager(SchoolYear* &pHead_schoolYear, Class* &pHead_class, passInfo* &headPass);
+
+void addStaff(passInfo*& headPass);
+
+void addStaffByConsole(passInfo* &headPass);
+
+void addStaffByFile(passInfo* &headPass);
+
+void removeStaff(passInfo*& headPass);
+
+void editStudent(passInfo* &headPass);
+
+void menuStaffMan(SchoolYear* &pHead_schoolYear, Class* &pHead_class, passInfo* &headPass);
+
 //Utility functions
 
 float float_one_point_round(float value);

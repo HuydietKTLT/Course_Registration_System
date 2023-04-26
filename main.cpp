@@ -35,7 +35,18 @@ int main()
 	}
 	case 'm':
 	{
-		// menuManager(pHead_schoolYear, pHead_class, headPass);
+		cout << "Type: Manager " << endl;
+		cout << "ID: " << ID << endl;
+		menuManager(pHead_schoolYear, pHead_class, headPass);
+		/*
+		1. Cho thêm bới thành viên staff và manager
+			Nhập từ console hoặc từ file
+	    		File staff.txt : ID,type
+			Xoa theo ID
+		2. Edit password
+			Cho phép edit password của bất cứ ai
+		3. Giống staff menu
+		*/
 		break;
 	}
 	default:
