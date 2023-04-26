@@ -107,7 +107,7 @@ void addStaffByFile(passInfo* &headPass)
     fin.open("staff.txt");
     if(fin.fail())
     {
-        cout << "Error! Can't open file!";
+        cout << "Error! Can't open file staff.txt!";
         return;
     }
     if(headPass == nullptr)

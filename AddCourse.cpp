@@ -832,7 +832,7 @@ Course *Find_Course(SchoolYear *pHead)
 	return pCur_Course;
 }
 
-void add_Student_to_Course_By_File(Student *&pHead, passInfo* &headPass)
+void add_Student_to_Course_By_File(Student *&pHead, passInfo *&headPass)
 {
 	Student *pCur = nullptr;
 	if (pHead != nullptr)
@@ -855,6 +855,7 @@ void add_Student_to_Course_By_File(Student *&pHead, passInfo* &headPass)
 		clrscr();
 		return;
 	}
+	passInfo* addPass = nullptr;
 	while (!file.eof())
 	{
 		if (pHead == nullptr)
@@ -893,8 +894,25 @@ void add_Student_to_Course_By_File(Student *&pHead, passInfo* &headPass)
 	file.close();
 }
 
-void add_Student_to_Course_By_Console(Student *&pHead, passInfo* &headPass)
+void add_Student_to_Course_By_Console(Student *&pHead, passInfo *&headPass)
 {
+	cout << "Enter new student ID: ";
+	string get_student_ID;
+	cin >> get_student_ID;
+	Student *pTraverse = nullptr;
+	if (pHead != nullptr)
+		pTraverse = pHead;
+	while (pTraverse != nullptr)
+	{
+		cout << "The student ID has been created before!. Try again" << endl;
+		cout << "Enter new student ID: ";
+		cin >> get_student_ID;
+		pTraverse = pHead;
+		while (pTraverse != nullptr && pTraverse->student_ID != get_student_ID)
+		{
+			pTraverse = pTraverse->pNext;
+		}
+	}
 	Student *pCur = nullptr;
 	if (pHead != nullptr)
 	{
@@ -914,10 +932,7 @@ void add_Student_to_Course_By_Console(Student *&pHead, passInfo* &headPass)
 		pCur = pHead;
 		pHead->pNext = nullptr;
 	}
-
-	cout << "Enter new student ID: ";
-	cin.ignore();
-	cin >> pCur->student_ID;
+	pCur->student_ID = get_student_ID;
 
 	cout << "Enter new student first name: ";
 	cin.ignore();
@@ -938,9 +953,33 @@ void add_Student_to_Course_By_Console(Student *&pHead, passInfo* &headPass)
 	cout << "Enter new student social ID: ";
 	cin.ignore();
 	cin >> pCur->social_ID;
+
+
+	//Check if the account is exist or not:
+
+	if (is_Exist_account(headPass, pCur->student_ID) == false)
+	{
+		passInfo* addPass = nullptr;
+		if (headPass == nullptr)
+		{
+			headPass = new passInfo;
+			addPass = headPass;
+		}
+		else
+		{
+			addPass->next = new passInfo;
+			addPass = addPass->next;
+		}
+
+		addPass->login = pCur->student_ID;
+		addPass->password = default_password;
+		addPass->type = 's';
+		addPass->next = nullptr;
+	}
+
 }
 
-void remove_Student_from_Course(Student *&pHead, passInfo*& headPass)
+void remove_Student_from_Course(Student *&pHead, passInfo *&headPass)
 {
 	Student *pCur = pHead;
 	;
