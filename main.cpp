@@ -22,13 +22,10 @@ int main()
 		cout << "Type: Teacher " << endl;
 		cout << "ID: " << ID << endl;
 		menuStaff(pHead_schoolYear, pHead_class, headPass);
-		print_output(pHead_schoolYear, pHead_class);
-
-		break;
 	}
 	case 's':
 	{
-		cout << "Type: Student ";
+		cout << "Type: Student " << endl;
 		cout << "ID: " << ID << endl;
 		menuStudent(pHead_schoolYear, ID, headPass);
 		break;
