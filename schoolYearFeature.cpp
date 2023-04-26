@@ -14,7 +14,7 @@ bool checkSchoolYearSemIsFull(SchoolYear *currentSchoolYear)
         return true;
     else
         return false;
-}
+}//
 
 void changeCurrentSchoolYear(SchoolYear *&currentSchoolYear, SchoolYear *pHead)
 {

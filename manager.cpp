@@ -162,6 +162,7 @@ void editStudent(passInfo* &headPass)
         }
         cur = cur->next;
     }
+	//
 }
 
 void removeStaff(passInfo*& headPass)

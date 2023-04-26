@@ -185,7 +185,7 @@ void import_score_of_course(Course *pCur_course)
 	cout << "Import score for each students" << endl;
 	Student *pStudent = pCur_course->student; // from now just use branch Student of this Course
 	while (pStudent != nullptr)
-	{
+	{//
 		SET_COLOR(13);
 		cout << "Student Information: ";
 		SET_COLOR(4);

@@ -278,7 +278,7 @@ void load_input(SchoolYear *&pHead_schoolYear, Class *&pHead_class)
 	//
 	// The big folder will contain the file .txt which named schoolYearList.txt, which in each line of the file contains the name of the schoolyear (This schoolyear has been created before)
 	// For each year which has been included in the file schoolYearList.txt, it means that the folder of that year has been created before.
-	//
+	// ////
 	// In each folder of each year, it will contain the file .txt which named semesterList.txt, which included the list of semester that has been created before and folder of its semester
 	// In each folder of each semester, it will contain the file .txt which named courseList.txt, which included the data of all the courses which have been created before.
 	// The data of each course includes course id, course name, class name

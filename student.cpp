@@ -165,7 +165,7 @@ void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID)
 }
 
 void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& headPass)
-{
+{//
 	int i;
 	while (true)
 	{

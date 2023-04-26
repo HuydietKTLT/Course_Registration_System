@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iomanip>
 #include <cmath>
+#include <cstring>
 #include <cstdio>
 #include <direct.h>
 #include <conio.h>

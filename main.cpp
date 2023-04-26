@@ -21,6 +21,8 @@ int main()
 		break;
 	case 't':
 	{
+		// cout << "Hello World" << endl;
+
 		cout << "Type: Teacher " << endl;
 		cout << "ID: " << ID << endl;
 		menuStaff(pHead_schoolYear, pHead_class, headPass);
@@ -41,7 +43,7 @@ int main()
 		/*
 		1. Cho thêm bới thành viên staff và manager
 			Nhập từ console hoặc từ file
-	    		File staff.txt : ID,type
+				File staff.txt : ID,type
 			Xoa theo ID
 		2. Edit password
 			Cho phép edit password của bất cứ ai

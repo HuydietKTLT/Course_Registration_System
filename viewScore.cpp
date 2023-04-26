@@ -39,6 +39,6 @@ void updateScoreForStudent (Course  *course)
     }
     cout << "Now enter the updated result of the student ID " << temp << " : " << endl;
     cout << "Midterm mark:"; cin >> s->score.mid_mark;
-    cout << "Final mark:"; cin >> s->score.final_mark;
+    cout << "Final mark:"; cin >> s->score.final_mark;//
     cout << "Other mark:"; cin >> s->score.other_mark;
 }

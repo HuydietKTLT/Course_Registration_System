@@ -604,6 +604,7 @@ void update_percentage(Course *&pCur)
 	cin.ignore();
 	while (pCur->other < 0)
 	{
+		// cout << "Hello World" << endl;
 		cout << "The percentage of point form the midterm exam and final exam:  ";
 		cin >> pCur->midterm >> pCur->final;
 		pCur->other = 100 - pCur->midterm - pCur->final;

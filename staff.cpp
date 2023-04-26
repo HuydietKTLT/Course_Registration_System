@@ -160,7 +160,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 				cout << "Press any key to continue..." << endl;
 				string s;
 				cin >> s;
-			}
+			}//
 			break;
 		}
 		case 12:

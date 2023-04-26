@@ -209,7 +209,7 @@ void add_Student_to_Course_By_File(Course *pCur, Student *&pHead, passInfo *&hea
 		}
 		else
 		{
-			cout << "Hello World " << endl;
+			// cout << "Hello World " << endl;
 			pPrevOverWrite->pNext = new Student;
 			pPrevOverWrite = pPrevOverWrite->pNext;
 

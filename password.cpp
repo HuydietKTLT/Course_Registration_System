@@ -49,7 +49,7 @@ void edit(passInfo *&readfile)
     if (ID == "0")
         return;
     while (true)
-    {
+    {//
         cout << "Do you want to change your password:\n";
         cout << "1. Yes.\n";
         cout << "0. No.\n";
