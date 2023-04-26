@@ -196,8 +196,6 @@ void add_Student_to_Course_By_File(Course *pCur, Student *&pHead, passInfo *&hea
 			pCurPass->type = 's';
 			pCurPass->next = nullptr;
 		}
-		cout << "YES" << endl;
-
 		Student *pOverWrite = pHead;
 		Student *pPrevOverWrite = nullptr;
 		while (pOverWrite != nullptr && pOverWrite->student_ID != student_ID)
