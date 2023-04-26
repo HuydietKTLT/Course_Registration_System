@@ -9,7 +9,7 @@ int main()
 	char type;
 	string ID;
 	passInfo *headPass = nullptr;
-	ReadPassword(headPass);
+	ReadPassword(headPass, pHead_schoolYear, pHead_class);
 	string log_in_studentID;
 	login(type, ID, headPass);
 	log_in_studentID = ID;

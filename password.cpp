@@ -84,7 +84,7 @@ void edit(passInfo *&readfile)
 }
 
 // Read password file to linked list
-void ReadPassword(passInfo *&readfile)
+void ReadPassword(passInfo *&pHead_readfile, SchoolYear *pHead_schoolYear, Class *pHead_class)
 {
 
     // Long's code
@@ -99,10 +99,10 @@ void ReadPassword(passInfo *&readfile)
     passInfo *pCur = nullptr;
     while (!fi.eof())
     {
-        if (readfile == nullptr)
+        if (pHead_readfile == nullptr)
         {
-            readfile = new passInfo;
-            pCur = readfile;
+            pHead_readfile = new passInfo;
+            pCur = pHead_readfile;
         }
         else
         {
@@ -124,52 +124,70 @@ void ReadPassword(passInfo *&readfile)
     // This can't change password of student
 
     // Thai's code
-    /*passInfo *temp = readfile;
-    while (temp->next != nullptr)
-        temp = temp->next;
+    passInfo *pAdd_account = pHead_readfile;
+    while (pAdd_account->next != nullptr)
+        pAdd_account = pAdd_account->next;
 
     while (pHead_schoolYear != nullptr)
     {
-        Semester* pHead2 = pHead_schoolYear->semester;
-        while (pHead2 != nullptr)
+        Semester *pHead_semester = pHead_schoolYear->semester;
+        while (pHead_semester != nullptr)
         {
-            Course* pHead3 = pHead2->course;
-            while (pHead3 != nullptr)
+            Course *pHead_course = pHead_semester->course;
+            while (pHead_course != nullptr)
             {
-                Student* pHead4 = pHead3->student;
-                while (pHead4 != nullptr)
+                Student *pHead_student = pHead_course->student;
+                while (pHead_student != nullptr)
                 {
-                    temp->next = new passInfo;
-                    temp = temp->next;
-                    temp->login = pHead_schoolYear->semester->course->student->student_ID;
-                    temp->password = "1234";
-                    temp->type = 's';
-                    temp->next = nullptr;
+                    if (is_Exist_account(pHead_readfile, pHead_student->student_ID) == false)
+                    {
+                        pAdd_account->next = new passInfo;
+                        pAdd_account = pAdd_account->next;
+                        pAdd_account->login = pHead_student->student_ID;
+                        pAdd_account->password = default_password;
+                        pAdd_account->type = 's';
+                        pAdd_account->next = nullptr;
+                    }
 
-                    pHead4 = pHead4->pNext;
+                    pHead_student = pHead_student->pNext;
                 }
-                pHead3 = pHead3->pNext;
+                pHead_course = pHead_course->pNext;
             }
-            pHead2 = pHead2->pNext;
+            pHead_semester = pHead_semester->pNext;
         }
         pHead_schoolYear = pHead_schoolYear->pNext;
     }
 
     while (pHead_class != nullptr)
     {
-        Student* pHead5 = pHead_class->student;
-        while (pHead5 != nullptr)
+        studentClass *pHead_studentClass = pHead_class->student;
+        while (pHead_studentClass != nullptr)
         {
-            temp->next = new passInfo;
-            temp = temp->next;
-            temp->login = pHead_class->student->student_ID;
-            temp->password = "1234";
-            temp->type = 's';
-            temp->next = nullptr;
-            pHead5 = pHead5->pNext;
+            if (is_Exist_account(pHead_readfile, pHead_studentClass->student_ID) == false)
+            {
+
+                pAdd_account->next = new passInfo;
+                pAdd_account = pAdd_account->next;
+                pAdd_account->login = pHead_studentClass->student_ID;
+                pAdd_account->password = default_password;
+                pAdd_account->type = 's';
+                pAdd_account->next = nullptr;
+            }
+            pHead_studentClass = pHead_studentClass->pNext;
         }
         pHead_class = pHead_class->pNext;
-    }*/
+    }
+}
+
+bool is_Exist_account(passInfo *pHead_pass, string student_ID)
+{
+    while (pHead_pass != nullptr)
+    {
+        if (pHead_pass->login == student_ID)
+            return true;
+        pHead_pass = pHead_pass->next;
+    }
+    return false;
 }
 
 // Clear the linked list

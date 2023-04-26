@@ -254,7 +254,9 @@ string pass();
 
 void clear(passInfo*& readfile);
 
-void ReadPassword(passInfo*& readfile);
+void ReadPassword(passInfo *&readfile, SchoolYear* pHead_schoolYear, Class* pHead_class);
+
+bool is_Exist_account(passInfo *pHead_pass, string student_ID);
 
 void dialocatePass(passInfo* readfile);
 
