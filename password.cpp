@@ -226,6 +226,7 @@ string pass()
     int i = 0;
     while ((password[i] = _getch()) != '\n' && password[i] != '\r' && i < (max_value - 1))
     {
+	SET_COLOR(i);    
         if (password[i] != '\b')
         {
             putchar('*');
