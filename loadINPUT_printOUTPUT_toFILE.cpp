@@ -6,7 +6,7 @@ bool isFileEmpty(string filename)
 	return file.peek() == ifstream::traits_type::eof();
 }
 
-void load_student_InCourse(Student *&pHead, string schoolYear_name, string semester_name, string course_id)
+void load_student_InCourse(Course* pCur_course, Student *&pHead, string schoolYear_name, string semester_name, string course_id)
 {
 	ifstream file;
 	file.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt");
@@ -35,18 +35,23 @@ void load_student_InCourse(Student *&pHead, string schoolYear_name, string semes
 		getline(file, pCur->date_of_birth, ',');
 		getline(file, pCur->social_ID, ',');
 
-		string temp;
+		string temp; 
 		getline(file, temp, ',');
-		pCur->score.total_mark = stof(temp);
+		pCur->score.total_mark = float_one_point_round(stof(temp));
 
 		getline(file, temp, ',');
-		pCur->score.final_mark = stof(temp);
+		pCur->score.final_mark = float_one_point_round(stof(temp));
 
 		getline(file, temp, ',');
-		pCur->score.mid_mark = stof(temp);
+		pCur->score.mid_mark = float_one_point_round(stof(temp));
 
 		getline(file, temp);
-		pCur->score.other_mark = stof(temp);
+		pCur->score.other_mark = float_one_point_round(stof(temp));
+
+		pCur->score.total_mark = pCur->score.final_mark * pCur_course->final / 100
+		                        +pCur->score.mid_mark   * pCur_course->midterm / 100
+								+pCur->score.other_mark * pCur_course->other / 100;
+		pCur->score.total_mark = float_one_point_round(pCur->score.total_mark);
 
 		pCur->pNext = nullptr;
 	}
@@ -295,7 +300,7 @@ void load_input(SchoolYear *&pHead_schoolYear, Class *&pHead_class)
 			while (pCur_Course != nullptr)
 			{
 				Student *pCur_Student = nullptr;
-				load_student_InCourse(pCur_Student, pCur_schoolYear->year_name, pCur_Semester->semester_name, pCur_Course->id);
+				load_student_InCourse(pCur_Course, pCur_Student, pCur_schoolYear->year_name, pCur_Semester->semester_name, pCur_Course->id);
 				pCur_Course->student = pCur_Student;
 				pCur_Course = pCur_Course->pNext;
 			}

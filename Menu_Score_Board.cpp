@@ -4,17 +4,18 @@ void view_scoreboard_toCourse(SchoolYear *list_year)
 {
 	SchoolYear *pCur = list_year;
 	Semester *View_Semester = nullptr;
-	View_Semester=pCur->semester;
+	View_Semester = pCur->semester;
 	SET_COLOR(13);
-	cout<<"Lits Semester in "<<pCur->year_name<<" :"<<endl;
-	while (View_Semester!=nullptr){
-			SET_COLOR(13);	
-			cout<<"+) ";
-			SET_COLOR(4);
-			cout<<View_Semester->semester_name<<"\n";
-			View_Semester=View_Semester->pNext;
-		}
-	SET_COLOR(13);	
+	cout << "List of Semesters in " << pCur->year_name << " :" << endl;
+	while (View_Semester != nullptr)
+	{
+		SET_COLOR(13);
+		cout << "+) ";
+		SET_COLOR(4);
+		cout << View_Semester->semester_name << "\n";
+		View_Semester = View_Semester->pNext;
+	}
+	SET_COLOR(13);
 	Semester *Cur_Semester = nullptr;
 	string Semester;
 	cout << "Enter Semester: ";
@@ -27,7 +28,10 @@ void view_scoreboard_toCourse(SchoolYear *list_year)
 		if (Cur_Semester == nullptr)
 		{
 			clrscr();
-			cout << Semester << " is not over yet\n";
+			cout << "Semester: " << Semester << " is not over yet\n";
+			string temp;
+			cout << "Press any key to continue...";
+			cin >> temp;
 			return;
 		}
 	}
@@ -35,32 +39,36 @@ void view_scoreboard_toCourse(SchoolYear *list_year)
 	{
 		clrscr();
 		cout << "Semester: " << Semester << " is not over yet\n";
+		string temp;
+		cout << "Press any key to continue...";
+		cin >> temp;
 		return;
 	}
 	clrscr();
 	Course *Cur_course = nullptr;
 	Course *View_course = nullptr;
-	View_course=Cur_Semester->course;
+	View_course = Cur_Semester->course;
 	SET_COLOR(13);
-	cout<<"Lits course in "<<Cur_Semester->semester_name<<" :"<<endl;
-	while (View_course!=nullptr){
-			SET_COLOR(13);
-			cout<<"+) ";
-			SET_COLOR(4);
-			cout<<View_course->course_name;
-			SET_COLOR(13);
-			cout<<" ID: ";
-			SET_COLOR(4);
-			cout<<View_course->id<<" \n";
-			View_course=View_course->pNext;
-		}
+	cout << "List of courses in " << Cur_Semester->semester_name << " :" << endl;
+	while (View_course != nullptr)
+	{
+		SET_COLOR(13);
+		cout << "+) ";
+		SET_COLOR(4);
+		cout << View_course->course_name;
+		SET_COLOR(13);
+		cout << " ID: ";
+		SET_COLOR(4);
+		cout << View_course->id << " \n";
+		View_course = View_course->pNext;
+	}
 	string Course;
 	SET_COLOR(13);
 	cout << "Enter ID Course: ";
 	SET_COLOR(4);
 	cin >> Course;
 	Cur_course = Cur_Semester->course;
-	while (Cur_course->id.compare(Course)!= 0 )
+	while (Cur_course->id.compare(Course) != 0)
 	{
 		if (Cur_course->pNext == nullptr)
 		{
@@ -143,74 +151,126 @@ void view_scoreboard_toCourse(SchoolYear *list_year)
 			<< studentF->score.other_mark << endl;
 		studentF = studentF->pNext;
 	}
+	cout << "Press any key to continue...";
+	string s;
+	cin >> s;
 }
 
-void import_score_of_course(Course *z)
+void import_score_of_course(Course *pCur_course)
 {
 	SET_COLOR(0);
-	cout << "Course information: " << endl;
-	cout << z->id << "  " << z->course_name << endl;
-	cout << z->class_name << endl;
-	cout << "Now we import score for each students : " << endl
-		 << endl;
-	Student *s = z->student; // from now just use branch Student of this Course
-	while (s != nullptr)
+	cout << "COURSE INFORMATION" << endl;
+	cout << "Course ID: ";
+	cout << pCur_course->id << endl;
+	cout << "Course name: ";
+	cout << pCur_course->course_name << endl;
+	cout << "Class name: ";
+	cout << pCur_course->class_name << endl;
+	cout << "Number of credits: ";
+	cout << pCur_course->number_credits << endl;
+	cout << "Number of students: ";
+	cout << pCur_course->number_students << endl;
+	cout << "Teacher name: ";
+	cout << pCur_course->teacher_name << endl;
+	cout << "Day of week: ";
+	cout << pCur_course->day_of_week << endl;
+	cout << "Sesssion: ";
+	cout << pCur_course->sessions << endl;
+	cout << "Percentage of Final mark: ";
+	cout << pCur_course->final << endl;
+	cout << "Percentage of Midterm mark: ";
+	cout << pCur_course->midterm << endl;
+	cout << "Percentage of Other mark: ";
+	cout << pCur_course->other << endl;
+	cout << "Import score for each students" << endl;
+	Student *pStudent = pCur_course->student; // from now just use branch Student of this Course
+	while (pStudent != nullptr)
 	{
 		SET_COLOR(13);
-		cout << "Student id: " ; 
+		cout << "Student Information: ";
 		SET_COLOR(4);
-		cout << s->student_ID << " " << s->first_name << " " << s->last_name << " " << s->gender << " " << s->date_of_birth << " " << s->social_ID << endl;
+		cout << pStudent->student_ID << " " << pStudent->first_name << " " << pStudent->last_name << " " << pStudent->gender << " " << pStudent->date_of_birth << " " << pStudent->social_ID << endl;
 		SET_COLOR(13);
-		cout << "Midterm mark:";
+		cout << "Midterm mark: ";
 		SET_COLOR(4);
-		cin >> s->score.mid_mark;
+		cin >> pStudent->score.mid_mark;
+		while (pStudent->score.mid_mark < 0 || pStudent->score.mid_mark > 10)
+		{
+			cout << "Invalid mark! Try again" << endl;
+			SET_COLOR(13);
+			cout << "Midterm mark: ";
+			SET_COLOR(4);
+			cin >> pStudent->score.mid_mark;
+		}
 		SET_COLOR(13);
-		cout << "Final mark:";
+		cout << "Final mark: ";
 		SET_COLOR(4);
-		cin >> s->score.final_mark;
+		cin >> pStudent->score.final_mark;
+		while (pStudent->score.final_mark < 0 || pStudent->score.final_mark > 10)
+		{
+			cout << "Invalid mark! Try again" << endl;
+			SET_COLOR(13);
+			cout << "Final mark: ";
+			SET_COLOR(4);
+			cin >> pStudent->score.final_mark;
+		}
 		SET_COLOR(13);
-		cout << "Other mark:";
+		cout << "Other mark: ";
 		SET_COLOR(4);
-		cin >> s->score.other_mark;
+		cin >> pStudent->score.other_mark;
+		while (pStudent->score.other_mark < 0 || pStudent->score.other_mark > 10)
+		{
+			cout << "Invalid mark! Try again" << endl;
+			SET_COLOR(13);
+			cout << "Other mark: ";
+			SET_COLOR(4);
+			cin >> pStudent->score.other_mark;
+		}
 		SET_COLOR(13);
 		// just assume the logic math calculate, staff can fix it
-		float f = z->final / 100;
-		float m = z->midterm / 100;
-		float o = z->other / 100;
-		s->score.total_mark = float_one_point_round(s->score.final_mark * f + s->score.mid_mark * m + s->score.other_mark * o);
-		cout << "Total mark is: " ;
+		float f = pStudent->score.final_mark * pCur_course->final / 100;
+		float m = pStudent->score.mid_mark * pCur_course->midterm / 100;
+		float o = pStudent->score.other_mark * pCur_course->other / 100;
+		pStudent->score.total_mark = float_one_point_round(f + m + o);
+		SET_COLOR(13);
+		cout << "Total mark is: ";
 		SET_COLOR(4);
-		cout << s->score.total_mark<<endl;
-		s = s->pNext;
+		cout << pStudent->score.total_mark << endl;
+		pStudent = pStudent->pNext;
 	}
+	cout << "Press any key to continue...";
+	string temp;
+	cin >> temp;
 }
 
 void Menu_Score_Board(SchoolYear *list_year)
 {
 	string option;
-	cout << "Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other: Quit=\n";
-	cin >> option;
-	clrscr();
-	while (option == "0" || option == "1" || option == "2")
+	while (true)
 	{
+		clrscr();
+		SET_COLOR(0);
+		cout << "Enter 1: =Get File ScoreBoard= \t   Enter 2: =Enter by keyboard=\t  Enter 3: = View Score = \t   =Enter 0: Quit=\n";
+		cin >> option;
 		SchoolYear *pCur = list_year;
 		string yes;
-		if (option == "0")
+		if (option == "1")
 		{
 			do
 			{
 				Semester *View_Semester = nullptr;
-				View_Semester=pCur->semester;
+				View_Semester = pCur->semester;
 				SET_COLOR(13);
-				cout<<"Lits Semester in "<<pCur->year_name<<" :"<<endl;
-				while (View_Semester!=nullptr){
-					SET_COLOR(13);	
-					cout<<"+) ";
+				cout << "List of Semester in " << pCur->year_name << ":" << endl;
+				while (View_Semester != nullptr)
+				{
+					SET_COLOR(13);
+					cout << "+) ";
 					SET_COLOR(4);
-					cout<<View_Semester->semester_name<<"\n";
-					View_Semester=View_Semester->pNext;
+					cout << View_Semester->semester_name << "\n";
+					View_Semester = View_Semester->pNext;
 				}
-				SET_COLOR(13);	
+				SET_COLOR(13);
 				Semester *Cur_Semester = nullptr;
 				string Semester;
 				cout << "Enter Semester: ";
@@ -231,25 +291,29 @@ void Menu_Score_Board(SchoolYear *list_year)
 				{
 					clrscr();
 					cout << "Semester: " << Semester << " is not over yet\n";
+					string temp;
+					cout << "Press any key to continue...";
+					cin >> temp;
 					break;
 				}
 				clrscr();
 				Course *Cur_course = nullptr;
 				Course *View_course = nullptr;
-				View_course=Cur_Semester->course;
+				View_course = Cur_Semester->course;
 				SET_COLOR(13);
-				cout<<"Lits course in "<<Cur_Semester->semester_name<<" :"<<endl;
-				while (View_course!=nullptr){
-						SET_COLOR(13);
-						cout<<"+) ";
-						SET_COLOR(4);
-						cout<<View_course->course_name;
-						SET_COLOR(13);
-						cout<<" ID: ";
-						SET_COLOR(4);
-						cout<<View_course->id<<" \n";
-						View_course=View_course->pNext;
-					}
+				cout << "List of courses in " << Cur_Semester->semester_name << ": " << endl;
+				while (View_course != nullptr)
+				{
+					SET_COLOR(13);
+					cout << "+) ";
+					SET_COLOR(4);
+					cout << View_course->course_name;
+					SET_COLOR(13);
+					cout << " ID: ";
+					SET_COLOR(4);
+					cout << View_course->id << " \n";
+					View_course = View_course->pNext;
+				}
 				string Course;
 				SET_COLOR(13);
 				cout << "Enter ID Course: ";
@@ -269,10 +333,13 @@ void Menu_Score_Board(SchoolYear *list_year)
 				{
 					clrscr();
 					cout << "Course: " << Course << " is not over yet\n";
+					string temp;
+					cout << "Press any key to continue...";
+					cin >> temp;
 					break;
 				}
-				fstream F;
-				F.open("import_scoreboard.txt", ios::app);
+				ofstream F;
+				F.open("import_scoreboard.txt", ios::trunc);
 				Student *studentF = nullptr;
 				studentF = Cur_course->student;
 				while (studentF != nullptr)
@@ -285,22 +352,25 @@ void Menu_Score_Board(SchoolYear *list_year)
 				}
 				F.close();
 				SET_COLOR(13);
-				cout << "Created a file containing the information of the course: " ;
+				cout << "Created a file containing the information of the course: ";
 				SET_COLOR(4);
-				cout << Cur_course->id ;
-				SET_COLOR(13); 
+				cout << Cur_course->id;
+				SET_COLOR(13);
 				cout << " , Please enter your score into the file (enter 0 = agree): ";
 				SET_COLOR(4);
 				cin >> yes;
 				if (yes != "0")
 				{
-					remove("import_scoreboard.txt");
+					cout << "Press any key to continue...";
+					string s;
+					cin >> s;
+					// remove("import_scoreboard.txt");
 					continue;
 				}
 				else
 				{
-					fstream outF;
-					outF.open("import_scoreboard.txt", ios::in);
+					ifstream outF;
+					outF.open("import_scoreboard.txt");
 					string tmp;
 					Student *score = Cur_course->student;
 					while (!outF.eof())
@@ -327,111 +397,126 @@ void Menu_Score_Board(SchoolYear *list_year)
 
 						if (score->score.mid_mark <= 10 && score->score.final_mark <= 10 && score->score.other_mark <= 10)
 						{
-							float f = score->score.final_mark / 100;
-							float m = score->score.mid_mark / 100;
-							float o = score->score.other_mark / 100;
-							score->score.total_mark = float_one_point_round(score->score.final_mark * f + score->score.mid_mark * m + score->score.other_mark * o);
-							score = score->pNext;
+							float f = score->score.final_mark * Cur_course->final / 100;
+							float m = score->score.mid_mark * Cur_course->midterm / 100;
+							float o = score->score.other_mark * Cur_course->other / 100;
+							score->score.total_mark = float_one_point_round(f + m + o);
 						}
-						else
-						{
-							cout << "Course score entry failed!\n";
-							yes = "0";
-							remove("import_scoreboard.txt");
-							break;
-						}
+						score = score->pNext;
+						// else
+						// {
+						// 	cout << "Course score entry failed!\n";
+						// 	yes = "0";
+						// 	// remove("import_scoreboard.txt");
+						// 	break;
+						// }
 					}
 					outF.close();
-					 remove("import_scoreboard.txt");
+					//  remove("import_scoreboard.txt");
 				}
-			} while (yes != "0");
+			} while (yes != "1");
 		}
-		else if (option == "1")
-		{
-			bool flag=false;
-			while(!flag){
-			Semester *View_Semester = nullptr;
-			View_Semester=pCur->semester;
-			SET_COLOR(13);
-			cout<<"Lits Semester in "<<pCur->year_name<<" :"<<endl;
-			while (View_Semester!=nullptr){
-					SET_COLOR(13);	
-					cout<<"+) ";
-					SET_COLOR(4);
-					cout<<View_Semester->semester_name<<"\n";
-					View_Semester=View_Semester->pNext;
-				}
-			SET_COLOR(13);	
-			Semester *Cur_Semester = nullptr;
-			string Semester;
-			cout << "Enter Semester: ";
-			SET_COLOR(4);
-			cin >> Semester;
-			Cur_Semester = pCur->semester;
-			while (Cur_Semester->semester_name.compare(Semester) != 0)
-			{
-			if (Cur_Semester->pNext == nullptr)
-				{
-					flag = true;
-					break;
-				}
-				Cur_Semester = Cur_Semester->pNext;
-			}
-			if(flag){
-				clrscr();
-				cout << "Semester: " << Semester << " is not over yet\n";
-				break;
-			}
-			cout<<Cur_Semester->course->course_name;
-			Course *Cur_course = nullptr;
-			clrscr();
-			Course *View_course = nullptr;
-			View_course=Cur_Semester->course;
-			SET_COLOR(13);
-			cout<<"Lits course in "<<Cur_Semester->semester_name<<" :"<<endl;
-			while (View_course!=nullptr){
-				SET_COLOR(13);
-				cout<<"+) ";
-				SET_COLOR(4);
-				cout<<View_course->course_name;
-				SET_COLOR(13);
-				cout<<" ID: ";
-				SET_COLOR(4);
-				cout<<View_course->id<<" \n";
-				View_course=View_course->pNext;
-			}
-			SET_COLOR(13);
-			string Course;
-			cout << "Enter ID Course: ";
-			SET_COLOR(4);
-			cin >> Course;
-			Cur_course = Cur_Semester->course;
-			while (Cur_course->id.compare(Course) != 0)
-			{
-				if (Cur_course->pNext  == nullptr)
-				{
-				flag=true;
-				break;
-				}
-				Cur_course = Cur_course->pNext;
-			}	
-			if(flag){
-				clrscr();
-				cout << "Course: " << Course << " is not over yet\n";
-				break;
-			}
-			import_score_of_course(Cur_course);
-			flag=true;
-			}	
-			clrscr();
-			}
 		else if (option == "2")
 		{
-				view_scoreboard_toCourse(list_year);
+			bool flag = false;
+			while (!flag)
+			{
+				Semester *View_Semester = nullptr;
+				View_Semester = pCur->semester;
+				SET_COLOR(13);
+				cout << "List of Semesters in " << pCur->year_name << " :" << endl;
+				while (View_Semester != nullptr)
+				{
+					SET_COLOR(13);
+					cout << "+) ";
+					SET_COLOR(4);
+					cout << View_Semester->semester_name << "\n";
+					View_Semester = View_Semester->pNext;
+				}
+				SET_COLOR(13);
+				Semester *Cur_Semester = nullptr;
+				string Semester;
+				cout << "Enter Semester: ";
+				SET_COLOR(4);
+				cin >> Semester;
+				Cur_Semester = pCur->semester;
+				while (Cur_Semester->semester_name.compare(Semester) != 0)
+				{
+					if (Cur_Semester->pNext == nullptr)
+					{
+						flag = true;
+						break;
+					}
+					Cur_Semester = Cur_Semester->pNext;
+				}
+				if (flag)
+				{
+					clrscr();
+					cout << "Semester: " << Semester << " is not over yet\n";
+					string s;
+					cout << "Press any key to continue...";
+					cin >> s;
+					break;
+				}
+				cout << Cur_Semester->course->course_name;
+				Course *Cur_course = nullptr;
+				clrscr();
+				Course *View_course = nullptr;
+				View_course = Cur_Semester->course;
+				SET_COLOR(13);
+				cout << "List of courses in " << Cur_Semester->semester_name << " :" << endl;
+				while (View_course != nullptr)
+				{
+					SET_COLOR(13);
+					cout << "+) ";
+					SET_COLOR(4);
+					cout << View_course->course_name;
+					SET_COLOR(13);
+					cout << " ID: ";
+					SET_COLOR(4);
+					cout << View_course->id << " \n";
+					View_course = View_course->pNext;
+				}
+				SET_COLOR(13);
+				string Course;
+				cout << "Enter ID Course: ";
+				SET_COLOR(4);
+				cin >> Course;
+				Cur_course = Cur_Semester->course;
+				while (Cur_course->id.compare(Course) != 0)
+				{
+					if (Cur_course->pNext == nullptr)
+					{
+						flag = true;
+						break;
+					}
+					Cur_course = Cur_course->pNext;
+				}
+				if (flag)
+				{
+					clrscr();
+					cout << "Course: " << Course << " is not over yet\n";
+					string s;
+					cout << "Press any key to continue...";
+					cin >> s;
+					break;
+				}
+				import_score_of_course(Cur_course);
+				flag = true;
+			}
+			clrscr();
 		}
-		SET_COLOR(0);
-		cout << "Enter 0: =Get File ScoreBoard= \t Enter 1: =Enter by keyboard=\tEnter 2: = View Score = \t =Enter other: Quit=\n";
-		cin >> option;
-		clrscr();
+		else if (option == "3")
+		{
+			view_scoreboard_toCourse(list_year);
+		}
+		else if (option == "0")
+		{
+			return;
+		}
+		else
+		{
+			continue;
+		}
 	}
 }

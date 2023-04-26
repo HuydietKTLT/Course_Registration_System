@@ -832,7 +832,7 @@ Course *Find_Course(SchoolYear *pHead)
 	return pCur_Course;
 }
 
-void add_Student_to_Course_By_File(Student *&pHead)
+void add_Student_to_Course_By_File(Student *&pHead, passInfo* &headPass)
 {
 	Student *pCur = nullptr;
 	if (pHead != nullptr)
@@ -893,7 +893,7 @@ void add_Student_to_Course_By_File(Student *&pHead)
 	file.close();
 }
 
-void add_Student_to_Course_By_Console(Student *&pHead)
+void add_Student_to_Course_By_Console(Student *&pHead, passInfo* &headPass)
 {
 	Student *pCur = nullptr;
 	if (pHead != nullptr)
@@ -940,7 +940,7 @@ void add_Student_to_Course_By_Console(Student *&pHead)
 	cin >> pCur->social_ID;
 }
 
-void remove_Student_from_Course(Student *&pHead)
+void remove_Student_from_Course(Student *&pHead, passInfo*& headPass)
 {
 	Student *pCur = pHead;
 	;

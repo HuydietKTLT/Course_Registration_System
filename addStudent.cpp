@@ -1,6 +1,6 @@
 #include "lib.h"
 
-Class* Find_Class(Class* pHead)
+Class *Find_Class(Class *pHead)
 {
 	if (pHead == nullptr)
 	{
@@ -41,51 +41,66 @@ void add_Student_To_Class_By_File(studentClass *&pHead, passInfo *&headPass)
 		while (pCur->pNext != nullptr)
 			pCur = pCur->pNext;
 	}
-	// passInfo *pCurPass = nullptr;
-	// if (headPass != nullptr)
-	// {
-	// 	pCurPass = headPass;
-	// 	while (pCurPass->next != nullptr)
-	// 		pCurPass = pCurPass->next;
-	// }
+
+	passInfo *pCurPass = nullptr;
+	if (headPass != nullptr)
+	{
+		pCurPass = headPass;
+		while (pCurPass->next != nullptr)
+			pCurPass = pCurPass->next;
+	}
 
 	while (!file.eof())
 	{
-		if (pHead == nullptr)
-		{
-			pHead = new studentClass;
-			pCur = pHead;
-		}
-		else if (pHead != nullptr)
-		{
-			pCur->pNext = new studentClass;
-			pCur = pCur->pNext;
-		}
-
-		// if (headPass == nullptr)
-		// {
-		// 	headPass = new passInfo;
-		// 	pCurPass = headPass;
-		// }
-		// else if (headPass != nullptr)
-		// {
-		// 	pCurPass->next = new passInfo;
-		// 	pCurPass = pCurPass->next;
-		// }
-
-		getline(file, pCur->student_ID, ',');
-		getline(file, pCur->first_name, ',');
-		getline(file, pCur->last_name, ',');
-		getline(file, pCur->gender, ',');
-		getline(file, pCur->date_of_birth, ',');
-		getline(file, pCur->social_ID);
-
+		string temp;
+		getline(file, temp, ',');
 		// Create a new account for the student
-		// pCurPass->login = pCur->student_ID;
-		// pCurPass->password = default_password;
-		// pCurPass->type = 's';
-		// pCurPass->next = nullptr;
-		pCur->pNext = nullptr;
+		if (is_Exist_account(headPass, temp) == false)
+		{
+			if (pHead == nullptr)
+			{
+				pHead = new studentClass;
+				pCur = pHead;
+			}
+			else if (pHead != nullptr)
+			{
+				pCur->pNext = new studentClass;
+				pCur = pCur->pNext;
+			}
+
+			if (headPass == nullptr)
+			{
+				headPass = new passInfo;
+				pCurPass = headPass;
+			}
+			else if (headPass != nullptr)
+			{
+				pCurPass->next = new passInfo;
+				pCurPass = pCurPass->next;
+			}
+
+			pCur->student_ID = temp;
+			getline(file, pCur->first_name, ',');
+			getline(file, pCur->last_name, ',');
+			getline(file, pCur->gender, ',');
+			getline(file, pCur->date_of_birth, ',');
+			getline(file, pCur->social_ID);
+
+			pCurPass->login = pCur->student_ID;
+			pCurPass->password = default_password;
+			pCurPass->type = 's';
+
+			pCur->pNext = nullptr;
+			pCurPass->next = nullptr;
+		}
+		else
+		{
+			getline(file, temp, ',');
+			getline(file, temp, ',');
+			getline(file, temp, ',');
+			getline(file, temp, ',');
+			getline(file, temp);
+		}
 	}
 	file.close();
 }

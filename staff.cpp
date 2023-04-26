@@ -81,8 +81,10 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		}
 		case 5:
 		{
-			if (current_schoolyear != nullptr) {
-				if (checkSchoolYearSemIsFull(current_schoolyear)) {
+			if (current_schoolyear != nullptr)
+			{
+				if (checkSchoolYearSemIsFull(current_schoolyear))
+				{
 					cout << "This school year is full of semester ! (3 semesters) \n";
 					break;
 				}
@@ -117,7 +119,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			Course *course_addStudent_console = Find_Course(pHead_schoolYear);
 			if (course_addStudent_console != nullptr)
 			{
-				add_Student_to_Course_By_Console(course_addStudent_console->student);
+				add_Student_to_Course_By_Console(course_addStudent_console->student, headPass);
 				cout << "Updated successfully!" << endl;
 				cout << "Press any key to continue..." << endl;
 				string s;
@@ -176,6 +178,13 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		}
 		case 13:
 		{
+			cout << "List of School Years: " << endl;
+			SchoolYear *pTraverse_schoolyear = pHead_schoolYear;
+			while (pTraverse_schoolyear != nullptr)
+			{
+				cout << pTraverse_schoolyear->year_name << endl;
+				pTraverse_schoolyear = pTraverse_schoolyear->pNext;
+			}
 			string get_schoolyear;
 			cout << "Enter School Year: ";
 			cin >> get_schoolyear;
@@ -186,26 +195,45 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			}
 			if (pHead == nullptr)
 			{
-				cout << "There is no schoolyear matching with your typing!!!" << endl;
+				cout << "There is no school year matching with your typing!!!" << endl;
+				string temp;
+				cout << "Press any key to continue...";
+				cin >> temp;
 				break;
 			}
-
-			Semester *pCur_Semester = pHead->semester;
 			// These code is used for traversing the linked list of Semester, to found the specific Semester.
 			string get_semester;
+			cout << "List of Semesters: " << endl;
+			Semester *pTraverse_semester = pHead->semester;
+			while (pTraverse_semester != nullptr)
+			{
+				cout << pTraverse_semester->semester_name << endl;
+				pTraverse_semester = pTraverse_semester->pNext;
+			}
 			cout << "Enter Semester: ";
 			cin >> get_semester;
-
+			Semester *pCur_Semester = pHead->semester;
 			while (pCur_Semester != nullptr && pCur_Semester->semester_name != get_semester)
 				pCur_Semester = pCur_Semester->pNext;
 
-			if (pCur_Semester == nullptr)
-			{
+			if (pCur_Semester == nullptr)		
+			{				
 				cout << "There is no semester matching with your typing !!!" << endl;
+				string temp;
+				cout << "Press any key to continue...";
+				cin >> temp;
 				break;
 			}
 
 			Course *pCur_Course = pCur_Semester->course;
+			Course *pTraverse_course = pCur_Semester->course;
+			cout << "List of courses: " << endl;
+			cout << setw(13) << left << "Course ID " << setw(13) << left << "Course name " << endl;
+			while (pTraverse_course != nullptr)
+			{
+				cout << left << setw(13) << pTraverse_course->id << left << setw(13) << pTraverse_course->course_name << endl;
+				pTraverse_course = pTraverse_course->pNext;
+			}
 			cout << "Enter Course ID: ";
 			string get_course_ID;
 			cin >> get_course_ID;
@@ -216,7 +244,10 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			if (pCur_Course == nullptr)
 			{
 				cout << "There is no course ID matching with your typing !!!" << endl;
-				return;
+				string temp;
+				cout << "Press any key to continue...";
+				cin >> temp;
+				break;
 			}
 
 			deleteCourse(pCur_Semester->course, pCur_Course, pHead->year_name, pCur_Semester->semester_name);
