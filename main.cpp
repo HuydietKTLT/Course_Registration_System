@@ -24,6 +24,7 @@ int main()
 		cout << "Type: Teacher " << endl;
 		cout << "ID: " << ID << endl;
 		menuStaff(pHead_schoolYear, pHead_class, headPass);
+		break;
 	}
 	case 's':
 	{
