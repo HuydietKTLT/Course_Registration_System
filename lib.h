@@ -274,6 +274,10 @@ float float_one_point_round(float value);
 
 void clrscr();
 
+void BackGroundColor (int color);
+
+void SET_COLOR(int color);
+
 float stf(string str);
 
 void stop();
