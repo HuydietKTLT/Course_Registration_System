@@ -11,6 +11,8 @@ int main()
 	passInfo *headPass = nullptr;
 	ReadPassword(headPass, pHead_schoolYear, pHead_class);
 	string log_in_studentID;
+	BackGroundColor(7);
+	SET_COLOR(0);
 	login(type, ID, headPass);
 	log_in_studentID = ID;
 	switch (type)
