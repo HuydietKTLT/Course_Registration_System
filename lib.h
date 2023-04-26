@@ -14,7 +14,7 @@
 #include <direct.h>
 #include <conio.h>
 #include <stdlib.h>
-
+#include <Windows.h>
 
 typedef long long ll;
 typedef long int li;
