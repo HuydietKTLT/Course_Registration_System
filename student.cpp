@@ -169,7 +169,8 @@ void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& hea
 	int i;
 	while (true)
 	{
-		cout << "-------------------------------------------\n";
+		clrscr();
+		cout << "-----------------------------------------------------------------------------\n";
 		cout << "1. View the courses in semester.\n2. View scoreboard.\n3. Change password.";
 		cout << "\n0. Log out";
 		cout << " \nEnter options:";
@@ -184,16 +185,25 @@ void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& hea
 		case 1:
 		{
 			view_list_all_courses(pHead_schoolYear, student_ID);
+			string s;
+			cout << "Press any key to continue...";
+			cin >> s;
 			break;
 		}
 		case 2:
 		{
 			view_list_all_scoreboard(pHead_schoolYear, student_ID);
+			string s;
+			cout << "Press any key to continue...";
+			cin >> s;
 			break;
 		}
 		case 3:
 		{
 			edit(headPass);
+			string s;
+			cout << "Press any key to continue...";
+			cin >> s;
 			break;
 		}
 		default:
