@@ -44,7 +44,16 @@ void add_Student_To_Class_By_File(studentClass *&pHead, passInfo *&headPass)
 	string gender;
 	string date_of_birth;
 	string social_ID;
+
 	passInfo *pCurPass = nullptr;
+	if (headPass != nullptr)
+	{
+		pCurPass = headPass;
+		while (pCurPass != nullptr && pCurPass->next != nullptr)
+		{
+			pCurPass = pCurPass->next;
+		}
+	}
 
 	while (!file.eof())
 	{
@@ -122,7 +131,7 @@ bool is_Exist_studentCourse(Student *pHead_student, string student_ID)
 	return false;
 }
 
-void add_Student_to_Course_By_File(Course* pCur ,Student *&pHead, passInfo* &headPass)
+void add_Student_to_Course_By_File(Course *pCur, Student *&pHead, passInfo *&headPass)
 {
 	ifstream file;
 	// The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be addedd
@@ -149,6 +158,12 @@ void add_Student_to_Course_By_File(Course* pCur ,Student *&pHead, passInfo* &hea
 	string mid_mark;
 	string other_mark;
 	passInfo *pCurPass = nullptr;
+	if (headPass != nullptr)
+	{
+		pCurPass = headPass;
+		while (pCurPass != nullptr && pCurPass->next != nullptr)
+			pCurPass = pCurPass->next;
+	}
 
 	while (!file.eof())
 	{
@@ -181,6 +196,7 @@ void add_Student_to_Course_By_File(Course* pCur ,Student *&pHead, passInfo* &hea
 			pCurPass->type = 's';
 			pCurPass->next = nullptr;
 		}
+		cout << "YES" << endl;
 
 		Student *pOverWrite = pHead;
 		Student *pPrevOverWrite = nullptr;
@@ -204,22 +220,20 @@ void add_Student_to_Course_By_File(Course* pCur ,Student *&pHead, passInfo* &hea
 			pPrevOverWrite->gender = gender;
 			pPrevOverWrite->date_of_birth = date_of_birth;
 			pPrevOverWrite->social_ID = social_ID;
-			pPrevOverWrite->score.total_mark = float_one_point_round( stof(total_mark));
-			pPrevOverWrite->score.final_mark = float_one_point_round( stof(final_mark));
-			pPrevOverWrite->score.mid_mark = float_one_point_round( stof(mid_mark));
-			pPrevOverWrite->score.other_mark = float_one_point_round( stof(other_mark));
+			pPrevOverWrite->score.total_mark = float_one_point_round(stof(total_mark));
+			pPrevOverWrite->score.final_mark = float_one_point_round(stof(final_mark));
+			pPrevOverWrite->score.mid_mark = float_one_point_round(stof(mid_mark));
+			pPrevOverWrite->score.other_mark = float_one_point_round(stof(other_mark));
 
-			pPrevOverWrite->score.total_mark = pPrevOverWrite->score.final_mark * pCur->final / 100
-			                                  +pPrevOverWrite->score.mid_mark   * pCur->midterm / 100
-										      +pPrevOverWrite->score.other_mark * pCur->other / 100;
-
+			pPrevOverWrite->score.total_mark = pPrevOverWrite->score.final_mark * pCur->final / 100 + pPrevOverWrite->score.mid_mark * pCur->midterm / 100 + pPrevOverWrite->score.other_mark * pCur->other / 100;
+			pPrevOverWrite->score.total_mark = float_one_point_round(pPrevOverWrite->score.total_mark);
 			pPrevOverWrite->pNext = nullptr;
 		}
 	}
 	file.close();
 }
 
-void add_Student_to_Course_By_Console(Course* pCur, Student*& pHead, passInfo*& headPass)
+void add_Student_to_Course_By_Console(Course *pCur, Student *&pHead, passInfo *&headPass)
 {
 	cout << "Enter new student ID: ";
 	string student_ID;
@@ -274,10 +288,16 @@ void add_Student_to_Course_By_Console(Course* pCur, Student*& pHead, passInfo*& 
 	cout << "Enter new student social ID: ";
 	cin >> pAdd->social_ID;
 
+	passInfo *addPass = nullptr;
+	if (headPass != nullptr)
+	{
+		addPass = headPass;
+		while (addPass != nullptr && addPass->next != nullptr)
+			addPass = addPass->next;
+	}
 	// Check if the account is exist or not:
 	if (is_Exist_account(headPass, pAdd->student_ID) == false)
 	{
-		passInfo *addPass = nullptr;
 		if (headPass == nullptr)
 		{
 			headPass = new passInfo;
@@ -295,7 +315,7 @@ void add_Student_to_Course_By_Console(Course* pCur, Student*& pHead, passInfo*& 
 	}
 }
 
-void remove_Student_from_Course(Student *&pHead, passInfo *&headPass)
+void remove_Student_from_Course(Student *&pHead)
 {
 	Student *pCur = pHead;
 	Student *pPrevCur = pHead;
@@ -312,13 +332,13 @@ void remove_Student_from_Course(Student *&pHead, passInfo *&headPass)
 	{
 		pPrevCur->pNext = pCur->pNext;
 		delete pCur;
+		pCur = nullptr;
+		pPrevCur = nullptr;
 		cout << "Delete Student from Course successfully!!!" << endl;
 		cout << "Press any key to continue...\n";
 		string s;
 		cin >> s;
 		clrscr();
-		pCur = nullptr;
-		pPrevCur = nullptr;
 		return;
 	}
 	cout << "There is no student ID matching with your typing !!!" << endl;

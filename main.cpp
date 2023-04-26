@@ -37,7 +37,7 @@ int main()
 	{
 		cout << "Type: Manager " << endl;
 		cout << "ID: " << ID << endl;
-		menuManager(pHead_schoolYear, pHead_class, headPass);
+		// menuManager(pHead_schoolYear, pHead_class, headPass);
 		/*
 		1. Cho thêm bới thành viên staff và manager
 			Nhập từ console hoặc từ file

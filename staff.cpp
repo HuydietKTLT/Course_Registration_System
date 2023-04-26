@@ -168,7 +168,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			Course *course_remove_student = Find_Course(pHead_schoolYear);
 			if (course_remove_student != nullptr)
 			{
-				remove_Student_from_Course(course_remove_student->student, headPass);
+				remove_Student_from_Course(course_remove_student->student);
 				cout << "Updated successfully!" << endl;
 				cout << "Press any key to continue..." << endl;
 				string s;

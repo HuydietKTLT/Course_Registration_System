@@ -119,7 +119,7 @@ struct SchoolYear
 bool isFileEmpty(string filename);
 
 //About loading data
-void load_student_InCourse(Student*& pHead, string schoolYear_name, string semester_name, string course_name);
+void load_student_InCourse(Course* pCur_course, Student *&pHead, string schoolYear_name, string semester_name, string course_id);
 
 void load_student_InClass(studentClass*& pHead, string class_name);
 
@@ -206,7 +206,7 @@ bool is_Exist_studentClass(studentClass *pHead_student, string student_ID);
 
 bool is_Exist_studentCourse(Student* pHead_student, string student_ID);
 
-void remove_Student_from_Course(Student *&pHead, passInfo*& headPass);
+void remove_Student_from_Course(Student *&pHead);
 
 //staff's menu
 
