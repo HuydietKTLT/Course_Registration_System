@@ -285,7 +285,11 @@ void Menu_Score_Board(SchoolYear *list_year)
 				}
 				F.close();
 				SET_COLOR(13);
-				cout << "Created a file containing the information of the course: " << Cur_course->id << " , Please enter your score into the file (enter 0 = agree): ";
+				cout << "Created a file containing the information of the course: " ;
+				SET_COLOR(4);
+				cout << Cur_course->id ;
+				SET_COLOR(13); 
+				cout << " , Please enter your score into the file (enter 0 = agree): ";
 				SET_COLOR(4);
 				cin >> yes;
 				if (yes != "0")
