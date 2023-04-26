@@ -107,7 +107,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 					cin >> s;
 					break;
 				}
-				add_Student_to_Course_By_File(course_addStudent_file->student, headPass);
+				add_Student_to_Course_By_File(course_addStudent_file, course_addStudent_file->student, headPass);
 				cout << "Updated successfully!" << endl;
 				cout << "Press any key to continue..." << endl;
 				cin >> s;
@@ -119,7 +119,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			Course *course_addStudent_console = Find_Course(pHead_schoolYear);
 			if (course_addStudent_console != nullptr)
 			{
-				add_Student_to_Course_By_Console(course_addStudent_console->student, headPass);
+				add_Student_to_Course_By_Console(course_addStudent_console,course_addStudent_console->student, headPass);
 				cout << "Updated successfully!" << endl;
 				cout << "Press any key to continue..." << endl;
 				string s;

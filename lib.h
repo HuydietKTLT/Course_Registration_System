@@ -198,9 +198,13 @@ Class* Find_Class(Class* pHead);
 
 void add_Student_To_Class_By_File(studentClass*& pHead, passInfo*& headPass);
 
-void add_Student_to_Course_By_Console(Student*& pHead, passInfo*& headPass);
+void add_Student_to_Course_By_Console(Course* pCur, Student*& pHead, passInfo*& headPass);
 
-void add_Student_to_Course_By_File(Student *&pHead, passInfo* &headPass);
+void add_Student_to_Course_By_File(Course* pCur,Student *&pHead, passInfo* &headPass);
+
+bool is_Exist_studentClass(studentClass *pHead_student, string student_ID);
+
+bool is_Exist_studentCourse(Student* pHead_student, string student_ID);
 
 void remove_Student_from_Course(Student *&pHead, passInfo*& headPass);
 
