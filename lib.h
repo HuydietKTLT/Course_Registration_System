@@ -211,7 +211,7 @@ void remove_Student_from_Course(Student *&pHead);
 
 //staff's menu
 
-void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &headPass);
+void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &headPass, string login);
 
 void createNewClass(Class*& pHead);
 
@@ -235,7 +235,7 @@ bool checkSchoolYearSemIsFull (SchoolYear *pCur); // SchoolYearFeature .cpp
 
 void changeCurrentSchoolYear (SchoolYear *&currentSchoolYear, SchoolYear *pHead); // SchoolYearFeature .cpp
 //student's menu
-void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& headPass);
+void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& headPass, string login);
 
 void view_list_all_courses(SchoolYear* pHead_schoolYear, string student_ID);
 
@@ -247,9 +247,9 @@ bool LoginCheck(string login, string password, char& type, string& ID, passInfo*
 
 void login(char& type, string& ID, passInfo* readfile);
 
-void edit(passInfo*& readfile);
+void edit(passInfo *&readfile, string login);
 
-bool doTheEdit(string password, string ID, passInfo*& head);
+void doTheEdit(string password, string ID, passInfo*& head);
 
 string pass();
 
@@ -257,7 +257,9 @@ void clear(passInfo*& readfile);
 
 void ReadPassword(passInfo *&readfile, SchoolYear* pHead_schoolYear, Class* pHead_class);
 
-bool is_Exist_account(passInfo *pHead_pass, string student_ID);
+void create_account(passInfo *&headPass);
+
+bool is_Exist_account(passInfo *pHead_pass, string login);
 
 void dialocatePass(passInfo* readfile);
 
