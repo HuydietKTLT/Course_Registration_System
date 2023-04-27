@@ -15,6 +15,7 @@ int main()
 	SET_COLOR(0);
 	login(type, ID, headPass);
 	log_in_studentID = ID;
+	SET_COLOR(0);
 	switch (type)
 	{
 	case '0':
