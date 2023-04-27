@@ -22,55 +22,131 @@ void login(char &type, string &ID, passInfo *readfile)
     string login, password;
     while (true)
     {
-        cout << "Enter your account name:0 to exit\n";
-        cout << "Enter your account name: ";
+        cout << "Enter your account name (0 to exit): ";
         cin >> login;
-        cout << "Enter your password: ";
-        password = pass();
         if (login == "0")
         {
             type = '0';
             return;
         }
+        cout << "Enter your password: ";
+        password = pass();
         if (LoginCheck(login, password, type, ID, readfile) == true)
             break;
         cout << "Fail successful! Please try again.\n";
     }
 }
 
-// Edit password menu
-void edit(passInfo *&readfile)
+void create_account(passInfo *&headPass)
 {
-    char type;
-    int i;
-    string ID;
-    string new_login, new_password;
-    login(type, ID, readfile);
-    if (ID == "0")
+    string login;
+    cout << "Enter your new account name (0 to exit): ";
+    cin >> login;
+    if (login == "0")
         return;
+
+    while (is_Exist_account(headPass, login) == true)
+    {
+        cout << "Your username has been already existed! Please try another name" << endl;
+        cout << "Enter your account name (0 to exit): ";
+        cin >> login;
+        if (login == "0")
+            return;
+    }
+    cout << "Enter your password: ";
+    string password;
+    password = pass();
+    cout << "Confirm your password: ";
+    string confirm_password;
+    confirm_password = pass();
+
+    while (password != confirm_password)
+    {
+        cout << "The passwords entered don't match. Try again" << endl;
+        cout << "Enter your password: ";
+        password = pass();
+        cout << "Confirm your password: ";
+        confirm_password = pass();
+    }
+
+    cout << "Choose type: " << endl;
+    cout << "1. Student" << endl;
+    cout << "2. Teacher" << endl;
+    string choose_type;
+    // bool choose_decide = false;
     while (true)
-    {//
-        cout << "Do you want to change your password:\n";
-        cout << "1. Yes.\n";
-        cout << "0. No.\n";
-        cout << "Enter your option:\n";
-        int option;
-        cin >> option;
-        switch (option)
+    {
+        cout << "Your option: ";
+        cin >> choose_type;
+        if (choose_type == "1" || choose_type == "2")
         {
-        case 1:
-        {
-            cout << "Enter your new password: ";
-            new_password = pass();
-            doTheEdit(new_password, ID, readfile);
+            if (choose_type == "1")
+            {
+                choose_type = "s";
+            }
+            else
+            {
+                choose_type = "t";
+            }
             break;
         }
-        case 0:
-            return;
-        default:
-            continue;
+    }
+    string accept;
+    while (true)
+    {
+        cout << "Do you accept our following terms[Y/N]: ";
+        cin >> accept;
+        if (accept == "Y" || accept == "N")
+        {
+            if (accept == "N")
+                return;
+            else
+                break;
         }
     }
+
+    passInfo *pAdd = nullptr;
+    if (headPass == nullptr)
+    {
+        headPass = new passInfo;
+        pAdd = headPass;
+        pAdd->next = nullptr;
+    }
+    else
+    {
+        pAdd = new passInfo;
+        pAdd->next = headPass;
+        headPass = pAdd;
+    }
+
+    pAdd->login = login;
+    pAdd->password = password;
+    pAdd->type = choose_type[0];
+    cout << "Create account successfuly!" << endl;
+    cout << "Press any key to continue...";
+    string temp;
+    cin >> temp;
+}
+
+// Edit password menu
+void edit(passInfo *&readfile, string login)
+{
+    string new_password;
+    cout << "Enter your new password: ";
+    new_password = pass();
+    string confirm_password;
+    cout << "Confirm your new password: ";
+    confirm_password = pass();
+    while (new_password != confirm_password)
+    {
+        cout << "The passwords entered don't match. Try again" << endl;
+        cout << "Enter your new password: ";
+        new_password = pass();
+        cout << "Confirm your new password: ";
+        confirm_password = pass();
+    }
+    doTheEdit(new_password, login, readfile);
+
     // do
     // {
     //     cout << "Do you want to change your password:\n";
@@ -179,11 +255,11 @@ void ReadPassword(passInfo *&pHead_readfile, SchoolYear *pHead_schoolYear, Class
     }
 }
 
-bool is_Exist_account(passInfo *pHead_pass, string student_ID)
+bool is_Exist_account(passInfo *pHead_pass, string login)
 {
     while (pHead_pass != nullptr)
     {
-        if (pHead_pass->login == student_ID)
+        if (pHead_pass->login == login)
             return true;
         pHead_pass = pHead_pass->next;
     }
@@ -203,7 +279,7 @@ void clear(passInfo *&readfile)
 }
 
 // Edit password
-bool doTheEdit(string password, string ID, passInfo *&head)
+void doTheEdit(string password, string ID, passInfo *&head)
 {
     passInfo *readfile = head;
     while (readfile != nullptr)
@@ -212,12 +288,12 @@ bool doTheEdit(string password, string ID, passInfo *&head)
         {
             readfile->password = password;
             cout << "Change password successfully.\n";
-            return false;
+            // return false;
         }
         readfile = readfile->next;
     }
-    cout << "Change password fail. Please try again;\n";
-    return true;
+    // cout << "Change password fail. Please try again;\n";
+    // return true;
 }
 
 string pass()
@@ -226,7 +302,7 @@ string pass()
     int i = 0;
     while ((password[i] = _getch()) != '\n' && password[i] != '\r' && i < (max_value - 1))
     {
-	SET_COLOR(i);    
+        SET_COLOR(i);
         if (password[i] != '\b')
         {
             putchar('*');
@@ -271,18 +347,17 @@ void dialocatePass(passInfo *readfile)
 }
 void SET_COLOR(int color)
 {
-	WORD wColor;
-     
+    WORD wColor;
 
-     HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-     CONSOLE_SCREEN_BUFFER_INFO csbi;
-     if(GetConsoleScreenBufferInfo(hStdOut, &csbi))
-     {
-          wColor = (csbi.wAttributes & 0xF0) + (color & 0x0F);
-          SetConsoleTextAttribute(hStdOut, wColor);
-     }
+    HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    if (GetConsoleScreenBufferInfo(hStdOut, &csbi))
+    {
+        wColor = (csbi.wAttributes & 0xF0) + (color & 0x0F);
+        SetConsoleTextAttribute(hStdOut, wColor);
+    }
 }
-void BackGroundColor (int color)
+void BackGroundColor(int color)
 {
     HANDLE hConsoleOutput;
     hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);

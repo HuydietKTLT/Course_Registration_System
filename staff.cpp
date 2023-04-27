@@ -2,13 +2,15 @@
 
 // Temp Menu for staff
 
-void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&headPass)
+void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&headPass, string login)
 {
 	int i;
 	SchoolYear *current_schoolyear = currentSchoolYear(pHead_schoolYear);
 	while (true)
 	{
 		clrscr();
+		cout << "Type: Teacher " << endl;
+		cout << "Login ID: " << login << endl;
 		cout << "-------------------------------------------\n"
 			 << current_schoolyear->year_name << endl;
 		cout << "-------------------------------------------\n"
@@ -357,7 +359,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		}
 		case 20:
 		{
-			edit(headPass);
+			edit(headPass, login);
 			cout << "Updated successfully!" << endl;
 			cout << "Press any key to continue...";
 			string s;

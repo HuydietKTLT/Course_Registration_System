@@ -1,11 +1,11 @@
 #include "lib.h"
 
-void view_list_all_courses(SchoolYear* pHead_schoolYear, string student_ID)
+void view_list_all_courses(SchoolYear *pHead_schoolYear, string student_ID)
 {
-	Semester* pCur_view_courses_semester = Find_Semester(pHead_schoolYear);
+	Semester *pCur_view_courses_semester = Find_Semester(pHead_schoolYear);
 	if (pCur_view_courses_semester != nullptr)
 	{
-		Course* pHead_view_courses_courses = pCur_view_courses_semester->course;
+		Course *pHead_view_courses_courses = pCur_view_courses_semester->course;
 		cout
 			<< left
 			<< setw(15)
@@ -33,7 +33,7 @@ void view_list_all_courses(SchoolYear* pHead_schoolYear, string student_ID)
 
 		while (pHead_view_courses_courses != nullptr)
 		{
-			Student* pHead_student = pHead_view_courses_courses->student;
+			Student *pHead_student = pHead_view_courses_courses->student;
 			while (pHead_student != nullptr)
 			{
 				if (pHead_student->student_ID == student_ID)
@@ -71,7 +71,7 @@ void view_list_all_courses(SchoolYear* pHead_schoolYear, string student_ID)
 	}
 }
 
-void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID)
+void view_list_all_scoreboard(SchoolYear *pHead_schoolYear, string student_ID)
 {
 
 	cout
@@ -109,13 +109,13 @@ void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID)
 
 	while (pHead_schoolYear != nullptr)
 	{
-		Semester* pHead2 = pHead_schoolYear->semester;
+		Semester *pHead2 = pHead_schoolYear->semester;
 		while (pHead2 != nullptr)
 		{
-			Course* pHead3 = pHead2->course;
+			Course *pHead3 = pHead2->course;
 			while (pHead3 != nullptr)
 			{
-				Student* pHead4 = pHead3->student;
+				Student *pHead4 = pHead3->student;
 				while (pHead4 != nullptr)
 				{
 					int s = 0;
@@ -152,7 +152,7 @@ void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID)
 							<< left
 							<< setw(15)
 							<< pHead4->score.other_mark;
-							cout << endl;
+						cout << endl;
 					}
 					pHead4 = pHead4->pNext;
 				}
@@ -164,12 +164,14 @@ void view_list_all_scoreboard(SchoolYear* pHead_schoolYear, string student_ID)
 	}
 }
 
-void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& headPass)
-{//
+void menuStudent(SchoolYear *pHead_schoolYear, string student_ID, passInfo *&headPass, string login)
+{ //
 	int i;
 	while (true)
 	{
 		clrscr();
+		cout << "Type: Student " << endl;
+		cout << "Login ID: " << login << endl;
 		cout << "-----------------------------------------------------------------------------\n";
 		cout << "1. View the courses in semester.\n2. View scoreboard.\n3. Change password.";
 		cout << "\n0. Log out";
@@ -200,7 +202,7 @@ void menuStudent(SchoolYear* pHead_schoolYear, string student_ID, passInfo*& hea
 		}
 		case 3:
 		{
-			edit(headPass);
+			edit(headPass, login);
 			string s;
 			cout << "Press any key to continue...";
 			cin >> s;
