@@ -8,6 +8,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 	SchoolYear *current_schoolyear = currentSchoolYear(pHead_schoolYear);
 	while (true)
 	{
+		SET_COLOR(0);
 		clrscr();
 		cout << "Type: Teacher " << endl;
 		cout << "Login ID: " << login << endl;
@@ -275,9 +276,8 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		case 14:
 		{
 
-			SchoolYear *current_schoolYear_print_score = currentSchoolYear(pHead_schoolYear);
-			if (current_schoolYear_print_score != nullptr)
-				Menu_Score_Board(current_schoolYear_print_score);
+			if (current_schoolyear!= nullptr)
+				Menu_Score_Board(current_schoolyear);
 			break;
 		}
 		case 15:
