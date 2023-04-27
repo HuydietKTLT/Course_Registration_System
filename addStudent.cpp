@@ -5,6 +5,9 @@ Class *Find_Class(Class *pHead)
 	if (pHead == nullptr)
 	{
 		cout << "There is no class has been created yet!!" << endl;
+		cout << "Press any key to continue...";
+		string temp;
+		cin >> temp;
 		return NULL;
 	}
 	string get_class;
@@ -17,6 +20,9 @@ Class *Find_Class(Class *pHead)
 	if (pHead == nullptr)
 	{
 		cout << "There is no class matching with your typing !!" << endl;
+		cout << "Press any key to continue...";
+		string temp;
+		cin >> temp;
 		return NULL;
 	}
 	return pHead;
@@ -316,6 +322,11 @@ void add_Student_to_Course_By_Console(Course *pCur, Student *&pHead, passInfo *&
 
 void remove_Student_from_Course(Student *&pHead)
 {
+	if (pHead == nullptr)
+	{
+		cout << "There is no students in the courses." << endl;
+		return;
+	}
 	Student *pCur = pHead;
 	Student *pPrevCur = pHead;
 	string get_student_ID;
@@ -329,20 +340,27 @@ void remove_Student_from_Course(Student *&pHead)
 
 	if (pCur != nullptr)
 	{
-		pPrevCur->pNext = pCur->pNext;
-		delete pCur;
-		pCur = nullptr;
-		pPrevCur = nullptr;
-		cout << "Delete Student from Course successfully!!!" << endl;
-		cout << "Press any key to continue...\n";
-		string s;
-		cin >> s;
-		clrscr();
+		if (pCur == pPrevCur)
+		{
+			pHead = pHead->pNext;
+			delete pCur;
+			pCur = nullptr;
+			pPrevCur = nullptr;
+		}
+		else
+		{
+			pPrevCur->pNext = pCur->pNext;
+			delete pCur;
+			pCur = nullptr;
+			pPrevCur = nullptr;
+		}
+		cout << "Delete student from Course successfully!!!" << endl;
+		// cout << "Updated successfully!" << endl;
+		// cout << "Press any key to continue...\n";
+		// string s;
+		// cin >> s;
+		// clrscr();
 		return;
 	}
 	cout << "There is no student ID matching with your typing !!!" << endl;
-	cout << "Press any key to continue...\n";
-	string s;
-	cin >> s;
-	clrscr();
 }

@@ -119,7 +119,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			Course *course_addStudent_console = Find_Course(pHead_schoolYear);
 			if (course_addStudent_console != nullptr)
 			{
-				add_Student_to_Course_By_Console(course_addStudent_console,course_addStudent_console->student, headPass);
+				add_Student_to_Course_By_Console(course_addStudent_console, course_addStudent_console->student, headPass);
 				cout << "Updated successfully!" << endl;
 				cout << "Press any key to continue..." << endl;
 				string s;
@@ -129,10 +129,28 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		}
 		case 8:
 		{
+			if (current_schoolyear == nullptr)
+			{
+				cout << "There is no school year has been created before!" << endl;
+				cout << "Press any key to continue...";
+				string temp;
+				cin >> temp;
+				break;
+			}
 			SchoolYear *pHead_schoolYear = current_schoolyear;
+			cout << "Current school year: " << current_schoolyear->year_name << endl;
 			Semester *pCur = pHead_schoolYear->semester;
-			while (pCur->pNext != nullptr)
+			while (pCur != nullptr && pCur->pNext != nullptr)
 				pCur = pCur->pNext;
+			if (pCur == nullptr)
+			{
+				cout << "There is no semester has been created before!" << endl;
+				cout << "Press any key to continue...";
+				string temp;
+				cin >> temp;
+				break;
+			}
+			cout << "Current semester: " << pCur->semester_name << endl;
 			addCourse(pCur->course);
 			cout << "Updated succefully!" << endl;
 			cout << "Press any key to continue..." << endl;
@@ -160,7 +178,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 				cout << "Press any key to continue..." << endl;
 				string s;
 				cin >> s;
-			}//
+			} //
 			break;
 		}
 		case 12:
@@ -169,7 +187,6 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			if (course_remove_student != nullptr)
 			{
 				remove_Student_from_Course(course_remove_student->student);
-				cout << "Updated successfully!" << endl;
 				cout << "Press any key to continue..." << endl;
 				string s;
 				cin >> s;
@@ -216,8 +233,8 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			while (pCur_Semester != nullptr && pCur_Semester->semester_name != get_semester)
 				pCur_Semester = pCur_Semester->pNext;
 
-			if (pCur_Semester == nullptr)		
-			{				
+			if (pCur_Semester == nullptr)
+			{
 				cout << "There is no semester matching with your typing !!!" << endl;
 				string temp;
 				cout << "Press any key to continue...";
@@ -251,10 +268,6 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			}
 
 			deleteCourse(pCur_Semester->course, pCur_Course, pHead->year_name, pCur_Semester->semester_name);
-			cout << "Updated successfully!" << endl;
-			cout << "Press any key to continue..." << endl;
-			string s;
-			cin >> s;
 			break;
 		}
 		case 14:

@@ -6,7 +6,7 @@ bool isFileEmpty(string filename)
 	return file.peek() == ifstream::traits_type::eof();
 }
 
-void load_student_InCourse(Course* pCur_course, Student *&pHead, string schoolYear_name, string semester_name, string course_id)
+void load_student_InCourse(Course *pCur_course, Student *&pHead, string schoolYear_name, string semester_name, string course_id)
 {
 	ifstream file;
 	file.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt");
@@ -35,7 +35,7 @@ void load_student_InCourse(Course* pCur_course, Student *&pHead, string schoolYe
 		getline(file, pCur->date_of_birth, ',');
 		getline(file, pCur->social_ID, ',');
 
-		string temp; 
+		string temp;
 		getline(file, temp, ',');
 		pCur->score.total_mark = float_one_point_round(stof(temp));
 
@@ -48,9 +48,7 @@ void load_student_InCourse(Course* pCur_course, Student *&pHead, string schoolYe
 		getline(file, temp);
 		pCur->score.other_mark = float_one_point_round(stof(temp));
 
-		pCur->score.total_mark = pCur->score.final_mark * pCur_course->final / 100
-		                        +pCur->score.mid_mark   * pCur_course->midterm / 100
-								+pCur->score.other_mark * pCur_course->other / 100;
+		pCur->score.total_mark = pCur->score.final_mark * pCur_course->final / 100 + pCur->score.mid_mark * pCur_course->midterm / 100 + pCur->score.other_mark * pCur_course->other / 100;
 		pCur->score.total_mark = float_one_point_round(pCur->score.total_mark);
 
 		pCur->pNext = nullptr;
@@ -411,34 +409,34 @@ void print_student_InClass(studentClass *pHead, string class_name)
 
 void print_student_InCourse(Student *pHead, string schoolYear_name, string semester_name, string course_id)
 {
-	ifstream check_file_exist;
-	check_file_exist.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt");
-	bool check = 0;
-	if (check_file_exist.is_open())
-		check = 1;
-	check_file_exist.close();
-	if (check == 1)
+	// ifstream check_file_exist;
+	// check_file_exist.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt");
+	// bool check = 0;
+	// if (check_file_exist.is_open())
+	// 	check = 1;
+	// check_file_exist.close();
+	// if (check == 1)
+	// {
+	ofstream file;
+	file.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt", ios::trunc);
+	while (pHead != nullptr)
 	{
-		ofstream file;
-		file.open(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt", ios::trunc);
-		while (pHead != nullptr)
-		{
-			file << pHead->student_ID << ","
-				 << pHead->first_name << ","
-				 << pHead->last_name << ","
-				 << pHead->gender << ","
-				 << pHead->date_of_birth << ","
-				 << pHead->social_ID << ","
-				 << pHead->score.total_mark << ","
-				 << pHead->score.final_mark << ","
-				 << pHead->score.mid_mark << ","
-				 << pHead->score.other_mark;
-			if (pHead->pNext != nullptr)
-				file << '\n';
-			pHead = pHead->pNext;
-		}
-		file.close();
+		file << pHead->student_ID << ","
+			 << pHead->first_name << ","
+			 << pHead->last_name << ","
+			 << pHead->gender << ","
+			 << pHead->date_of_birth << ","
+			 << pHead->social_ID << ","
+			 << pHead->score.total_mark << ","
+			 << pHead->score.final_mark << ","
+			 << pHead->score.mid_mark << ","
+			 << pHead->score.other_mark;
+		if (pHead->pNext != nullptr)
+			file << '\n';
+		pHead = pHead->pNext;
 	}
+	file.close();
+	// }
 }
 
 void print_course(Course *pHead, string schoolYear_name, string semester_name)

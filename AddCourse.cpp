@@ -270,6 +270,32 @@ void addCourse(Course *&pHead)
 	string course_id;
 	cin >> course_id;
 
+	Course *pCur = nullptr, *pPrevCur = nullptr;
+	if (pHead != nullptr)
+	{
+		pCur = pHead;
+		while (pCur != nullptr)
+		{
+			cout << "The course ID has been created before! Please choose another course ID: " << endl;
+			cout << "Enter Course ID: ";
+			cin >> course_id;
+			pCur = pHead;
+			while (pCur != nullptr && pCur->id != course_id)
+			{
+				pPrevCur = pCur;
+				pCur = pCur->pNext;
+			}
+		}
+		pPrevCur->pNext = new Course;
+		pPrevCur = pPrevCur->pNext;
+	}
+
+	else
+	{
+		pHead = new Course;
+		pPrevCur = pHead;
+	}
+
 	cout << "Enter Course Name: ";
 	string course_name;
 	cin >> course_name;
@@ -348,27 +374,6 @@ void addCourse(Course *&pHead)
 			cout << "Please try again..." << endl;
 		}
 	}
-	Course *pCur = nullptr, *pPrevCur = nullptr;
-	if (pHead == nullptr)
-	{
-		pHead = new Course;
-		pCur = pHead;
-		pPrevCur = pHead;
-	}
-	while (pCur != nullptr && pCur->id != course_id)
-	{
-		pPrevCur = pCur;
-		pCur = pCur->pNext;
-	}
-	if (pCur == nullptr)
-	{
-		pPrevCur->pNext = new Course;
-		pPrevCur = pPrevCur->pNext;
-	}
-	if (pCur->id == course_id)
-	{
-		pPrevCur = pCur;
-	}
 
 	pPrevCur->id = course_id;
 	pPrevCur->course_name = course_name;
@@ -428,6 +433,7 @@ void deleteCourse(Course *&pHead, Course *&pDelete, string year_name, string sem
 	if (pHead == pDelete)
 	{
 		pHead = pHead->pNext;
+		// Delete the linked list of students in the Course.
 		while (pCur->student != nullptr)
 		{
 			Student *pTemp1 = pCur->student;
@@ -463,6 +469,7 @@ void deleteCourse(Course *&pHead, Course *&pDelete, string year_name, string sem
 	delete pCur;
 	pPrevCur = nullptr;
 	pCur = nullptr;
+	cout << "Updated successfully!" << endl;
 }
 
 void update_course_ID(Course *&pCur, SchoolYear *pHead)
@@ -736,8 +743,15 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 
 Semester *Find_Semester(SchoolYear *pHead)
 {
-	string get_schoolyear;
+	cout << "List of School Years: " << endl;
+	SchoolYear *pTraverse_schoolyear = pHead;
+	while (pTraverse_schoolyear != nullptr)
+	{
+		cout << pTraverse_schoolyear->year_name << endl;
+		pTraverse_schoolyear = pTraverse_schoolyear->pNext;
+	}
 	cout << "Enter shool Year: ";
+	string get_schoolyear;
 	cin >> get_schoolyear;
 	while (pHead != nullptr && pHead->year_name != get_schoolyear)
 	{
@@ -745,7 +759,7 @@ Semester *Find_Semester(SchoolYear *pHead)
 	}
 	if (pHead == nullptr)
 	{
-		cout << "There is no schoolyear matching with your typing!!!" << endl;
+		cout << "There is no school year matching with your typing!!!" << endl;
 		cout << "Press any key to continue...\n";
 		string s;
 		cin >> s;
@@ -753,6 +767,13 @@ Semester *Find_Semester(SchoolYear *pHead)
 		return NULL;
 	}
 
+	cout << "List of Semesters: " << endl;
+	Semester *pTraverse_semester = pHead->semester;
+	while (pTraverse_semester != nullptr)
+	{
+		cout << pTraverse_semester->semester_name << endl;
+		pTraverse_semester = pTraverse_semester->pNext;
+	}
 	Semester *pCur_semester = pHead->semester;
 	string get_semester;
 	cout << "Enter semester: ";
@@ -771,50 +792,23 @@ Semester *Find_Semester(SchoolYear *pHead)
 		clrscr();
 		return NULL;
 	}
-	else
-		return pCur_semester;
+	return pCur_semester;
 }
 
 Course *Find_Course(SchoolYear *pHead)
 {
-	// These code is used for traversing the linked list of Schoolyear, to found the specific Schoolyear.
-	string get_schoolyear;
-	cout << "Enter School Year: ";
-	cin >> get_schoolyear;
-	while (pHead != nullptr && pHead->year_name != get_schoolyear)
+	Semester *find_semester = Find_Semester(pHead);
+	if (find_semester == nullptr) return NULL;
+	Course *pTraverse_course = find_semester->course;
+	cout << "List of courses: " << endl;
+	cout << setw(13) << left << "Course ID " << setw(13) << left << "Course name " << endl;
+	while (pTraverse_course != nullptr)
 	{
-		pHead = pHead->pNext;
-	}
-	if (pHead == nullptr)
-	{
-		cout << "There is no schoolyear matching with your typing!!!" << endl;
-		cout << "Press any key to continue...\n";
-		string s;
-		cin >> s;
-		clrscr();
-		return NULL;
+		cout << setw(13) << left << pTraverse_course->id << setw(13) << left << pTraverse_course->course_name << endl;
+		pTraverse_course = pTraverse_course->pNext;
 	}
 
-	Semester *pCur_Semester = pHead->semester;
-	// These code is used for traversing the linked list of Semester, to found the specific Semester.
-	string get_semester;
-	cout << "Enter Semester: ";
-	cin >> get_semester;
-
-	while (pCur_Semester != nullptr && pCur_Semester->semester_name != get_semester)
-		pCur_Semester = pCur_Semester->pNext;
-
-	if (pCur_Semester == nullptr)
-	{
-		cout << "There is no semester matching with your typing !!!" << endl;
-		cout << "Press any key to continue...\n";
-		string s;
-		cin >> s;
-		clrscr();
-		return NULL;
-	}
-
-	Course *pCur_Course = pCur_Semester->course;
+	Course *pCur_Course = find_semester->course;
 	cout << "Enter Course ID: ";
 	string get_course_ID;
 	cin >> get_course_ID;
@@ -823,7 +817,7 @@ Course *Find_Course(SchoolYear *pHead)
 	if (pCur_Course == nullptr)
 	{
 		cout << "There is no course ID matching with your typing !!!" << endl;
-		cout << "Press any key to continue...\n";
+		cout << "Press any key to continue...";
 		string s;
 		cin >> s;
 		clrscr();
