@@ -6,6 +6,13 @@ void view_scoreboard_toCourse(SchoolYear *list_year)
 	Semester *View_Semester = nullptr;
 	View_Semester = pCur->semester;
 	SET_COLOR(13);
+	if(pCur->semester==nullptr) {
+		string temp;
+		cout<<"There are no Semesters yet"<<endl;
+		cout << "Press any key to continue...";
+		cin >> temp;
+		return;
+	}
 	cout << "List of Semesters in " << pCur->year_name << " :" << endl;
 	while (View_Semester != nullptr)
 	{
@@ -49,6 +56,13 @@ void view_scoreboard_toCourse(SchoolYear *list_year)
 	Course *View_course = nullptr;
 	View_course = Cur_Semester->course;
 	SET_COLOR(13);
+	if(Cur_Semester->course==nullptr) {
+		string temp;
+		cout<<"There are no Course yet"<<endl;
+		cout << "Press any key to continue...";
+		cin >> temp;
+		return;
+	}
 	cout << "List of courses in " << Cur_Semester->semester_name << " :" << endl;
 	while (View_course != nullptr)
 	{
@@ -261,6 +275,13 @@ void Menu_Score_Board(SchoolYear *list_year)
 				Semester *View_Semester = nullptr;
 				View_Semester = pCur->semester;
 				SET_COLOR(13);
+				if(pCur->semester==nullptr) {
+					string temp;
+					cout<<"There are no Semesters yet"<<endl;
+					cout << "Press any key to continue...";
+					cin >> temp;
+					return;
+				}
 				cout << "List of Semester in " << pCur->year_name << ":" << endl;
 				while (View_Semester != nullptr)
 				{
@@ -301,6 +322,13 @@ void Menu_Score_Board(SchoolYear *list_year)
 				Course *View_course = nullptr;
 				View_course = Cur_Semester->course;
 				SET_COLOR(13);
+				if(Cur_Semester->course==nullptr) {
+				string temp;
+				cout<<"There are no Course yet"<<endl;
+				cout << "Press any key to continue...";
+				cin >> temp;
+				return;
+				}
 				cout << "List of courses in " << Cur_Semester->semester_name << ": " << endl;
 				while (View_course != nullptr)
 				{
@@ -424,6 +452,13 @@ void Menu_Score_Board(SchoolYear *list_year)
 				Semester *View_Semester = nullptr;
 				View_Semester = pCur->semester;
 				SET_COLOR(13);
+				if(pCur->semester==nullptr) {
+				string temp;
+				cout<<"There are no Semesters yet"<<endl;
+				cout << "Press any key to continue...";
+				cin >> temp;
+				return;
+			}
 				cout << "List of Semesters in " << pCur->year_name << " :" << endl;
 				while (View_Semester != nullptr)
 				{
@@ -464,6 +499,13 @@ void Menu_Score_Board(SchoolYear *list_year)
 				Course *View_course = nullptr;
 				View_course = Cur_Semester->course;
 				SET_COLOR(13);
+				if(Cur_Semester->course==nullptr) {
+				string temp;
+				cout<<"There are no Course yet"<<endl;
+				cout << "Press any key to continue...";
+				cin >> temp;
+				return;
+			}
 				cout << "List of courses in " << Cur_Semester->semester_name << " :" << endl;
 				while (View_course != nullptr)
 				{
