@@ -18,7 +18,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			 << "1. New school year.\n"
 			 << "2. New classes.\n"
 			 << "3. Change current school year.\n"
-			 << "4. Add new 1st year students to 1st-year classes.\n"
+			 << "4. Add new students to 1st-year classes.\n"
 			 << "5. New semester for current school year.\n"
 			 << "6. Add students to course by file.\n"
 			 << "7. Add a student to course by console.\n"
