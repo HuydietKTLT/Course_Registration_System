@@ -62,7 +62,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		}
 		case 4:
 		{
-			Class *find_class = Find_Class(pHead_class);
+			Class *find_class = Find_Class_addStudent_1styear(pHead_class, current_schoolyear);
 			if (find_class != nullptr)
 			{
 				string s;
@@ -276,7 +276,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		case 14:
 		{
 
-			if (current_schoolyear!= nullptr)
+			if (current_schoolyear != nullptr)
 				Menu_Score_Board(current_schoolyear);
 			break;
 		}
@@ -379,10 +379,22 @@ SchoolYear *currentSchoolYear(SchoolYear *pHead)
 		return NULL;
 	// cout << "-------------------------------------------\n";
 	SchoolYear *currentshoolyear = pHead;
-	while (currentshoolyear->pNext != nullptr)
-		currentshoolyear = currentshoolyear->pNext;
+	int currentSchoolYear = stoi(currentshoolyear->year_name.substr(7, 2));
+	SchoolYear *pTraverse = pHead;
+	while (pTraverse != nullptr)
+	{
+		currentSchoolYear = max(currentSchoolYear, stoi(pTraverse->year_name.substr(7, 2)));
+		pTraverse = pTraverse->pNext;
+	}
 	// cout << currentshoolyear->year_name << endl;
-	return currentshoolyear;
+	pTraverse = pHead;
+	while (pTraverse != nullptr)
+	{
+		if (currentSchoolYear == stoi(pTraverse->year_name.substr(7, 2)))
+			return pTraverse;
+		pTraverse = pTraverse->pNext;
+	}
+	return nullptr;
 }
 
 // print current semester to screen

@@ -1,5 +1,44 @@
 #include "lib.h"
 
+Class *Find_Class_addStudent_1styear(Class *pHead, SchoolYear *currentSchoolYear)
+{
+	if (pHead == nullptr)
+	{
+		cout << "There is no class has been created yet! Create class before adding student." << endl;
+		cout << "Press any key to continue...";
+		string temp;
+		cin >> temp;
+		return NULL;
+	}
+	string get_class;
+	cout << "Enter class: ";
+	cin >> get_class;
+
+	while (pHead != nullptr && pHead->class_name != get_class)
+		pHead = pHead->pNext;
+
+	if (pHead == nullptr)
+	{
+		cout << "There is no class matching with your typing in this school year !!" << endl;
+		cout << "Press any key to continue...";
+		string temp;
+		cin >> temp;
+		return NULL;
+	}
+	if (pHead->class_name == get_class)
+	{
+		if (stoi(pHead->class_name.substr(0, 2)) != stoi(currentSchoolYear->year_name.substr(7, 2)))
+		{
+			cout << "There is no class matching with your typing in this school year !!" << endl;
+			cout << "Press any key to continue...";
+			string temp;
+			cin >> temp;
+			return NULL;
+		}
+	}
+	return pHead;
+}
+
 Class *Find_Class(Class *pHead)
 {
 	if (pHead == nullptr)

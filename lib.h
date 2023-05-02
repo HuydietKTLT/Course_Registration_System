@@ -197,6 +197,8 @@ Course* Find_Course(SchoolYear* pHead);
 
 Class* Find_Class(Class* pHead);
 
+Class *Find_Class_addStudent_1styear(Class *pHead, SchoolYear *currentSchoolYear);
+
 void add_Student_To_Class_By_File(studentClass*& pHead, passInfo*& headPass);
 
 void add_Student_to_Course_By_Console(Course* pCur, Student*& pHead, passInfo*& headPass);
