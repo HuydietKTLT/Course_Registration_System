@@ -86,13 +86,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		{
 			if (current_schoolyear != nullptr)
 			{
-				if (checkSchoolYearSemIsFull(current_schoolyear))
-				{
-					cout << "This school year is full of semester ! (3 semesters) \n";
-					break;
-				}
 				addSemesterMenu(current_schoolyear);
-				cout << "Add new semester successful !";
 			}
 			break;
 		}
@@ -594,27 +588,14 @@ void createNewClass(Class *&pHead)
 void addSemesterMenu(SchoolYear *pHead_schoolYear)
 {
 	clrscr();
-	while (true)
+	while (!checkSchoolYearSemIsFull(pHead_schoolYear))
 	{
-		cout << "-------------------------------------------\n";
-		cout << "1. Choose a semester\n0. Exit\nEnter options: ";
-		int i;
-		cin >> i;
-		switch (i)
-		{
-		case 0:
-		{
-			return;
-		}
-		case 1:
-		{
-			addSemester(pHead_schoolYear->semester);
-			break;
-		}
-		default:
-			continue;
-		}
+		addSemester(pHead_schoolYear->semester);
 	}
+	cout << "This school year is full of semester ! (3 semesters) \n";
+	string temp;
+	cout << "Press any key to continue...\n";
+	cin >> temp;
 }
 
 // void add_semester(Semester*& pHead, string semester)
@@ -641,39 +622,34 @@ void addSemesterMenu(SchoolYear *pHead_schoolYear)
 
 void addSemester(Semester *&pHead)
 {
-	while (true)
+
+	cout << "-------------------------------------------\n";
+	cout << "Choose Semester: " << endl;
+	cout << "1. Semester 1\n2. Semester 2\n3. Semester 3\nEnter options: ";
+	int option;
+	cin >> option;
+	switch (option)
 	{
-		cout << "-------------------------------------------\n";
-		cout << "1. Semester 1\n2. Semester 2\n3. Semester 3\n0. Exit\nEnter options: ";
-		int option;
-		cin >> option;
-		switch (option)
-		{
-		case 1:
-			if (pHead == nullptr)
-				add_semester(pHead, "Semester1");
-			else
-				cout << "Failed to create new semester. Semester has been created!";
-			break;
-		case 2:
-			if (!check_semester(pHead, "Semester2"))
-				cout << "Failed to create new semester. Semester has been created!";
-			else
-				add_semester(pHead, "Semester2");
-			break;
-		case 3:
-			if (!check_semester(pHead, "Semester3"))
-				cout << "Failed to create new semester. Semester has been created!";
-			else
-				add_semester(pHead, "Semester3");
-			break;
-		case 0:
-		{
-			return;
-		}
-		default:
-			continue;
-		}
+	case 1:
+		if (pHead == nullptr)
+			add_semester(pHead, "Semester1");
+		else
+			cout << "Failed to create new semester. Semester has been created!";
+		break;
+	case 2:
+		if (!check_semester(pHead, "Semester2"))
+			cout << "Failed to create new semester. Semester has been created!";
+		else
+			add_semester(pHead, "Semester2");
+		break;
+	case 3:
+		if (!check_semester(pHead, "Semester3"))
+			cout << "Failed to create new semester. Semester has been created!";
+		else
+			add_semester(pHead, "Semester3");
+		break;
+	default:
+		return;
 	}
 }
 
@@ -710,4 +686,5 @@ void add_semester(Semester *&pHead, string semester)
 	pTail->semester_name = semester;
 	pTail->course = nullptr;
 	pTail->pNext = nullptr;
+	cout << "Add new semester successful !";
 }
