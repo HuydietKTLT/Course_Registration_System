@@ -92,6 +92,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 					break;
 				}
 				addSemesterMenu(current_schoolyear);
+				cout << "Add new semester successful !";
 			}
 			break;
 		}

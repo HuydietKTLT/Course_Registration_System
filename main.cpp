@@ -17,7 +17,7 @@ int main()
 	while (true)
 	{
 		clrscr();
-		cout << "-----STUDENT MANAGE SYSTEM-----" << endl;
+		cout << "-----STUDENT MANAGE SYSTEM-----" << endl;	
 		cout << "1. Sign in " << endl
 			 << "2. Create an account" << endl
 			 << "0. Exit" << endl;
