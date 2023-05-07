@@ -532,6 +532,7 @@ void update_course_ID(Course *&pCur, SchoolYear *pHead)
 void update_course_name(Course *&pCur)
 {
 	cout << "Enter new Course Name: ";
+	cin.ignore();
 	getline(cin, pCur->course_name);
 	cout << "Update successfully!\n";
 }
@@ -539,6 +540,7 @@ void update_course_name(Course *&pCur)
 void update_class_name(Course *&pCur)
 {
 	cout << "Enter new Class Name: ";
+	cin.ignore();
 	getline(cin, pCur->class_name);
 	cout << "Update successfully!\n";
 }
@@ -546,6 +548,7 @@ void update_class_name(Course *&pCur)
 void update_teacher_name(Course *&pCur)
 {
 	cout << "Enter new Teacher Name: ";
+	cin.ignore();
 	getline(cin, pCur->teacher_name);
 	cout << "Update successfully!\n";
 }
@@ -636,13 +639,14 @@ void update_Course(Course *&pCur, SchoolYear *pHead)
 		cout << "3. Class Name" << endl;
 		cout << "4. Teacher Name" << endl;
 		cout << "5. Number of credits " << endl;
-		cout << "6, Number of students" << endl;
+		cout << "6. Number of students" << endl;
 		cout << "7. Day of the week" << endl;
 		cout << "8. Sessions" << endl;
 		cout << "9. Update the percentage of point form the midterm exam and final exam" << endl;
 		cout << "10. All of above " << endl;
 		cout << "0. Exit" << endl;
 		int option;
+		cout << "Your option: ";
 		cin >> option;
 		clrscr();
 		switch (option)
