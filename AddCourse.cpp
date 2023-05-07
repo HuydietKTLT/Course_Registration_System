@@ -274,13 +274,18 @@ void addCourse(Course *&pHead)
 	if (pHead != nullptr)
 	{
 		pCur = pHead;
+		pPrevCur = pHead;
 		while (pCur != nullptr)
 		{
-			cout << "The course ID has been created before! Please choose another course ID: " << endl;
-			cout << "Enter Course ID: ";
-			cin >> course_id;
-			pCur = pHead;
-			while (pCur != nullptr && pCur->id != course_id)
+			if (pCur->id == course_id)
+			{
+				cout << "The course ID has been created before! Please choose another course ID: " << endl;
+				cout << "Enter Course ID: ";
+				cin >> course_id;
+				pCur = pHead;
+				pPrevCur = pHead;
+			}
+			else
 			{
 				pPrevCur = pCur;
 				pCur = pCur->pNext;
@@ -798,7 +803,8 @@ Semester *Find_Semester(SchoolYear *pHead)
 Course *Find_Course(SchoolYear *pHead)
 {
 	Semester *find_semester = Find_Semester(pHead);
-	if (find_semester == nullptr) return NULL;
+	if (find_semester == nullptr)
+		return NULL;
 	Course *pTraverse_course = find_semester->course;
 	cout << "List of courses: " << endl;
 	cout << setw(13) << left << "Course ID " << setw(13) << left << "Course name " << endl;
