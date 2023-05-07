@@ -475,6 +475,10 @@ void deleteCourse(Course *&pHead, Course *&pDelete, string year_name, string sem
 	pPrevCur = nullptr;
 	pCur = nullptr;
 	cout << "Updated successfully!" << endl;
+	string temp;
+	cout << "Press any key to continue...\n";
+	cin >> temp;
+	clrscr();
 }
 
 void update_course_ID(Course *&pCur, SchoolYear *pHead)
