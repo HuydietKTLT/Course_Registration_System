@@ -1029,16 +1029,42 @@ void Print_All_Student_In_A_Class_With_score_Semester(SchoolYear *pHead, Class *
 
 		while (pCurScore != nullptr)
 		{
-			if (pCurScore->score.final_mark == 0)
-			{
-				pCurScore = pCurScore->next;
-				continue;
-			}
 			if (checkForCourse(pCurCourse, pCurScore->course_ID) == false)
 			{
 				pCurScore = pCurScore->next;
+				if (pCurScore == nullptr)
+					cout << "\tNo score for this student" << endl;
 				continue;
 			}
+			cout
+				<< left
+				<< setw(30)
+				<< "COURSE NAME"
+				<< "|"
+				<< left
+				<< setw(15)
+				<< "COURSE ID"
+				<< "|"
+				<< left
+				<< setw(10)
+				<< "TOTAL MARK"
+				<< "|"
+				<< left
+				<< setw(10)
+				<< "FINAL MARK"
+				<< "|"
+				<< left
+				<< setw(10)
+				<< "MID MARK"
+				<< "|"
+				<< left
+				<< setw(10)
+				<< "OTHER MARK" << endl;
+			// if (pCurScore->score.final_mark == 0)
+			// {
+			// 	pCurScore = pCurScore->next;
+			// 	continue;
+			// }
 
 			cout
 				<< left
@@ -1048,16 +1074,16 @@ void Print_All_Student_In_A_Class_With_score_Semester(SchoolYear *pHead, Class *
 				<< setw(15)
 				<< pCurScore->course_ID << "|"
 				<< left
-				<< setw(5)
+				<< setw(10)
+				<< pCurScore->score.total_mark << "|"
+				<< left
+				<< setw(10)
 				<< pCurScore->score.final_mark << "|"
 				<< left
-				<< setw(5)
-				<< pCurScore->score.final_mark << "|"
-				<< left
-				<< setw(5)
+				<< setw(10)
 				<< pCurScore->score.mid_mark << "|"
 				<< left
-				<< setw(5)
+				<< setw(10)
 				<< pCurScore->score.other_mark << endl;
 			n++;
 			sum += pCurScore->score.final_mark;
