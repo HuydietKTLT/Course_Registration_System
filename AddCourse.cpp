@@ -435,6 +435,7 @@ void deleteCourse(Course *&pHead, Course *&pDelete, string year_name, string sem
 	}
 
 	Course *pCur = pHead;
+	// If the deleted node is the first Node, then do these lines of code.
 	if (pHead == pDelete)
 	{
 		pHead = pHead->pNext;
@@ -450,6 +451,11 @@ void deleteCourse(Course *&pHead, Course *&pDelete, string year_name, string sem
 		remove(path.c_str());
 		delete pCur;
 		pCur = nullptr;
+		cout << "Updated successfully!" << endl;
+		string temp;
+		cout << "Press any key to continue...\n";
+		cin >> temp;
+		clrscr();
 		return;
 	}
 
