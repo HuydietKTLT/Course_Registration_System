@@ -68,6 +68,9 @@ void view_list_all_courses(SchoolYear *pHead_schoolYear, string student_ID)
 			}
 			pHead_view_courses_courses = pHead_view_courses_courses->pNext;
 		}
+		string s;
+		cout << "Press any key to continue...";
+		cin >> s;
 	}
 }
 
@@ -187,9 +190,6 @@ void menuStudent(SchoolYear *pHead_schoolYear, string student_ID, passInfo *&hea
 		case 1:
 		{
 			view_list_all_courses(pHead_schoolYear, student_ID);
-			string s;
-			cout << "Press any key to continue...";
-			cin >> s;
 			break;
 		}
 		case 2:
