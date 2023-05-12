@@ -8,11 +8,11 @@ void print_All_CourseToConsole(SchoolYear *pHead_schoolYear)
 	SchoolYear *pHead1 = pHead_schoolYear;
 	while (pHead1 != nullptr)
 	{
-		cout << pHead1->year_name << endl;
+		cout << "Academic Year: " << pHead1->year_name << endl;
 		Semester *pHead2 = pHead1->semester;
 		while (pHead2 != nullptr)
 		{
-			cout << pHead2->semester_name << " " << endl;
+			cout << "Semester: " <<  pHead2->semester_name << " " << endl;
 			cout
 				<< left
 				<< setw(15)
