@@ -77,7 +77,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 					cin >> s;
 					break;
 				}
-				add_Student_To_Class_By_File(find_class->student, headPass);
+				add_Student_To_Class_By_File(pHead_class,find_class->student, headPass);
 				cout << "Updated successfully!" << endl;
 				cout << "Press any key to continue..." << endl;
 				cin >> s;
@@ -314,6 +314,9 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 			if (pHead == nullptr)
 			{
 				cout << "There is no school year matching with your typing!!!" << endl;
+				string s;
+				cout << "Press any key to continue...";
+				cin >> s;
 				break;
 			}
 
@@ -376,18 +379,18 @@ SchoolYear *currentSchoolYear(SchoolYear *pHead)
 		return NULL;
 	// cout << "-------------------------------------------\n";
 	SchoolYear *currentshoolyear = pHead;
-	int currentSchoolYear = stoi(currentshoolyear->year_name.substr(7, 2));
+	int currentSchoolYear = stoi(currentshoolyear->year_name.substr(5, 4));
 	SchoolYear *pTraverse = pHead;
 	while (pTraverse != nullptr)
 	{
-		currentSchoolYear = max(currentSchoolYear, stoi(pTraverse->year_name.substr(7, 2)));
+		currentSchoolYear = max(currentSchoolYear, stoi(pTraverse->year_name.substr(5, 4)));
 		pTraverse = pTraverse->pNext;
 	}
 	// cout << currentshoolyear->year_name << endl;
 	pTraverse = pHead;
 	while (pTraverse != nullptr)
 	{
-		if (currentSchoolYear == stoi(pTraverse->year_name.substr(7, 2)))
+		if (currentSchoolYear == stoi(pTraverse->year_name.substr(5, 4)))
 			return pTraverse;
 		pTraverse = pTraverse->pNext;
 	}
@@ -428,15 +431,21 @@ void createNewSchoolYear(SchoolYear *&pHead)
 	cout << "Enter new school year: ";
 	string year;
 	cin >> year;
-	for (int i=0; i < year.length(); i++) {
+	while (year.size() != 9)
+	{
+		cout << "Wrong syntax to create new school year.\n";
+		cout << "The syntax must be xxxx-xxxx." << endl;
+		cin >> year;
+	}
+	for (int i = 0; i < year.length(); i++)
+	{
 		if (year[i] != '-' && year[i] != '0' && year[i] != '1' && year[i] != '2' && year[i] != '3' && year[i] != '4' &&
-		                      year[i] != '5' && year[i] != '6' && year[i] != '7' && year[i] != '8' && year[i] != '9') {
+			year[i] != '5' && year[i] != '6' && year[i] != '7' && year[i] != '8' && year[i] != '9')
+		{
 			clrscr();
 			cout << "Wrong syntax to create new school year.\n";
 			cout << "The syntax must be xxxx-xxxx." << endl;
-			cout << "Press any key to continue...\n";
-			string s;
-			cin >> s;
+			cin >> year;
 			return;
 		}
 	}
@@ -504,7 +513,7 @@ void createNewSchoolYear(SchoolYear *&pHead)
 }
 
 // create new class menu
-void createNewClass(Class *&pHead, SchoolYear* head)
+void createNewClass(Class *&pHead, SchoolYear *head)
 {
 	int i;
 	while (true)
@@ -606,11 +615,15 @@ void addSemesterMenu(SchoolYear *pHead_schoolYear)
 	while (!checkSchoolYearSemIsFull(pHead_schoolYear))
 	{
 		addSemester(pHead_schoolYear->semester);
+		break;
 	}
-	cout << "This school year is full of semester ! (3 semesters) \n";
-	string temp;
-	cout << "Press any key to continue...\n";
-	cin >> temp;
+	if (checkSchoolYearSemIsFull(pHead_schoolYear))
+	{
+		cout << "This school year is full of semester ! (3 semesters) \n";
+		string temp;
+		cout << "Press any key to continue...\n";
+		cin >> temp;
+	}
 }
 
 // void add_semester(Semester*& pHead, string semester)
@@ -637,34 +650,44 @@ void addSemesterMenu(SchoolYear *pHead_schoolYear)
 
 void addSemester(Semester *&pHead)
 {
-
-	cout << "-------------------------------------------\n";
-	cout << "Choose Semester: " << endl;
-	cout << "1. Semester 1\n2. Semester 2\n3. Semester 3\n0. Exit\nEnter options: ";
-	int option;
-	cin >> option;
-	switch (option)
+	while (true)
 	{
-	case 1:
-		if (pHead == nullptr)
-			add_semester(pHead, "Semester1");
-		else
-			cout << "Failed to create new semester.";
+		cout << "-------------------------------------------\n";
+		cout << "Choose Semester: " << endl;
+		cout << "1. Semester 1\n2. Semester 2\n3. Semester 3\n0. Exit\nEnter options: ";
+		int option;
+		cin >> option;
+		switch (option)
+		{
+		case 1:
+		{
+			if (pHead == nullptr)
+				add_semester(pHead, "Semester1");
+			else
+				cout << "Failed to create new semester.";
+		}
 		break;
-	case 2:
-		if (!check_semester(pHead, "Semester2"))
-			cout << "Failed to create new semester.";
-		else
-			add_semester(pHead, "Semester2");
+		case 2:
+		{
+			if (!check_semester(pHead, "Semester2"))
+				cout << "Failed to create new semester.";
+			else
+				add_semester(pHead, "Semester2");
+		}
 		break;
-	case 3:
-		if (!check_semester(pHead, "Semester3"))
-			cout << "Failed to create new semester.";
-		else
-			add_semester(pHead, "Semester3");
+		case 3:
+		{
+			if (!check_semester(pHead, "Semester3"))
+				cout << "Failed to create new semester.";
+			else
+				add_semester(pHead, "Semester3");
+		}
 		break;
-	default:
-		return;
+		case 0:
+			return;
+		default:
+			continue;
+		}
 	}
 }
 

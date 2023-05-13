@@ -12,7 +12,7 @@ void print_All_CourseToConsole(SchoolYear *pHead_schoolYear)
 		Semester *pHead2 = pHead1->semester;
 		while (pHead2 != nullptr)
 		{
-			cout << "Semester: " <<  pHead2->semester_name << " " << endl;
+			cout << "Semester: " << pHead2->semester_name << " " << endl;
 			cout
 				<< left
 				<< setw(15)
@@ -124,6 +124,9 @@ void print_All_Student_In_A_class(studentClass *pCur)
 	if (pCur == nullptr)
 	{
 		cout << "There is no students have been added yet!" << endl;
+		string s;
+		cout << "Press any key to continue...\n";
+		cin >> s;
 		return;
 	}
 	cout << left
@@ -265,7 +268,6 @@ void Print_All_Student_In_A_Course(Student *pCur)
 
 void addCourse(Course *&pHead)
 {
-
 	cout << "Enter Course ID: ";
 	string course_id;
 	cin >> course_id;
@@ -301,13 +303,14 @@ void addCourse(Course *&pHead)
 		pPrevCur = pHead;
 	}
 
+	cin.ignore();
 	cout << "Enter Course Name: ";
 	string course_name;
-	cin >> course_name;
+	getline(cin, course_name);
 
 	cout << "Enter Class Name: ";
 	string class_name;
-	cin >> class_name;
+	getline(cin, class_name);
 	while (class_name.size() > 8)
 	{
 		cout << "The class name is invalid!" << endl;
@@ -318,7 +321,6 @@ void addCourse(Course *&pHead)
 
 	cout << "Enter Teacher Name: ";
 	string teacher_name;
-	cin.ignore();
 	getline(cin, teacher_name);
 
 	cout << "Enter Number of credits: ";
@@ -340,28 +342,28 @@ void addCourse(Course *&pHead)
 		cout << "Enter Number of students: ";
 		cin >> number_students;
 	}
-
+	cin.ignore();
 	cout << "Enter day of week: " << endl;
 	cout << "MON / TUE / WED / THU / FRI / SAT:  ";
 	string day_week;
-	cin >> day_week;
+	getline(cin, day_week);
 	while (day_week != "MON" && day_week != "TUE" && day_week != "WED" && day_week != "THU" && day_week != "FRI" && day_week != "SAT")
 	{
 		cout << "Wrong type of day of week!" << endl;
 		cout << "Enter day of week: ";
 		cout << "MON / TUE / WED / THU / FRI / SAT:  ";
-		cin >> day_week;
+		getline(cin, day_week);
 	}
 
 	cout << "Enter session" << endl;
 	cout << "S1(07:30) -- S2(09:30) -- S3(13:30) -- S4(15:30): ";
 	string session;
-	cin >> session;
+	getline(cin, session);
 	while (session != "S1(07:30)" && session != "S2(09:30)" && session != "S3(13:30)" && session != "S4(15:30)")
 	{
 		cout << "Wrong type of session!" << endl;
 		cout << "S1(07:30) -- S2(09:30) -- S3(13:30) -- S4(15:30): ";
-		cin >> session;
+		getline(cin, session);
 	}
 
 	int other_mark = -1;
@@ -420,6 +422,11 @@ void export_list_of_student_ToCSVFile(Student *pCur, string year_name, string se
 		pCur = pCur->pNext;
 	}
 	file.close();
+	cout << "Updated successfully!" << endl;
+	string temp;
+	cout << "Press any key to continue...\n";
+	cin >> temp;
+	clrscr();
 }
 
 // The pDelete is surely found.
@@ -869,6 +876,10 @@ void Print_All_Student_In_A_Class_With_score_All(Class *pClass)
 	}
 
 	studentClass *pCur = pCur_Class->student;
+	if (pCur == nullptr)
+	{
+		cout << "There is no students in the class " << endl;
+	}
 
 	while (pCur != nullptr)
 	{

@@ -14,7 +14,10 @@ void load_student_InCourse(Course *pCur_course, Student *&pHead, string schoolYe
 	if (!file.is_open())
 		return;
 	if (isFileEmpty(schoolYear_name + "\\" + semester_name + "\\" + course_id + ".txt"))
+	{
+		pHead = nullptr;
 		return;
+	}
 	Student *pCur = pHead;
 	while (!file.eof())
 	{
@@ -63,7 +66,10 @@ void load_student_InClass(studentClass *&pHead, string class_name)
 	if (!file.is_open())
 		return;
 	if (isFileEmpty(class_name + ".txt"))
+	{
+		pHead = nullptr;
 		return;
+	}
 	studentClass *pCur = pHead;
 	while (!file.eof())
 	{
@@ -142,7 +148,10 @@ void load_course(Course *&pHead, string schoolYear_name, string semester_name)
 	if (!file.is_open())
 		return;
 	if (isFileEmpty(schoolYear_name + "\\" + semester_name + "\\courseList.txt"))
+	{
+		pHead = nullptr;
 		return;
+	}
 	Course *pCur = pHead;
 	while (!file.eof())
 	{
@@ -194,7 +203,10 @@ void load_semester(Semester *&pHead, string schoolYear_name)
 		return;
 	}
 	if (isFileEmpty(schoolYear_name + "\\semesterList.txt") == true)
+	{
+		pHead = nullptr;
 		return;
+	}
 	while (!file.eof())
 	{
 		if (pHead == nullptr)
@@ -221,7 +233,10 @@ void load_schoolYear(SchoolYear *&pHead)
 	if (!file.is_open())
 		return;
 	if (isFileEmpty("schoolYearList.txt"))
+	{
+		pHead = nullptr;
 		return;
+	}
 	SchoolYear *pCur = pHead;
 	while (!file.eof())
 	{
@@ -249,6 +264,12 @@ void load_class(Class *&pHead)
 
 	if (!file.is_open())
 		return;
+
+	if (isFileEmpty("classList.txt"))
+	{
+		pHead = nullptr;
+		return;
+	}
 
 	Class *pCur = pHead;
 	while (!file.eof())

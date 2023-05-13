@@ -199,13 +199,13 @@ Class* Find_Class(Class* pHead);
 
 Class *Find_Class_addStudent_1styear(Class *pHead, SchoolYear *currentSchoolYear);
 
-void add_Student_To_Class_By_File(studentClass*& pHead, passInfo*& headPass);
+void add_Student_To_Class_By_File(Class *pHead_class,studentClass*& pHead_studentClass, passInfo*& headPass);
 
 void add_Student_to_Course_By_Console(Course* pCur, Student*& pHead, passInfo*& headPass);
 
 void add_Student_to_Course_By_File(Course* pCur,Student *&pHead, passInfo* &headPass);
 
-bool is_Exist_studentClass(studentClass *pHead_student, string student_ID);
+bool is_Exist_studentClass(Class *pHead_class, string student_ID);
 
 bool is_Exist_studentCourse(Student* pHead_student, string student_ID);
 
@@ -272,22 +272,6 @@ void view_scoreboard_toCourse(SchoolYear* list_year);
 void import_score_of_course(Course* z);
 
 void Menu_Score_Board(SchoolYear* list_year);
-
-//Manager
-
-void menuManager(SchoolYear* &pHead_schoolYear, Class* &pHead_class, passInfo* &headPass);
-
-void addStaff(passInfo*& headPass);
-
-void addStaffByConsole(passInfo* &headPass);
-
-void addStaffByFile(passInfo* &headPass);
-
-void removeStaff(passInfo*& headPass);
-
-void editStudent(passInfo* &headPass);
-
-void menuStaffMan(SchoolYear* &pHead_schoolYear, Class* &pHead_class, passInfo* &headPass);
 
 //Utility functions
 

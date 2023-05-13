@@ -25,17 +25,17 @@ Class *Find_Class_addStudent_1styear(Class *pHead, SchoolYear *currentSchoolYear
 		cin >> temp;
 		return NULL;
 	}
-	if (pHead->class_name == get_class)
-	{
-		if (stoi(pHead->class_name.substr(0, 2)) != stoi(currentSchoolYear->year_name.substr(7, 2)))
-		{
-			cout << "There is no class matching with your typing in this school year !!" << endl;
-			cout << "Press any key to continue...";
-			string temp;
-			cin >> temp;
-			return NULL;
-		}
-	}
+	// if (pHead->class_name == get_class)
+	// {
+	// 	if (stoi(pHead->class_name.substr(0, 2)) != stoi(currentSchoolYear->year_name.substr(7, 2)))
+	// 	{
+	// 		cout << "There is no class matching with your typing in this school year !!" << endl;
+	// 		cout << "Press any key to continue...";
+	// 		string temp;
+	// 		cin >> temp;
+	// 		return NULL;
+	// 	}
+	// }
 	return pHead;
 }
 
@@ -67,7 +67,7 @@ Class *Find_Class(Class *pHead)
 	return pHead;
 }
 
-void add_Student_To_Class_By_File(studentClass *&pHead, passInfo *&headPass)
+void add_Student_To_Class_By_File(Class *pHead_class, studentClass *&pHead_studentClass, passInfo *&headPass)
 {
 	ifstream file;
 	// The file addStudentToCourse.txt is an input file, which contain the first line is the Course to be added
@@ -127,21 +127,29 @@ void add_Student_To_Class_By_File(studentClass *&pHead, passInfo *&headPass)
 			pCurPass->type = 's';
 			pCurPass->next = nullptr;
 		}
-		studentClass *pOverWrite = pHead;
+		studentClass *pOverWrite = pHead_studentClass;
 		studentClass *pPrevOverWrite = nullptr;
 		while (pOverWrite != nullptr && pOverWrite->student_ID != student_ID)
 		{
 			pPrevOverWrite = pOverWrite;
 			pOverWrite = pOverWrite->pNext;
 		}
-		if (pOverWrite != nullptr)
+		if (pOverWrite != nullptr || is_Exist_studentClass(pHead_class, student_ID) == true)
 		{
 			continue;
 		}
 		else
 		{
-			pPrevOverWrite->pNext = new studentClass;
-			pPrevOverWrite = pPrevOverWrite->pNext;
+			if (pPrevOverWrite == nullptr)
+			{
+				pHead_studentClass = new studentClass;
+				pPrevOverWrite = pHead_studentClass;
+			}
+			else
+			{
+				pPrevOverWrite->pNext = new studentClass;
+				pPrevOverWrite = pPrevOverWrite->pNext;
+			}
 			pPrevOverWrite->student_ID = student_ID;
 			pPrevOverWrite->first_name = first_name;
 			pPrevOverWrite->last_name = last_name;
@@ -154,13 +162,18 @@ void add_Student_To_Class_By_File(studentClass *&pHead, passInfo *&headPass)
 	file.close();
 }
 
-bool is_Exist_studentClass(studentClass *pHead_student, string student_ID)
+bool is_Exist_studentClass(Class *pHead_class, string student_ID)
 {
-	while (pHead_student != nullptr)
+	while (pHead_class != nullptr)
 	{
-		if (pHead_student->student_ID == student_ID)
-			return true;
-		pHead_student = pHead_student->pNext;
+		studentClass *pCur = pHead_class->student;
+		while (pCur != nullptr)
+		{
+			if (pCur->student_ID == student_ID)
+				return true;
+			pCur = pCur->pNext;
+		}
+		pHead_class = pHead_class->pNext;
 	}
 	return false;
 }
@@ -241,7 +254,9 @@ void add_Student_to_Course_By_File(Course *pCur, Student *&pHead, passInfo *&hea
 			pCurPass->type = 's';
 			pCurPass->next = nullptr;
 		}
-		Student *pOverWrite = pHead;
+		Student *pOverWrite = nullptr;
+		if (pHead != nullptr)
+			pOverWrite = pHead;
 		Student *pPrevOverWrite = nullptr;
 		while (pOverWrite != nullptr && pOverWrite->student_ID != student_ID)
 		{
@@ -254,10 +269,16 @@ void add_Student_to_Course_By_File(Course *pCur, Student *&pHead, passInfo *&hea
 		}
 		else
 		{
-			// cout << "Hello World " << endl;
-			pPrevOverWrite->pNext = new Student;
-			pPrevOverWrite = pPrevOverWrite->pNext;
-
+			if (pHead == nullptr)
+			{
+				pHead = new Student;
+				pPrevOverWrite = pHead;
+			}
+			else
+			{
+				pPrevOverWrite->pNext = new Student;
+				pPrevOverWrite = pPrevOverWrite->pNext;
+			}
 			pPrevOverWrite->student_ID = student_ID;
 			pPrevOverWrite->first_name = first_name;
 			pPrevOverWrite->last_name = last_name;
