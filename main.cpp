@@ -16,6 +16,7 @@ int main()
 	SET_COLOR(0);
 	while (true)
 	{
+		dialocatePass(headPass);
 		clrscr();
 		cout << "-----STUDENT MANAGE SYSTEM-----" << endl;	
 		cout << "1. Sign in " << endl
