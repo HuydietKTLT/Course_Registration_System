@@ -215,7 +215,7 @@ void remove_Student_from_Course(Student *&pHead);
 
 void menuStaff(SchoolYear* pHead_schoolYear, Class* pHead_class, passInfo* &headPass, string login);
 
-void createNewClass(Class*& pHead);
+void createNewClass(Class*& pHead, SchoolYear * head);
 
 void createNewSchoolYear(SchoolYear*& pHead_schoolYear);
 
