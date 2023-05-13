@@ -8,6 +8,8 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 	SchoolYear *current_schoolyear = currentSchoolYear(pHead_schoolYear);
 	while (true)
 	{
+		dialocatePass(headPass);
+		print_output(pHead_schoolYear, pHead_class);
 		SET_COLOR(0);
 		clrscr();
 		cout << "Type: Teacher " << endl;

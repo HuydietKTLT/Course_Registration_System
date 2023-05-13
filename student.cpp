@@ -172,6 +172,7 @@ void menuStudent(SchoolYear *pHead_schoolYear, string student_ID, passInfo *&hea
 	int i;
 	while (true)
 	{
+		dialocatePass(headPass);
 		clrscr();
 		cout << "Type: Student " << endl;
 		cout << "Login ID: " << login << endl;
