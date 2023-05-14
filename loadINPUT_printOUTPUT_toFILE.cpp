@@ -219,7 +219,25 @@ void load_semester(Semester *&pHead, string schoolYear_name)
 			pCur->pNext = new Semester;
 			pCur = pCur->pNext;
 		}
-		file >> pCur->semester_name;
+		// file >> pCur->semester_name;
+
+		string day, month, year;
+		
+		getline(file, pCur->semester_name, ',');
+		getline(file, day, '/');
+		pCur->start.day = stoi(day);
+		getline(file, month, '/');
+		pCur->start.month = stoi(month);
+		getline(file, year, ',');
+		pCur->start.year = stoi(year);
+
+		getline(file, day, '/');
+		pCur->end.day = stoi(day);
+		getline(file, month, '/');
+		pCur->end.month = stoi(month);
+		getline(file, year);
+		pCur->end.year = stoi(year);
+
 		pCur->course = nullptr;
 		pCur->pNext = nullptr;
 	}
@@ -495,7 +513,8 @@ void print_Semester(Semester *pHead_Semester, string schoolYear_name)
 	while (pHead_Semester != nullptr)
 	{
 		path = schoolYear_name + BACKSLASH + pHead_Semester->semester_name;
-		file << pHead_Semester->semester_name;
+		file << pHead_Semester->semester_name << "," << pHead_Semester->start.day << "/" << pHead_Semester->start.month << "/" << pHead_Semester->start.year
+			 << "," << pHead_Semester->end.day << "/" << pHead_Semester->end.month << "/" << pHead_Semester->end.year ;
 		if (pHead_Semester->pNext != nullptr)
 			file << endl;
 		_mkdir(path.c_str());

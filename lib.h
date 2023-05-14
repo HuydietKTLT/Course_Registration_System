@@ -28,6 +28,12 @@ const int max_value = 20;
 //Set default password
 const string default_password = "1234";
 
+struct Date {
+	int day;
+	int month;
+	int year;
+};
+
 struct Score {
 	float total_mark = 0;
 	float final_mark = 0;
@@ -81,6 +87,8 @@ struct Semester
 	string semester_name = "x";
 	Course* course;
 	Semester* pNext;
+	Date start;
+	Date end;
 };
 
 struct scoreClass
@@ -223,13 +231,13 @@ string revString(string a);
 
 SchoolYear* currentSchoolYear(SchoolYear* pHead);
 
-void addSemesterMenu(SchoolYear* pHead_schoolYear);
+void addSemesterMenu(SchoolYear* pHead_schoolYear, SchoolYear *pPrev_schoolYear);
 
-void addSemester(Semester* &pHead);
+void addSemester(SchoolYear* current_SchoolYear, SchoolYear *pPrev_schoolYear, Semester* &pHead);
 
 bool check_semester(Semester* pHead, string semester);
 
-void add_semester(Semester*& pHead, string semester);
+void add_semester(SchoolYear* current_SchoolYear, SchoolYear *pPrev_schoolYear, Semester*& pHead, string semester);
 
 Semester* currentSemester(Semester* pHead);
 
@@ -286,5 +294,16 @@ void SET_COLOR(int color);
 float stf(string str);
 
 void stop();
+
+//Semester check
+bool isLeapYear(int year);
+
+int number_days_of_month(int month, int year);
+
+bool isDate(Date p);
+
+bool checkIsSmallerDate (Date d1, Date d2);
+
+bool checkIsGoodSemester (Semester *s1, Semester *s2);
 
 #endif
