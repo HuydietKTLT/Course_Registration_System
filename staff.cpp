@@ -77,7 +77,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 					cin >> s;
 					break;
 				}
-				add_Student_To_Class_By_File(pHead_class,find_class->student, headPass);
+				add_Student_To_Class_By_File(pHead_class, find_class->student, headPass);
 				cout << "Updated successfully!" << endl;
 				cout << "Press any key to continue..." << endl;
 				cin >> s;
@@ -88,7 +88,7 @@ void menuStaff(SchoolYear *pHead_schoolYear, Class *pHead_class, passInfo *&head
 		{
 			if (current_schoolyear != nullptr)
 			{
-				SchoolYear* pPrev_schoolYear = pHead_schoolYear;
+				SchoolYear *pPrev_schoolYear = pHead_schoolYear;
 				while (pPrev_schoolYear->pNext != current_schoolyear)
 					pPrev_schoolYear = pPrev_schoolYear->pNext;
 				addSemesterMenu(current_schoolyear, pPrev_schoolYear);
@@ -434,6 +434,8 @@ void createNewSchoolYear(SchoolYear *&pHead)
 	cout << "Enter new school year: ";
 	string year;
 	cin >> year;
+
+
 	while (year.size() != 9)
 	{
 		cout << "Wrong syntax to create new school year.\n";
@@ -453,7 +455,7 @@ void createNewSchoolYear(SchoolYear *&pHead)
 		}
 	}
 	string year1 = year.substr(0, 4);
-	string year2 = year.substr(5, year.size() - 1);
+	string year2 = year.substr(5, 4);
 
 	while (year.size() != 9 || year[4] != '-' || stoi(year2) - stoi(year1) != 1)
 	{
@@ -473,8 +475,7 @@ void createNewSchoolYear(SchoolYear *&pHead)
 		if (year == "0")
 			return;
 		year1 = year.substr(0, 4);
-		year2 = year.substr(5, year.size() - 1);
-		clrscr();
+		year2 = year.substr(5, 4);
 	}
 
 	SchoolYear *pCur = nullptr;
@@ -489,6 +490,7 @@ void createNewSchoolYear(SchoolYear *&pHead)
 		is_created = false;
 	if (is_created == false)
 	{
+		SchoolYear *pPrevCur = nullptr;
 		pCur = nullptr;
 		if (pHead == nullptr)
 		{
@@ -497,13 +499,31 @@ void createNewSchoolYear(SchoolYear *&pHead)
 		}
 		else
 			pCur = pHead;
-		while (pCur->pNext != nullptr)
+
+		if (stoi(year.substr(0, 4)) < stoi(pHead->year_name.substr(0, 4)))
+		{
+			SchoolYear *DummyNode = nullptr;
+			DummyNode = new SchoolYear;
+			DummyNode->year_name = year;
+			DummyNode->semester = nullptr;
+			DummyNode->pNext = pHead;
+			pHead = DummyNode;
+			cout << "New school year created successfully.\n";
+			cout << "Press any key to continue...\n";
+			string s;
+			cin >> s;
+			return;
+		}
+
+		while (pCur->pNext != nullptr && stoi(year.substr(0, 4)) < stoi(pCur->pNext->year_name.substr(0, 4)))
 			pCur = pCur->pNext;
-		pCur->pNext = new SchoolYear();
-		pCur = pCur->pNext;
-		pCur->year_name = year;
-		pCur->semester = nullptr;
-		pCur->pNext = nullptr;
+
+		SchoolYear *DummyNode = nullptr;
+		DummyNode = new SchoolYear;
+		DummyNode->year_name = year;
+		DummyNode->semester = nullptr;
+		DummyNode->pNext = pCur->pNext;
+		pCur->pNext = DummyNode;
 		cout << "New school year created successfully.\n";
 	}
 	else
@@ -651,7 +671,7 @@ void addSemesterMenu(SchoolYear *pHead_schoolYear, SchoolYear *pPrev_schoolYear)
 // }
 // add new semester
 
-void addSemester(SchoolYear* current_SchoolYear, SchoolYear* pPrev_schoolYear, Semester *&pHead)
+void addSemester(SchoolYear *current_SchoolYear, SchoolYear *pPrev_schoolYear, Semester *&pHead)
 {
 	while (true)
 	{
@@ -740,27 +760,35 @@ bool isDate(Date p)
 	return true;
 }
 
-bool checkIsSmallerDate (Date d1, Date d2)
+bool checkIsSmallerDate(Date d1, Date d2)
 {
 	// d1 befor, d2 after
-	if (d1.year > d2.year) return false;
-    else if (d1.year < d2.year) return true;
-    else if (d1.month > d2.month) return false;
-    else if (d1.month < d2.month) return true;
-    else if (d1.day > d2.day) return false;
-	else if (d1.day < d2.day) return true;
+	if (d1.year > d2.year)
+		return false;
+	else if (d1.year < d2.year)
+		return true;
+	else if (d1.month > d2.month)
+		return false;
+	else if (d1.month < d2.month)
+		return true;
+	else if (d1.day > d2.day)
+		return false;
+	else if (d1.day < d2.day)
+		return true;
 	return false;
 }
 
-bool checkIsGoodSemester (Semester *s1, Semester *s2)
+bool checkIsGoodSemester(Semester *s1, Semester *s2)
 {
-	if (s1 == nullptr || s2 == nullptr) return true;
-	else {
+	if (s1 == nullptr || s2 == nullptr)
+		return true;
+	else
+	{
 		return checkIsSmallerDate(s1->end, s2->start);
 	}
 }
 
-void add_semester(SchoolYear* current_SchoolYear, SchoolYear *pPrev_schoolYear, Semester *&pHead, string semester)
+void add_semester(SchoolYear *current_SchoolYear, SchoolYear *pPrev_schoolYear, Semester *&pHead, string semester)
 {
 	Semester *pTail = nullptr;
 	if (pHead == nullptr)
@@ -781,59 +809,80 @@ void add_semester(SchoolYear* current_SchoolYear, SchoolYear *pPrev_schoolYear, 
 	pTail->semester_name = semester;
 
 	Semester *lastSemester_pPrev_schoolYear = pPrev_schoolYear->semester;
-	while (lastSemester_pPrev_schoolYear->pNext != nullptr)  {
+	while (lastSemester_pPrev_schoolYear->pNext != nullptr)
+	{
 		lastSemester_pPrev_schoolYear = lastSemester_pPrev_schoolYear->pNext;
 	}
 	Date start, end;
 
 	cout << "----------" << current_SchoolYear->year_name << "----------" << endl;
 	cout << "Enter the start date of the semester (dd/mm/yyyy) \n";
-	cout << "Enter day: "; cin >> start.day;
-	cout << "Enter month: "; cin >> start.month;
-	cout << "Enter year: "; cin >> start.year;
+	cout << "Enter day: ";
+	cin >> start.day;
+	cout << "Enter month: ";
+	cin >> start.month;
+	cout << "Enter year: ";
+	cin >> start.year;
 
 	pTail->start = start;
 	Semester *pPrev_tail = nullptr;
-	if (pHead->pNext != nullptr) {
+	if (pHead->pNext != nullptr)
+	{
 		pPrev_tail = pHead;
-		while (pPrev_tail->pNext != pTail) 
+		while (pPrev_tail->pNext != pTail)
 			pPrev_tail = pPrev_tail->pNext;
 	}
 
-	while ((start.year != stoi(current_SchoolYear->year_name.substr(0,4)) && start.year != stoi(current_SchoolYear->year_name.substr(5,4))) 
-				|| !isDate(start) || !checkIsGoodSemester(lastSemester_pPrev_schoolYear, pTail) || !checkIsGoodSemester(pPrev_tail, pTail)) { 
-		if ((start.year != stoi(current_SchoolYear->year_name.substr(0,4)) && start.year != stoi(current_SchoolYear->year_name.substr(5,4)))) {
+	while ((start.year != stoi(current_SchoolYear->year_name.substr(0, 4)) && start.year != stoi(current_SchoolYear->year_name.substr(5, 4))) || !isDate(start) || !checkIsGoodSemester(lastSemester_pPrev_schoolYear, pTail) || !checkIsGoodSemester(pPrev_tail, pTail))
+	{
+		if ((start.year != stoi(current_SchoolYear->year_name.substr(0, 4)) && start.year != stoi(current_SchoolYear->year_name.substr(5, 4))))
+		{
 			cout << "Start date doesn't match with current school year !\n";
 		}
-		else if (!isDate(start)) cout << "Date is invalid !\n";
-		else cout << "Start date of this semester in this school year must be later than end date of semester of previous school year !  \n";
+		else if (!isDate(start))
+			cout << "Date is invalid !\n";
+		else
+			cout << "Start date of this semester in this school year must be later than end date of semester of previous school year !  \n";
 		cout << "----------" << current_SchoolYear->year_name << "----------" << endl;
 		cout << "Enter the start date of the semester (dd/mm/yyyy) \n";
-		cout << "Enter day: "; cin >> start.day;
-		cout << "Enter month: "; cin >> start.month;
-		cout << "Enter year: "; cin >> start.year;
+		cout << "Enter day: ";
+		cin >> start.day;
+		cout << "Enter month: ";
+		cin >> start.month;
+		cout << "Enter year: ";
+		cin >> start.year;
 		pTail->start = start;
 	}
 
 	cout << "----------" << current_SchoolYear->year_name << "----------" << endl;
-	cout << "Enter the end date of the semester (dd/mm/yyyy) \n" ;
-	cout << "Enter day: "; cin >> end.day;
-	cout << "Enter month: "; cin >> end.month;
-	cout << "Enter year: "; cin >> end.year;
+	cout << "Enter the end date of the semester (dd/mm/yyyy) \n";
+	cout << "Enter day: ";
+	cin >> end.day;
+	cout << "Enter month: ";
+	cin >> end.month;
+	cout << "Enter year: ";
+	cin >> end.year;
 
 	pTail->end = end;
 
-	while ((end.year != stoi(current_SchoolYear->year_name.substr(0,4)) && end.year != stoi(current_SchoolYear->year_name.substr(5,4))) || !isDate(end) || !checkIsSmallerDate(start, end))  {
-		if (end.year != stoi(current_SchoolYear->year_name.substr(0,4)) && end.year != stoi(current_SchoolYear->year_name.substr(5,4))) {
+	while ((end.year != stoi(current_SchoolYear->year_name.substr(0, 4)) && end.year != stoi(current_SchoolYear->year_name.substr(5, 4))) || !isDate(end) || !checkIsSmallerDate(start, end))
+	{
+		if (end.year != stoi(current_SchoolYear->year_name.substr(0, 4)) && end.year != stoi(current_SchoolYear->year_name.substr(5, 4)))
+		{
 			cout << "End date doesn't match with current school year !\n ";
 		}
-		else if (!checkIsSmallerDate(start, end)) cout << "End date must be later than start date !\n";
-		else cout << "Date is invalid !\n";
+		else if (!checkIsSmallerDate(start, end))
+			cout << "End date must be later than start date !\n";
+		else
+			cout << "Date is invalid !\n";
 		cout << "----------" << current_SchoolYear->year_name << "----------" << endl;
 		cout << "Enter the end date of the semester (dd/mm/yyyy) \n";
-		cout << "Enter day: "; cin >> end.day;
-		cout << "Enter month: "; cin >> end.month;
-		cout << "Enter year: "; cin >> end.year;
+		cout << "Enter day: ";
+		cin >> end.day;
+		cout << "Enter month: ";
+		cin >> end.month;
+		cout << "Enter year: ";
+		cin >> end.year;
 		pTail->end = end;
 	}
 
