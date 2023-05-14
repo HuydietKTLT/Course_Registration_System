@@ -76,7 +76,6 @@ void view_list_all_courses(SchoolYear *pHead_schoolYear, string student_ID)
 
 void view_list_all_scoreboard(SchoolYear *pHead_schoolYear, string student_ID)
 {
-
 	cout
 		<< left
 		<< setw(15)
