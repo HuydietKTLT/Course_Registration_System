@@ -427,6 +427,19 @@ string revString(string a)
 	return b;
 }
 
+bool isValidYear(string year)
+{
+	if (year.size() != 9)
+		return false;
+	for (int i = 0; i < year.length(); i++)
+	{
+		if (year[i] != '-' && year[i] != '0' && year[i] != '1' && year[i] != '2' && year[i] != '3' && year[i] != '4' &&
+			year[i] != '5' && year[i] != '6' && year[i] != '7' && year[i] != '8' && year[i] != '9')
+			return false;
+	}
+	return true;
+}
+
 // create new school year
 void createNewSchoolYear(SchoolYear *&pHead)
 {
@@ -434,30 +447,21 @@ void createNewSchoolYear(SchoolYear *&pHead)
 	cout << "Enter new school year: ";
 	string year;
 	cin >> year;
-
-
-	while (year.size() != 9)
+	while (!isValidYear(year))
 	{
+		clrscr();
 		cout << "Wrong syntax to create new school year.\n";
-		cout << "The syntax must be xxxx-xxxx." << endl;
+		cout << "The syntax must be xxxx-xxxx and x must be a number from 0-9" << endl;
+		cout << "Enter new school year (press '0' to exit): ";
 		cin >> year;
-	}
-	for (int i = 0; i < year.length(); i++)
-	{
-		if (year[i] != '-' && year[i] != '0' && year[i] != '1' && year[i] != '2' && year[i] != '3' && year[i] != '4' &&
-			year[i] != '5' && year[i] != '6' && year[i] != '7' && year[i] != '8' && year[i] != '9')
-		{
-			clrscr();
-			cout << "Wrong syntax to create new school year.\n";
-			cout << "The syntax must be xxxx-xxxx." << endl;
-			cin >> year;
+		if (year == "0")
 			return;
-		}
 	}
+
 	string year1 = year.substr(0, 4);
 	string year2 = year.substr(5, 4);
 
-	while (year.size() != 9 || year[4] != '-' || stoi(year2) - stoi(year1) != 1)
+	while (year[4] != '-' || stoi(year2) - stoi(year1) != 1)
 	{
 		clrscr();
 		cout << "Wrong syntax to create new school year.\n";
@@ -473,11 +477,14 @@ void createNewSchoolYear(SchoolYear *&pHead)
 		cout << "Enter new school year (press '0' to exit): ";
 		cin >> year;
 		if (year == "0")
-		return;
-		while (year.size() != 9 ){
-			cout << "Please try again..." << endl;
-			cout << "Enter new school year (press '0' to exit): ";	
-			cin>>year;
+			return;
+		while (!isValidYear(year))
+		{
+			clrscr();
+			cout << "Wrong syntax to create new school year.\n";
+			cout << "The syntax must be xxxx-xxxx and x must be a number from 0-9" << endl;
+			cout << "Enter new school year (press '0' to exit): ";
+			cin >> year;
 			if (year == "0")
 				return;
 		}
@@ -521,8 +528,12 @@ void createNewSchoolYear(SchoolYear *&pHead)
 			return;
 		}
 
-		while (pCur->pNext != nullptr && stoi(year.substr(0, 4)) < stoi(pCur->pNext->year_name.substr(0, 4)))
+		while (pCur != nullptr && pCur->pNext != nullptr)
+		{
+			if (stoi(year.substr(0, 4)) < stoi(pCur->pNext->year_name.substr(0, 4)))
+				break;
 			pCur = pCur->pNext;
+		}
 
 		SchoolYear *DummyNode = nullptr;
 		DummyNode = new SchoolYear;
