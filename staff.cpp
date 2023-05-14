@@ -473,11 +473,17 @@ void createNewSchoolYear(SchoolYear *&pHead)
 		cout << "Enter new school year (press '0' to exit): ";
 		cin >> year;
 		if (year == "0")
-			return;
+		return;
+		while (year.size() != 9 ){
+			cout << "Please try again..." << endl;
+			cout << "Enter new school year (press '0' to exit): ";	
+			cin>>year;
+			if (year == "0")
+				return;
+		}
 		year1 = year.substr(0, 4);
 		year2 = year.substr(5, 4);
 	}
-
 	SchoolYear *pCur = nullptr;
 	if (pHead != nullptr)
 		pCur = pHead;
