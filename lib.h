@@ -296,6 +296,9 @@ float stf(string str);
 void stop();
 
 //Semester check
+
+bool isValidYear(string year);
+
 bool isLeapYear(int year);
 
 int number_days_of_month(int month, int year);
