@@ -1,2 +1,0 @@
-ntlong,m
-ilont,t
