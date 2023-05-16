@@ -867,7 +867,7 @@ void Print_All_Student_In_A_Class_With_score_All(Class *pClass)
 
 	if (pCur_Class == nullptr)
 	{
-		cout << "There is no semester matching with your typing !!!" << endl;
+		cout << "There is no class matching with your typing !!!" << endl;
 		cout << "Press any key to continue...\n";
 		string s;
 		cin >> s;
