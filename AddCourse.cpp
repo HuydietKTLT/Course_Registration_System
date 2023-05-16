@@ -549,7 +549,6 @@ void update_course_ID(Course *&pCur, SchoolYear *pHead)
 void update_course_name(Course *&pCur)
 {
 	cout << "Enter new Course Name: ";
-	cin.ignore();
 	getline(cin, pCur->course_name);
 	cout << "Update successfully!\n";
 }
@@ -557,7 +556,6 @@ void update_course_name(Course *&pCur)
 void update_class_name(Course *&pCur)
 {
 	cout << "Enter new Class Name: ";
-	cin.ignore();
 	getline(cin, pCur->class_name);
 	cout << "Update successfully!\n";
 }
@@ -565,7 +563,6 @@ void update_class_name(Course *&pCur)
 void update_teacher_name(Course *&pCur)
 {
 	cout << "Enter new Teacher Name: ";
-	cin.ignore();
 	getline(cin, pCur->teacher_name);
 	cout << "Update successfully!\n";
 }
@@ -633,7 +630,6 @@ void update_session(Course *&pCur)
 void update_percentage(Course *&pCur)
 {
 	pCur->other = -1;
-	cin.ignore();
 	while (pCur->other < 0)
 	{
 		// cout << "Hello World" << endl;
