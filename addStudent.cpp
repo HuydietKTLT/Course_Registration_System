@@ -300,22 +300,22 @@ void add_Student_to_Course_By_File(Course *pCur, Student *&pHead, passInfo *&hea
 
 void add_Student_to_Course_By_Console(Course *pCur, Student *&pHead, passInfo *&headPass)
 {
-	cout << "Enter new student ID: ";
-	string student_ID;
-	cin >> student_ID;
 	Student *pTraverse = nullptr;
-	if (pHead != nullptr)
-		pTraverse = pHead;
-	while (pTraverse != nullptr)
+	string student_ID;
+	while (true)
 	{
-		cout << "The student ID has been created before!. Try again" << endl;
 		cout << "Enter new student ID: ";
 		cin >> student_ID;
-		pTraverse = pHead;
+		if (pHead != nullptr)
+			pTraverse = pHead;
 		while (pTraverse != nullptr && pTraverse->student_ID != student_ID)
 		{
 			pTraverse = pTraverse->pNext;
 		}
+		if (pTraverse != nullptr)
+			cout << "The student ID has been created before!. Try again" << endl;
+		else
+			break;
 	}
 	Student *pAdd = nullptr;
 	if (pHead != nullptr)
@@ -337,19 +337,16 @@ void add_Student_to_Course_By_Console(Course *pCur, Student *&pHead, passInfo *&
 		pHead->pNext = nullptr;
 	}
 	pAdd->student_ID = student_ID;
-
+	cin.ignore();
 	cout << "Enter new student first name: ";
-	cin >> pAdd->first_name;
+	getline(cin, pAdd->first_name);
 
 	cout << "Enter new student last name: ";
-	cin >> pAdd->last_name;
-
+	getline(cin, pAdd->last_name);
 	cout << "Enter new student gender: ";
-	cin >> pAdd->gender;
-
+	getline(cin, pAdd->gender);
 	cout << "Enter new student date of birth: ";
-	cin >> pAdd->date_of_birth;
-
+	getline(cin, pAdd->date_of_birth);
 	cout << "Enter new student social ID: ";
 	cin >> pAdd->social_ID;
 
