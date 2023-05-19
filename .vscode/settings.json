@@ -13,5 +13,6 @@
         "ios": "cpp",
         "xiosbase": "cpp",
         "xutility": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }
